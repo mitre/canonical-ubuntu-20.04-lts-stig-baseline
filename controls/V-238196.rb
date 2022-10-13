@@ -1,6 +1,8 @@
+# encoding: UTF-8
+
 control "V-238196" do
-  title "The Ubuntu operating system must provision temporary user accounts with an expiration time 
-of 72 hours or less. "
+  title "The Ubuntu operating system must provision temporary user accounts
+with an expiration time of 72 hours or less."
   desc "If temporary user accounts remain active when no longer needed or for an excessive period, 
 these accounts may be used to gain unauthorized access. To mitigate this risk, automated 
 termination of all temporary accounts must be set upon account creation. 
@@ -39,8 +41,7 @@ account does not expire within 72 hours of that account's creation, this is a fi
 Substitute 
 \"system_account_name\" with the account to be created. 
  
-$ sudo chage -E $(date -d \"+3 days\" 
-+%F) system_account_name "
+$ sudo chage -E $(date -d \"+3 days\" +%F) system_account_name "
   impact 0.5
   tag severity: "medium "
   tag gtitle: "SRG-OS-000002-GPOS-00002 "
@@ -50,4 +51,19 @@ $ sudo chage -E $(date -d \"+3 days\"
   tag fix_id: "F-41365r653762_fix "
   tag cci: ["CCI-000016"]
   tag nist: ["AC-2 (2)"]
+
+  temporary_accounts = input('temporary_accounts')
+
+  if temporary_accounts.empty?
+    describe 'Temporary accounts' do
+      subject { temporary_accounts }
+      it { should be_empty }
+    end
+  else
+    temporary_accounts.each do |acct|
+      describe command("chage -l #{acct} | grep 'Account expires'") do
+        its('stdout.strip') { should_not match /:\s*never/ }
+      end
+    end
+  end  
 end

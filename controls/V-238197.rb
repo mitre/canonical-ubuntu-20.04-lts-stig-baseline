@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 control "V-238197" do
   title "The Ubuntu operating system must enable the graphical user logon banner to display the 
 Standard Mandatory DoD Notice and Consent Banner before granting local access to the system 
@@ -14,8 +16,7 @@ interfaces with human users and are not required when such human interfaces do n
 The banner must be formatted in accordance with applicable DoD policy. Use the following 
 verbiage for operating systems that can accommodate banners of 1300 characters: 
  
-\"You are 
-accessing a U.S. Government (USG) Information System (IS) that is provided for 
+\"You are accessing a U.S. Government (USG) Information System (IS) that is provided for 
 USG-authorized use only. 
  
 By using this IS (which includes any device attached to this IS), 
@@ -26,16 +27,13 @@ communications on this IS for purposes including, but not limited to, penetratio
 COMSEC monitoring, network operations and defense, personnel misconduct (PM), law 
 enforcement (LE), and counterintelligence (CI) investigations. 
  
--At any time, the USG may 
-inspect and seize data stored on this IS. 
+-At any time, the USG may inspect and seize data stored on this IS. 
  
--Communications using, or data stored on, this IS 
-are not private, are subject to routine monitoring, interception, and search, and may be 
-disclosed or used for any USG-authorized purpose. 
+-Communications using, or data stored on, this IS are not private, are subject to routine
+monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose. 
  
--This IS includes security measures 
-(e.g., authentication and access controls) to protect USG interests--not for your personal 
-benefit or privacy. 
+-This IS includes security measures (e.g., authentication and access controls) to protect
+USG interests--not for your personal benefit or privacy. 
  
 -Notwithstanding the above, using this IS does not constitute consent 
 to PM, LE or CI investigative searching or monitoring of the content of privileged 
@@ -43,8 +41,7 @@ communications, or work product, related to personal representation or services 
 attorneys, psychotherapists, or clergy, and their assistants. Such communications and 
 work product are private and confidential. See User Agreement for details.\" 
  
-Use the 
-following verbiage for operating systems that have severe limitations on the number of 
+Use the following verbiage for operating systems that have severe limitations on the number of 
 characters that can be displayed in the banner: 
  
 \"I've read & consent to terms in IS user 
@@ -59,8 +56,7 @@ requirement is Not Applicable.
 Check that the operating banner message for the graphical 
 user logon is enabled with the following command: 
  
-$ grep ^banner-message-enable 
-/etc/gdm3/greeter.dconf-defaults 
+$ grep ^banner-message-enable /etc/gdm3/greeter.dconf-defaults 
  
 banner-message-enable=true 
  
@@ -94,4 +90,16 @@ $ sudo systemctl restart gdm3 "
   tag fix_id: "F-41366r653765_fix "
   tag cci: ["CCI-000048"]
   tag nist: ["AC-8 a"]
+
+  xorg_status = command('which Xorg').exit_status
+  if xorg_status == 0
+    describe 'banner-message-enable must be set to true' do
+        subject { command('grep banner-message-enable /etc/dconf/db/local.d/*') }
+        its('stdout') { should match /(banner-message-enable).+=.+(true)/ }
+    end
+  else
+    describe command('which Xorg').exit_status do
+      skip("GUI not installed.\nwhich Xorg exit_status: " + command('which Xorg').exit_status.to_s)
+    end
+  end
 end
