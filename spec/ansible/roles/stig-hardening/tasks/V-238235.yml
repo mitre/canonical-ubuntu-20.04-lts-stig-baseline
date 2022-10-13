@@ -1,0 +1,8 @@
+- name: V-238235
+  lineinfile:
+    dest: /etc/pam.d/common-auth
+    line: 'auth required pam_tally2.so onerr=fail deny=3'
+    state: present
+    insertafter: EOF
+  tags:
+  - medium

@@ -1,0 +1,15 @@
+- name: restart auditd
+  command: service auditd restart
+  args:
+    warn: no
+
+- name: augenrules load
+  command: augenrules --load
+  notify:
+  - restart auditd
+
+- name: update grub
+  command: update-grub 
+
+- name: update trusted ca debian
+  command: update-ca-certificates

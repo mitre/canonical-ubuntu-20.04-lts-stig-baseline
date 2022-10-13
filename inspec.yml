@@ -1,13 +1,101 @@
 name: Canonical_Ubuntu_20-04_LTS_STIG
 title: Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide
-maintainer: The Authors
-copyright: The Authors
-copyright_email: you@example.com
+maintainer: Nitin Ravindran
+copyright: Nitin Ravindran
+copyright_email: nravindran@vmware.com
 license: Apache-2.0
-summary: '"This Security Technical Implementation Guide is published as a tool
-  to improve the security of Department of Defense (DoD) information systems.
-  The requirements are derived from the National Institute of Standards and
-  Technology (NIST) 800-53 and related documents. Comments or proposed revisions
-  to this document should be sent via email to the following address:
-  disa.stig_spt@mail.mil."'
+summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
 version: 0.1.0
+
+supports:
+  - platform-name: ubuntu
+    release: 20.04
+
+inputs:
+  - name: temporary_accounts
+    description: Temporary user accounts
+    type: Array
+    value: []
+  - name: banner_text
+    description: Standard Mandatory DoD Notice and Consent Banner
+    type: String
+    value: 'You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+
+    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+
+    -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
+
+    -At any time, the USG may inspect and seize data stored on this IS.
+
+    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
+
+    -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
+
+    -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.'
+  - name: sudo_accounts
+    description: Array of users who need access to security functions are part of the sudo group.
+    type: Array
+    value: [ "ubuntu" ]
+  - name: tmout
+    desciption:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
+    type: numeric
+    value: 600
+  - name: action_mail_acct
+    description: Email to be notified when allocated audit record storage volume reaches 
+    type: string
+    value: root
+  - name: audit_tools
+    description: Audit tools
+    type: Array
+    value: [
+      '/sbin/auditctl',
+      '/sbin/aureport',
+      '/sbin/ausearch',
+      '/sbin/autrace',
+      '/sbin/auditd',
+      '/sbin/audispd',
+      '/sbin/augenrules'
+    ]
+  - name: standard_audit_log_size
+    description: Set audit log size in bytes (default:1073741824 per control specification)
+    type: Numeric
+    value: 8894028
+  - name: aide_conf_path
+    description: Path to aide.conf
+    type: String
+    value: '/etc/aide/aide.conf'
+  - name: action_mail_acct
+    description: Email to be notified when allocated audit record storage volume reaches 
+    type: string
+    value: root
+  - name: maxlogins
+    description: Maximum number of concurrent sessions
+    type: Numeric
+    value: 10
+  - name: is_kdump_required
+    description: Is kdump service required? (check with SA and documented with ISSO)
+    type: Boolean
+    value: false
+  - name: is_system_networked
+    description: Set to true if the system is networked for NTP check
+    type: Boolean
+    value: true
+  - name: sssd_conf_path
+    description: Path to sssd.conf
+    type: String
+    value: '/etc/sssd/sssd.conf'
+  - name: allowed_ca_fingerprints_regex
+    description: Certificate fingerprint regex for DoD PKI-established certificate authorities
+    type: string
+    value: (9676F287356C89A12683D65234098CB77C4F1C18F23C0E541DE0E196725B7EBE|B107B33F453E5510F68E513110C6F6944BACC263DF0137F821C1B3C2F8F863D2|559A5189452B13F8233F0022363C06F26E3C517C1D4B77445035959DF3244F74|1F4EDE9DC2A241F6521BF518424ACD49EBE84420E69DAF5BAC57AF1F8EE294A9)
+  - name: allowed_network_interfaces
+    description: Array of allowed network interfaces (wired & wireless)
+    type: Array
+    value: [
+      'lo',
+      'eth0'
+    ]
+  - name: audit_sp_remote_server
+    description: Address of the remote server receiving the audit log
+    type: String
+    value: '192.0.0.1'

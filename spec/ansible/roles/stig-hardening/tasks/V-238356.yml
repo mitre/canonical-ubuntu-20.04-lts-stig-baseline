@@ -1,0 +1,28 @@
+- name: verify chrony.conf exists
+  stat:
+    path: "/etc/chrony/chrony.conf"
+  register: chrony_conf
+  tags:
+  - medium
+
+- name: remove existing servers
+  lineinfile:
+    path: "/etc/chrony/chrony.conf"
+    regex: ^(pool|server)\s+
+    state: absent
+  when:
+    - chrony_conf.stat.exists | bool
+  tags:
+  - medium
+
+- name: add servers and set maxpoll
+  lineinfile:
+    path: "/etc/chrony/chrony.conf"
+    line: "server {{ item }} iburst maxpoll = 17"
+    state: present
+    insertafter: EOF
+  when:
+    - chrony_conf.stat.exists | bool
+  with_items: "{{ chrony_time_sources }}"
+  tags:
+  - medium

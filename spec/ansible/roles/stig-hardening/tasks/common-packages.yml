@@ -1,0 +1,55 @@
+- name: "[Common] Ensure apt cache is updated"
+  apt:
+    force_apt_get: yes
+    purge: yes
+    autoclean: yes
+    update_cache: yes
+    upgrade: full
+    
+- name: "[Common] Install packages"
+  package:
+    name: "{{ install_packages }}"
+    state: present
+  tags:
+  - V-219160
+  - V-219304
+  - V-219313
+  - V-219316
+  - V-219318
+  - V-219319
+  - V-219322
+  - V-219323
+
+- name: "[Common] Uninstall packages"
+  package:
+    name: "{{ remove_packages }}"
+    state: absent
+  tags:
+  - V-219157
+  - V-219158
+  - V-219177
+
+- name: "Install AIDE"
+  package:
+    name: 
+    - aide 
+    - aide-common
+    state: present
+  when:
+    install_aide | bool
+  tags:
+  - V-219343
+
+- name: "Install chrony"
+  package:
+    name: chrony
+    state: present
+  when:
+    install_chrony | bool
+
+- name: "Install audispd-plugins"
+  package:
+    name: audispd-plugins
+    state: present
+  when:
+    install_audispd_plugins | bool

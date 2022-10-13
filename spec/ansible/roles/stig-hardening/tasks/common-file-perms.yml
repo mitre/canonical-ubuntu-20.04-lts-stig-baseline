@@ -1,0 +1,124 @@
+- name: "[Common] Get skel files wih bad permissions"
+  command: find  /etc/skel/ -type f -perm /137
+  register: skel_files
+
+- name: "[Common] Set skel file permissions"
+  file:
+    path: "{{ item }}"
+    mode: '0640'
+  with_items: "{{ skel_files.stdout_lines }}"
+
+- name: "[Common] Get files with bad user, group, or permissions"
+  command: |
+    find \
+    /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin /lib /usr/lib /lib64 \
+    -type f \
+    ! -type l \
+    -a \( ! -group root -o ! -user root -o -perm /022 \)
+  register: sys_lib_files
+  
+- name: "[Common] Set correct user, group and permission for files"
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "0755"
+    state: file
+  with_items: "{{ sys_lib_files.stdout_lines }}"
+  tags:
+  - V-219198
+  - V-219200
+  - V-219202
+  - V-219204
+  - V-219206
+  - V-219208
+
+- name: "[Common] Get directories with incorrect user, group, or permissions"
+  command: |
+    find \
+    /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin /lib /usr/lib /lib64 \
+    -type d \
+    ! -type l \
+    -a \( ! -group root -o ! -user root -o -perm /022 \)
+  register: sys_lib_directories
+  
+- name: "[Common] Set correct user, group and permission for directories."
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "0755"
+    state: directory
+  with_items: "{{ sys_lib_directories.stdout_lines }}"
+  tags:
+  - V-219199
+  - V-219201
+  - V-219203
+  - V-219205
+  - V-219207
+  - V-219209
+
+ 
+- name: "[Common] Copy cloud-init-log-permissions"
+  copy:
+    src: files/cloud-init-log-permissions.service
+    dest: /etc/systemd/system/cloud-init-log-permissions.service
+    group: root
+    owner: root
+    mode: 0644
+
+- name: "[Common] Enable cloud-init-log-permissions"
+  service:
+    name: "cloud-init-log-permissions"
+    enabled: yes
+
+- name: "[Common] Get  audit configuration files"
+  command: find /etc/audit/audit.rules /etc/audit/auditd.conf /etc/audit/rules.d/ -type f
+  register: audit_conf_files
+  tags:
+  - medium
+
+- name: "[Common] Set audit configuration file permissions"
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: "0640"
+  with_items: "{{ audit_conf_files.stdout_lines }}"
+  tags:
+  - medium
+  - V-219235
+  - V-219236
+
+- name: V-219189
+  lineinfile:
+    path: '/usr/lib/tmpfiles.d/00rsyslog.conf'
+    regexp: '(^z \/var\/log)\s+(\d+)\s+(.*$)'
+    line: '\1 0750 root syslog -'
+    backrefs: yes
+  tags:
+    - medium
+    - V-219189
+    - V-219190
+    - V-219191
+
+- name: V-219189
+  lineinfile:
+    path: '/usr/lib/tmpfiles.d/var.conf'
+    regexp: '(^d \/var\/log)\s+(\d+)\s+(.*$)'
+    line: 'd /var/log 0750 root syslog -'
+    backrefs: yes
+  tags:
+    - medium
+    - V-219189
+    - V-219190
+    - V-219191
+
+- name: "[Common] Set permissions for /var/log" 
+  file:
+    path: "/var/log"
+    owner: root
+    group: syslog
+    mode: "0750"
+  tags:
+  - medium
