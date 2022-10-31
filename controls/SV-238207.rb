@@ -65,4 +65,15 @@ TMOUT=600 "
   tag fix_id: "F-41376r653795_fix "
   tag cci: ["CCI-002361"]
   tag nist: ["AC-12"]
+
+  profile_files=command('find /etc/profile.d/ /etc/bash.bashrc -type f').stdout.strip.split("\n").entries
+  timeout=input("tmout").to_s
+
+  describe.one do
+    profile_files.each do |pf|
+      describe file(pf.strip) do
+        its('content') { should match "^TMOUT=#{timeout}$" }
+      end
+    end
+  end
 end

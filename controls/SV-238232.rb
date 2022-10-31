@@ -38,4 +38,16 @@ Modify all of the \"cert_policy\" lines in
   tag fix_id: "F-41401r653870_fix "
   tag cci: ["CCI-001954"]
   tag nist: ["IA-2 (12)"]
+
+  config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
+  if config_file_exists
+    describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+      its('cert_policy') { should include 'ocsp_on' }
+    end
+  else
+    describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

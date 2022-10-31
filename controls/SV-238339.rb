@@ -33,4 +33,8 @@ $ sudo chown root /var/log "
   tag fix_id: "F-41508r654191_fix "
   tag cci: ["CCI-001314"]
   tag nist: ["SI-11 b"]
+
+  describe directory("/var/log") do
+    its("owner") { should cmp "root" }
+  end
 end

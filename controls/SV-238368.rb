@@ -41,4 +41,15 @@ Execution bit, set it to \"enable\". "
   tag fix_id: "F-41537r654278_fix "
   tag cci: ["CCI-002824"]
   tag nist: ["SI-16"]
-end
+
+  options = {
+    assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
+  }
+  describe.one do
+    describe command('dmesg | grep NX').stdout.strip do
+      it { should match /.+(NX \(Execute Disable\) protection: active)/ }
+    end
+    describe parse_config_file('/proc/cpuinfo', options).flags.split(' ') do
+      it { should include 'nx' }
+    end
+  end

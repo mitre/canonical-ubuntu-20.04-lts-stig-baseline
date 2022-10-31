@@ -57,4 +57,18 @@ $ sudo systemctl kill auditd -s SIGHUP "
   tag fix_id: "F-41416r832946_fix "
   tag cci: ["CCI-000162"]
   tag nist: ["AU-9 a"]
+
+  log_file = auditd_conf.log_file
+
+  log_file_exists = !log_file.nil?
+  if log_file_exists
+    describe file(log_file) do
+      its('group') { should cmp 'root' }
+    end
+  else
+    describe ('Audit log file ' + log_file + ' exists') do
+      subject { log_file_exists }
+      it { should be true }
+    end
+  end
 end

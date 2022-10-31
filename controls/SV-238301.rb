@@ -54,4 +54,12 @@ Replace \"[audit_tool]\" with each audit tool not owned by root. "
   tag fix_id: "F-41470r654077_fix "
   tag cci: ["CCI-001493","CCI-001494"]
   tag nist: ["AU-9 a","AU-9"]
+
+  audit_tools = input('audit_tools')
+
+  audit_tools.each do |tool|
+    describe file(tool) do
+      its('owner') { should cmp 'root' }
+    end
+  end
 end

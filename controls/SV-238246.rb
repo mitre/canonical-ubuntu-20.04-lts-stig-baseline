@@ -53,4 +53,18 @@ $ sudo chown root /var/log/audit/* "
   tag fix_id: "F-41415r653912_fix "
   tag cci: ["CCI-000162"]
   tag nist: ["AU-9 a"]
+
+  log_file = auditd_conf.log_file
+
+  log_file_exists = !log_file.nil?
+  if log_file_exists
+    describe file(log_file) do
+      its('owner') { should cmp 'root' }
+    end
+  else
+    describe ('Audit log file ' + log_file + ' exists') do
+      subject { log_file_exists }
+      it { should be true }
+    end
+  end
 end

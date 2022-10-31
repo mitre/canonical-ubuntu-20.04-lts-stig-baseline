@@ -35,4 +35,8 @@ ENCRYPT_METHOD SHA512 "
   tag fix_id: "F-41494r654149_fix "
   tag cci: ["CCI-000803"]
   tag nist: ["IA-7"]
+
+  describe login_defs do
+    its('ENCRYPT_METHOD') { should eq 'SHA512' }
+  end
 end

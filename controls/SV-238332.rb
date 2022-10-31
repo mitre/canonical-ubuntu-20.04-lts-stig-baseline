@@ -46,4 +46,19 @@ $ sudo chmod +t  [Public Directory] "
   tag fix_id: "F-41501r654170_fix "
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4"]
+
+  lines = command('find / -xdev -type d  \( -perm -0002 -a ! -perm -1000 \) -print 2>/dev/null').stdout.strip.split("\n").entries
+  if lines.count > 0
+    lines.each do |line|
+      dir = line.strip
+      describe directory(dir) do
+        it { should be_sticky }
+      end
+    end
+  else
+    describe 'Sticky bit has been set on all world writable directories' do
+      subject { lines }
+      its('count') { should eq 0 }
+    end
+  end
 end

@@ -34,4 +34,8 @@ $ sudo apt-get install vlock "
   tag fix_id: "F-41369r653774_fix "
   tag cci: ["CCI-000058","CCI-000060"]
   tag nist: ["AC-11 a","AC-11 (1)"]
+
+  describe package('vlock') do
+    it { should be_installed }
+  end
 end

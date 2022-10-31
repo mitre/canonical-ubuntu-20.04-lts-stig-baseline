@@ -37,4 +37,18 @@ directory instead of the \"/etc/sssd/sssd.conf\" file. "
   tag fix_id: "F-41531r654260_fix "
   tag cci: ["CCI-002007"]
   tag nist: ["IA-5 (13)"]
+
+  config_file = input('sssd_conf_path')
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('offline_credentials_expiration') { should cmp '1' }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

@@ -70,4 +70,43 @@ p+i+n+u+g+s+b+acl+xattrs+sha512 "
   tag fix_id: "F-41472r654083_fix "
   tag cci: ["CCI-001496"]
   tag nist: ["AU-9 (3)"]
+
+  aide_conf = aide_conf input('aide_conf_path')
+
+  aide_conf_exists = aide_conf.exist?
+
+  if aide_conf_exists
+    describe aide_conf.where { selection_line == '/sbin/auditctl' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/auditd' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/ausearch' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/aureport' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/autrace' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/audispd' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+
+    describe aide_conf.where { selection_line == '/sbin/augenrules' } do
+      its('rules') { should include ['p', 'i', 'n', 'u', 'g', 's', 'b', 'acl', 'xattrs', 'sha512'] }
+    end
+  else
+    describe 'aide.conf file exists' do
+      subject { aide_conf_exists }
+      it { should be true }
+    end
+  end
 end

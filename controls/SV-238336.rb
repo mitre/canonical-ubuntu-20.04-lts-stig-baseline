@@ -45,4 +45,13 @@ server. "
   tag fix_id: "F-41505r858537_fix "
   tag cci: ["CCI-001233"]
   tag nist: ["SI-2 (2)"]
+
+  describe package('mfetp') do
+    it { should be_installed }
+  end
+
+  describe command('/opt/McAfee/ens/tp/init/mfetpd-control.sh status') do
+    its('exit_status') { should cmp 0 }
+  end
+
 end

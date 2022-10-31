@@ -34,4 +34,23 @@ root -type d -exec chown root '{}' \\; "
   tag fix_id: "F-41519r654224_fix "
   tag cci: ["CCI-001499"]
   tag nist: ["CM-5 (6)"]
+
+  if os.arch == "x86_64"
+    library_dirs = command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-user root \-type d').stdout.strip.split("\n").entries
+  else
+    library_dirs = command('find /lib /usr/lib /usr/lib32 /lib32 ! \-user root \-type d').stdout.strip.split("\n").entries
+  end
+
+  if library_dirs.count > 0
+    library_dirs.each do |lib_file|
+      describe file(lib_file) do
+        its("owner") { should cmp "root" }
+      end
+    end
+  else
+    describe "Number of system-wide shared library directories found that are NOT owned by root" do
+      subject { library_dirs }
+      its("count") { should eq 0 }
+    end
+  end
 end

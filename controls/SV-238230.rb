@@ -52,4 +52,8 @@ $ sudo apt install libpam-pkcs11 "
   tag fix_id: "F-41399r653864_fix "
   tag cci: ["CCI-001948"]
   tag nist: ["IA-2 (11)"]
+
+  describe package('libpam-pkcs11') do
+    it { should be_installed }
+  end
 end

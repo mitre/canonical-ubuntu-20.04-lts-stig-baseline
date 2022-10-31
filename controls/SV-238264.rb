@@ -70,4 +70,17 @@ augenrules --load "
   tag fix_id: "F-41433r808476_fix "
   tag cci: ["CCI-000172"]
   tag nist: ["AU-12 c"]
+
+  #FIX
+
+  if os.arch == 'x86_64'
+    describe auditd.syscall('chown').where { arch == 'b64' } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+    end
+  end
+  describe auditd.syscall('chown').where { arch == 'b32' } do
+    its('action.uniq') { should eq ['always'] }
+    its('list.uniq') { should eq ['exit'] }
+  end
 end

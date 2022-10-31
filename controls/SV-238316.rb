@@ -46,4 +46,28 @@ $ sudo augenrules --load "
   tag fix_id: "F-41485r654122_fix "
   tag cci: ["CCI-000172"]
   tag nist: ["AU-12 c"]
+
+  @audit_file = "/var/run/wtmp"
+
+  audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
+  if audit_lines_exist
+    describe auditd.file(@audit_file) do
+      its("permissions") { should_not cmp [] }
+      its("action") { should_not include "never" }
+    end
+
+    @perms = auditd.file(@audit_file).permissions
+
+    @perms.each do |perm|
+      describe perm do
+        it { should include "w" }
+        it { should include "a" }
+      end
+    end
+  else
+    describe ("Audit line(s) for " + @audit_file + " exist") do
+      subject { audit_lines_exist }
+      it { should be true }
+    end
+  end
 end

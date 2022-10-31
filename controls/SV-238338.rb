@@ -34,4 +34,8 @@ $ sudo chgrp syslog /var/log "
   tag fix_id: "F-41507r654188_fix "
   tag cci: ["CCI-001314"]
   tag nist: ["SI-11 b"]
+
+  describe directory('/var/log') do
+    its('group') { should cmp 'syslog' }
+  end
 end

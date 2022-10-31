@@ -41,4 +41,8 @@ Add the following line to the top of the
   tag fix_id: "F-41492r654143_fix "
   tag cci: ["CCI-000054"]
   tag nist: ["AC-10"]
+
+  describe limits_conf do
+    its('*') { should include ['hard', 'maxlogins', input('maxlogins').to_s] }
+  end
 end

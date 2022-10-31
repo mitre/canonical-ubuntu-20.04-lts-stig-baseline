@@ -71,4 +71,15 @@ sudo augenrules --load "
   tag fix_id: "F-41473r654086_fix "
   tag cci: ["CCI-002233","CCI-002234"]
   tag nist: ["AC-6 (8)","AC-6 (9)"]
+
+  if os.arch == 'x86_64'
+    describe auditd.syscall('execve').where { arch == 'b64' } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+    end
+  end
+  describe auditd.syscall('execve').where { arch == 'b32' } do
+    its('action.uniq') { should eq ['always'] }
+    its('list.uniq') { should eq ['exit'] }
+  end
 end

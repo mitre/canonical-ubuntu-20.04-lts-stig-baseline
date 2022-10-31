@@ -53,4 +53,27 @@ augenrules --load "
   tag fix_id: "F-41410r653897_fix "
   tag cci: ["CCI-000172","CCI-001403","CCI-001404","CCI-001405","CCI-002130"]
   tag nist: ["AU-12 c","AC-2 (4)"]
+
+  @audit_file = '/etc/gshadow'
+  audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
+  if audit_lines_exist
+    describe auditd.file(@audit_file) do
+      its('permissions') { should_not cmp [] }
+      its('action') { should_not include 'never' }
+    end
+
+    @perms = auditd.file(@audit_file).permissions
+
+    @perms.each do |perm|
+      describe perm do
+        it { should include 'w' }
+        it { should include 'a' }
+      end
+    end
+  else
+    describe ('Audit line(s) for ' + @audit_file + ' exist') do
+      subject { audit_lines_exist }
+      it { should be true }
+    end
+  end
 end

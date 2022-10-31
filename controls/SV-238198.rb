@@ -120,4 +120,12 @@ systemctl restart gdm3 "
   tag fix_id: "F-41367r653768_fix "
   tag cci: ["CCI-000048"]
   tag nist: ["AC-8 a"]
+  #TOODO
+#   banner_text = input('banner_text')
+#   clean_banner = banner_text.gsub(/[\r\n\s]/, '')
+#   gdm3_defaults_file="/etc/gdm3/greeter.dconf-defaults"
+#   describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+#     subject { file(gdm3_defaults_file).content.gsub(/[\r\n\s]/, '')}
+#     it { should cmp clean_banner }
+#   end
 end

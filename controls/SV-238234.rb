@@ -38,4 +38,13 @@ obscure sha512 shadow remember=5 rounds=5000 "
   tag fix_id: "F-41403r832944_fix "
   tag cci: ["CCI-000196","CCI-000200"]
   tag nist: ["IA-5 (1) (c)","IA-5 (1) (e)"]
+
+  describe file('/etc/pam.d/common-password') do
+    it { should exist }
+  end
+
+  describe command("grep -i remember /etc/pam.d/common-password | sed 's/.*remember=\\([^ ]*\\).*/\\1/'") do
+    its('exit_status') { should eq 0 }
+    its('stdout.strip') { should cmp >= 5 }
+  end
 end

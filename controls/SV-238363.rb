@@ -39,4 +39,18 @@ enable FIPS. "
   tag fix_id: "F-41532r654263_fix "
   tag cci: ["CCI-002450"]
   tag nist: ["SC-13 b"]
+
+  config_file = '/proc/sys/crypto/fips_enabled'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe file(config_file) do
+      its('content') { should match %r{\A1\Z} }
+    end
+  else
+    describe ('FIPS is enabled') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

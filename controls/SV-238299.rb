@@ -38,4 +38,12 @@ $ sudo update-grub "
   tag fix_id: "F-41468r654071_fix "
   tag cci: ["CCI-001464"]
   tag nist: ["AU-14 (1)"]
+
+  grub_entries = command('grep "^\s*linux" /boot/grub/grub.cfg').stdout.strip.split("\n").entries
+
+  grub_entries.each do |entry|
+    describe entry do
+      it { should include "audit=1" }
+    end
+  end
 end

@@ -32,4 +32,8 @@ PASS_MIN_DAYS    1 "
   tag fix_id: "F-41371r653780_fix "
   tag cci: ["CCI-000198"]
   tag nist: ["IA-5 (1) (d)"]
+
+  describe login_defs do
+    its('PASS_MIN_DAYS') { should >= '1' }
+  end
 end

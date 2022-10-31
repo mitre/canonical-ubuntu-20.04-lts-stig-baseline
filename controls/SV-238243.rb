@@ -53,4 +53,12 @@ systemctl restart auditd.service "
   tag fix_id: "F-41412r653903_fix "
   tag cci: ["CCI-000139"]
   tag nist: ["AU-5 a"]
+
+  action_mail_acct = auditd_conf.action_mail_acct
+  security_accounts = input('action_mail_acct')
+
+  describe 'System Administrator (SA) and Information System Security Officer (ISSO) are notified in the event of an audit processing failure' do
+    subject { security_accounts }
+    it { should cmp action_mail_acct }
+  end
 end

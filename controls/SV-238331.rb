@@ -44,4 +44,9 @@ account_name "
   tag fix_id: "F-41500r654167_fix "
   tag cci: ["CCI-001682"]
   tag nist: ["AC-2 (2)"]
+
+  describe 'Manual verification required' do
+    skip 'Manually verify if emergency account must be created
+      the system must terminate the account after a 72 hour time period.'
+  end
 end

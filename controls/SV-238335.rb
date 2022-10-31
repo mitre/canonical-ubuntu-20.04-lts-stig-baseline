@@ -67,4 +67,8 @@ will need to be resized and existing partitions changed. "
   tag fix_id: "F-41504r654179_fix "
   tag cci: ["CCI-001199"]
   tag nist: ["SC-28"]
+
+  describe 'Not Applicable' do
+    skip 'Encryption of data at rest is handled by the IaaS'
+  end
 end

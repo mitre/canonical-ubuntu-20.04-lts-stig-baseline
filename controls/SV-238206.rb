@@ -48,4 +48,23 @@ $ sudo gpasswd -d &lt;username&gt; sudo "
   tag fix_id: "F-41375r653792_fix "
   tag cci: ["CCI-001084"]
   tag nist: ["SC-3"]
+
+  sudo_accounts = input('sudo_accounts')
+
+  if sudo_accounts.count > 0
+    sudo_accounts.each do |account|
+      describe group('sudo') do
+        its('members') { should include account }
+      end
+    end
+  else
+    describe.one do
+      describe group('sudo') do
+        its('members') { should be_nil }
+      end
+      describe group('sudo') do
+        its('members') { should be_empty }
+      end
+    end
+  end
 end

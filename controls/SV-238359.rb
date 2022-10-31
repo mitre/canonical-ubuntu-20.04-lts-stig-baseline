@@ -55,4 +55,23 @@ APT::Get::AllowUnauthenticated
   tag fix_id: "F-41528r654251_fix "
   tag cci: ["CCI-001749"]
   tag nist: ["CM-5 (3)"]
+
+  describe directory('/etc/apt/apt.conf.d') do
+    it { should exist }
+  end
+
+  apt_allowunauth = command('grep -i allowunauth /etc/apt/apt.conf.d/*').stdout.strip.split("\n")
+  if apt_allowunauth.empty?
+    describe 'apt conf files do not contain AllowUnauthenticated' do
+      subject { apt_allowunauth.empty? }
+      it { should be true }
+    end
+  else
+    apt_allowunauth.each do |line|
+      describe "#{line} contains AllowUnauthenctication" do
+        subject { line }
+        it { should_not match /.*false.*/ }
+      end
+    end
+  end
 end

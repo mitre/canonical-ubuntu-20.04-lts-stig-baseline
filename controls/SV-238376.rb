@@ -45,4 +45,28 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm
   tag fix_id: "F-41545r654302_fix "
   tag cci: ["CCI-001499"]
   tag nist: ["CM-5 (6)"]
+
+  system_commands = command("find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /022 -type f").stdout.strip.split("\n").entries
+  valid_system_commands = Set[]
+
+  if system_commands.count > 0
+    system_commands.each do |sys_cmd|
+      if file(sys_cmd).exist?
+        valid_system_commands = valid_system_commands << sys_cmd
+      end
+    end
+  end
+
+  if valid_system_commands.count > 0
+    valid_system_commands.each do |val_sys_cmd|
+      describe file(val_sys_cmd) do
+        it { should_not be_more_permissive_than("0755") }
+      end
+    end
+  else
+    describe "Number of system commands found in /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin or /usr/local/sbin, that are less permissive than 0755" do
+      subject { valid_system_commands }
+      its("count") { should eq 0 }
+    end
+  end
 end

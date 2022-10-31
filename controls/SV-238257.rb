@@ -50,4 +50,29 @@ $ sudo augenrules
   tag fix_id: "F-41426r653945_fix "
   tag cci: ["CCI-000172"]
   tag nist: ["AU-12 c"]
+
+  @audit_file = '/usr/lib/openssh/ssh-keysign'
+
+  audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
+  if audit_lines_exist
+    describe auditd.file(@audit_file) do
+      its('permissions') { should_not cmp [] }
+      its('action') { should_not include 'never' }
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+    end
+
+    @perms = auditd.file(@audit_file).permissions
+
+    @perms.each do |perm|
+      describe perm do
+        it { should include 'x' }
+      end
+    end
+  else
+    describe ('Audit line(s) for ' + @audit_file + ' exist') do
+      subject { audit_lines_exist }
+      it { should be true }
+    end
+  end
 end

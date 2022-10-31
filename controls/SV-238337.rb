@@ -38,4 +38,11 @@ $ sudo find
   tag fix_id: "F-41506r654185_fix "
   tag cci: ["CCI-001312"]
   tag nist: ["SI-11 a"]
+
+  log_files = command('find /var/log -perm /137 -type f -exec stat -c "%n %a" {} \;').stdout.strip.split("\n").entries
+
+  describe "Number of log files found with a permission NOT set to 640" do
+    subject { log_files }
+    its("count") { should eq 0 }
+  end
 end

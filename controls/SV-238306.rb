@@ -80,4 +80,24 @@ $ sudo systemctl restart auditd.service "
   tag fix_id: "F-41475r654092_fix "
   tag cci: ["CCI-001851"]
   tag nist: ["AU-4 (1)"]
+
+  config_file = '/etc/audisp/plugins.d/au-remote.conf'
+  config_file_exists = file(config_file).exist?
+  audit_sp_remote_server= input("audit_sp_remote_server")
+
+  describe package('audispd-plugins') do
+    it { should be_installed }
+  end
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('active') { should cmp 'yes' }
+      its('remote_server') { should cmp audit_sp_remote_server }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

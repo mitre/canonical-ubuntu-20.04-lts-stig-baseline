@@ -39,4 +39,18 @@ ocredit=-1 "
   tag fix_id: "F-41395r653852_fix "
   tag cci: ["CCI-001619"]
   tag nist: ["IA-5 (1) (a)"]
+
+  config_file = '/etc/security/pwquality.conf'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('ocredit') { should cmp -1 }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

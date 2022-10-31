@@ -31,4 +31,18 @@ dictcheck=1 "
   tag fix_id: "F-41396r653855_fix "
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b"]
+
+  config_file = '/etc/security/pwquality.conf'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('dictcheck') { should cmp 1 }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

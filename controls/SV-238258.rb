@@ -85,4 +85,15 @@ $ sudo augenrules --load "
   tag fix_id: "F-41427r808473_fix "
   tag cci: ["CCI-000172"]
   tag nist: ["AU-12 c"]
+
+  if os.arch == "x86_64"
+    describe auditd.syscall("setxattr").where { arch == "b64" } do
+      its("action.uniq") { should eq ["always"] }
+      its("list.uniq") { should eq ["exit"] }
+    end
+  end
+  describe auditd.syscall("setxattr").where { arch == "b32" } do
+    its("action.uniq") { should eq ["always"] }
+    its("list.uniq") { should eq ["exit"] }
+  end
 end

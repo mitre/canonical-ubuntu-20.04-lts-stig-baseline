@@ -39,4 +39,18 @@ be located in the \"/etc/cron.weekly\" directory. "
   tag fix_id: "F-41490r654137_fix "
   tag cci: ["CCI-001851"]
   tag nist: ["AU-4 (1)"]
+
+  cron_file = '/etc/cron.weekly/audit-offload'
+  cron_file_exists = file(cron_file).exist?
+
+  if cron_file_exists
+    describe file(cron_file) do
+      its('content') { should_not be_empty }
+    end
+  else
+    describe cron_file + ' exists' do
+      subject { cron_file_exists }
+      it { should be true }
+    end
+  end
 end

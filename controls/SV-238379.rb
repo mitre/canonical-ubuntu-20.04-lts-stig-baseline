@@ -45,4 +45,15 @@ dconf settings:
   tag fix_id: "F-41548r654311_fix "
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b"]
+
+  xorg_status = command('which Xorg').exit_status
+  if xorg_status == 0
+    describe command("grep -R logout='' /etc/dconf/db/local.d/").stdout.strip.split("\n").entries do
+      its('count') { should_not eq 0 }
+    end
+  else
+    describe command('which Xorg').exit_status do
+      skip("GUI not installed.\nwhich Xorg exit_status: " + command('which Xorg').exit_status.to_s)
+    end
+  end
 end

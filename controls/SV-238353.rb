@@ -63,4 +63,10 @@ rsyslog "
   tag fix_id: "F-41522r654233_fix "
   tag cci: ["CCI-001665"]
   tag nist: ["SC-24"]
+
+  describe service('rsyslog') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
 end

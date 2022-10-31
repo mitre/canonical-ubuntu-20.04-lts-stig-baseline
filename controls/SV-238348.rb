@@ -34,4 +34,23 @@ $ sudo find /lib /lib64 /usr/lib -perm /022 -type d -exec chmod 755 '{}'
   tag fix_id: "F-41517r654218_fix "
   tag cci: ["CCI-001499"]
   tag nist: ["CM-5 (6)"]
+
+  if os.arch == 'x86_64'
+    library_dirs = command('find /lib /lib32 lib64 /usr/lib /usr/lib32 -perm /022 -type d').stdout.strip.split("\n").entries
+  else
+    library_dirs = command('find /lib /usr/lib /usr/lib32 /lib32 -perm /022 -type d').stdout.strip.split("\n").entries
+  end
+
+  if library_dirs.count > 0
+    library_dirs.each do |lib_file|
+      describe file(lib_file) do
+        it { should_not be_more_permissive_than('0755') }
+      end
+    end
+  else
+    describe 'Number of system-wide shared library directories found that are less permissive than 0755' do
+      subject { library_dirs }
+      its('count') { should eq 0 }
+    end
+  end
 end

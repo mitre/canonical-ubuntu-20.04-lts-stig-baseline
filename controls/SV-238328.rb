@@ -79,4 +79,15 @@ $ sudo ufw deny
   tag fix_id: "F-41497r654158_fix "
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
-end
+e
+  ufw_status = command('ufw status').stdout.strip.lines.first
+  value = ufw_status.split(':')[1].strip
+
+  describe 'UFW status' do
+    subject { value }
+    it { should cmp 'active' }
+  end
+  describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
+    skip 'Status listings checks must be preformed manually'
+  end
+endnd

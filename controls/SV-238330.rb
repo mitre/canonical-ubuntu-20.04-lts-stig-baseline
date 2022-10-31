@@ -43,4 +43,19 @@ password expires. "
   tag fix_id: "F-41499r654164_fix "
   tag cci: ["CCI-000795"]
   tag nist: ["IA-4 e"]
+
+  config_file = '/etc/default/useradd'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('INACTIVE') { should cmp > '0' }
+      its('INACTIVE') { should cmp <= 35 }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

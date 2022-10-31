@@ -86,4 +86,29 @@ $ sudo augenrules --load "
   tag fix_id: "F-41440r808482_fix "
   tag cci: ["CCI-000172"]
   tag nist: ["AU-12 c"]
+
+  #FIX
+
+  if os.arch == 'x86_64'
+    describe auditd.syscall('open').where { arch == 'b64' } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+      its('exit.uniq') { should include '-EPERM' }
+    end
+    describe auditd.syscall('open').where { arch == 'b64' } do
+      its('action.uniq') { should eq ['always'] }
+      its('list.uniq') { should eq ['exit'] }
+      its('exit.uniq') { should include '-EACCES' }
+    end
+  end
+  describe auditd.syscall('open').where { arch == 'b32' } do
+    its('action.uniq') { should eq ['always'] }
+    its('list.uniq') { should eq ['exit'] }
+    its('exit.uniq') { should include '-EPERM' }
+  end
+  describe auditd.syscall('open').where { arch == 'b32' } do
+    its('action.uniq') { should eq ['always'] }
+    its('list.uniq') { should eq ['exit'] }
+    its('exit.uniq') { should include '-EACCES' }
+  end
 end

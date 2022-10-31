@@ -35,4 +35,23 @@ $ sudo chgrp root [FILE] "
   tag fix_id: "F-41520r832961_fix "
   tag cci: ["CCI-001499"]
   tag nist: ["CM-5 (6)"]
+
+  if os.arch == "x86_64"
+    library_files = command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-group root \-type f').stdout.strip.split("\n").entries
+  else
+    library_files = command('find /lib /usr/lib /usr/lib32 /lib32 ! \-group root \-type f').stdout.strip.split("\n").entries
+  end
+
+  if library_files.count > 0
+    library_files.each do |lib_file|
+      describe file(lib_file) do
+        its("group") { should cmp "root" }
+      end
+    end
+  else
+    describe "Number of system-wide shared library files found that are NOT group-owned by root" do
+      subject { library_files }
+      its("count") { should eq 0 }
+    end
+  end
 end

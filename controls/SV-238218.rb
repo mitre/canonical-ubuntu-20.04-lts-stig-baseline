@@ -41,4 +41,9 @@ sshd.service "
   tag fix_id: "F-41387r653828_fix "
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b"]
+
+  describe sshd_config do
+    its('PermitEmptyPasswords') { should cmp 'no' }
+    its('PermitUserEnvironment') { should cmp 'no' }
+  end
 end

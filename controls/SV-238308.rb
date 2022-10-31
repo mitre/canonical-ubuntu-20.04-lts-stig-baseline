@@ -30,4 +30,10 @@ $ sudo timedatectl set-timezone [ZONE] "
   tag fix_id: "F-41477r654098_fix "
   tag cci: ["CCI-001890"]
   tag nist: ["AU-8 b"]
+
+  time_zone = command('timedatectl status | grep -i "time zone"').stdout.strip
+
+  describe time_zone do
+    it { should match 'UTC' }
+  end
 end

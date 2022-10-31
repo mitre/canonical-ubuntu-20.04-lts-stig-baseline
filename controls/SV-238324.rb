@@ -51,4 +51,19 @@ $ sudo systemctl restart rsyslog.service "
   tag fix_id: "F-41493r832958_fix "
   tag cci: ["CCI-000067"]
   tag nist: ["AC-17 (1)"]
+
+  options = {
+    assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/
+  }
+  config_file = '/etc/rsyslog.d/50-default.conf'
+  auth_setting = parse_config_file(config_file, options).params['auth,authpriv.*']
+  daemon_setting = parse_config_file(config_file, options).params['daemon.notice']
+  describe auth_setting do
+    it { should_not be_nil }
+    it { should_not be_empty }
+  end
+  describe daemon_setting do
+    it { should_not be_nil }
+    it { should_not be_empty }
+  end
 end

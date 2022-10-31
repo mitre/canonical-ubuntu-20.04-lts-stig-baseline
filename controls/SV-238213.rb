@@ -53,4 +53,8 @@ $ sudo systemctl restart sshd.service "
   tag fix_id: "F-41382r653813_fix "
   tag cci: ["CCI-001133"]
   tag nist: ["SC-10"]
+
+  describe sshd_config do
+    its('ClientAliveInterval') { should cmp 600 }
+  end
 end

@@ -31,4 +31,18 @@ accordingly at
   tag fix_id: "F-41370r653777_fix "
   tag cci: ["CCI-000187"]
   tag nist: ["IA-5 (2) (a) (2)"]
+
+  config_file = '/etc/pam_pkcs11/pam_pkcs11.conf'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('use_mappers') { should cmp 'pwent' }
+    end
+  else
+    describe (config_file + ' exists') do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

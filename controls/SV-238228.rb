@@ -76,4 +76,16 @@ Note: The value of \"retry\" should be between \"1\" and
   tag fix_id: "F-41397r653858_fix "
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b"]
+
+  describe package('libpam-pwquality') do
+    it { should be_installed }
+  end
+
+  describe file('/etc/security/pwquality.conf') do
+    its('content') { should match '^enforcing\s+=\s+1$' }
+  end
+
+  describe file('/etc/pam.d/common-password') do
+    its('content') { should match '^password\s+requisite\s+pam_pwquality.so\s+retry=3\s+enforce_for_root$' }
+  end
 end

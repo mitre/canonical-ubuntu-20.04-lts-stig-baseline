@@ -41,4 +41,21 @@ an example to copy into place and modify accordingly at
   tag fix_id: "F-41402r653873_fix "
   tag cci: ["CCI-001991"]
   tag nist: ["IA-5 (2) (d)"]
+
+  config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
+  if config_file_exists
+    describe.one do
+      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+        its('cert_policy') { should include 'crl_auto' }
+      end
+      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+        its('cert_policy') { should include 'crl_offline' }
+      end
+    end
+  else
+    describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

@@ -39,4 +39,13 @@ Unattended-Upgrade::Remove-Unused-Kernel-Packages \"true\"; "
   tag fix_id: "F-41539r654284_fix "
   tag cci: ["CCI-002617"]
   tag nist: ["SI-2 (6)"]
+
+  describe directory('/etc/apt/apt.conf.d') do
+    it { should exist }
+  end
+
+  describe command('grep -i remove-unused /etc/apt/apt.conf.d/50unattended-upgrades').stdout.strip do
+    it { should match /^\s*([^\s]*::Remove-Unused-Dependencies)\s*\"true\"\s*;$/ }
+    it { should match /^\s*([^\s]*::Remove-Unused-Kernel-Packages)\s*\"true\"\s*;$/ }
+  end
 end

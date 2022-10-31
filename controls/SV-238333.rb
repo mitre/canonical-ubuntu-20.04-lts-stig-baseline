@@ -48,4 +48,8 @@ net.ipv4.tcp_syncookies
   tag fix_id: "F-41502r654173_fix "
   tag cci: ["CCI-001095"]
   tag nist: ["SC-5 (2)"]
+
+  describe kernel_parameter('net.ipv4.tcp_syncookies') do
+    its('value') { should cmp 1 }
+  end
 end

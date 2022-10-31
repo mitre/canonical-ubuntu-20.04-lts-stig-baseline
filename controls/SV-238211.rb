@@ -42,4 +42,8 @@ UsePAM yes "
   tag fix_id: "F-41380r653807_fix "
   tag cci: ["CCI-000877"]
   tag nist: ["MA-4 c"]
+
+  describe sshd_config do
+    its('UsePAM') { should cmp 'yes' }
+  end
 end

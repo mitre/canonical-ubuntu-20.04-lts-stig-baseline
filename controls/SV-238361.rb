@@ -37,4 +37,9 @@ $ sudo passwd -e [UserName] "
   tag fix_id: "F-41530r654257_fix "
   tag cci: ["CCI-002041"]
   tag nist: ["IA-5 (1) (f)"]
+
+  describe 'Manual verification required' do
+    skip 'Manually verify if a policy exists to ensure that a method exists to force temporary
+      users to change their password upon next login'
+  end
 end

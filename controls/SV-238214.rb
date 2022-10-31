@@ -158,4 +158,35 @@ $ sudo systemctl -s SIGHUP kill sshd "
   tag fix_id: "F-41383r653816_fix "
   tag cci: ["CCI-000048","CCI-001384","CCI-001385","CCI-001386","CCI-001387","CCI-001388"]
   tag nist: ["AC-8 a","AC-8 c 1","AC-8 c 2","AC-8 c 3"]
+
+  banner_text = input('banner_text')
+  banner_files = [sshd_config.banner].flatten
+
+  banner_files.each do |banner_file|
+    if banner_file.nil?
+      describe 'The SSHD Banner is not set' do
+        subject { banner_file.nil? }
+        it { should be false }
+      end
+    end
+    if !banner_file.nil? && !banner_file.match(/none/i).nil?
+      describe 'The SSHD Banner is disabled' do
+        subject { banner_file.match(/none/i).nil? }
+        it { should be true }
+      end
+    end
+    if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
+      describe 'The SSHD Banner is set, but, the file does not exist' do
+        subject { file(banner_file).exist? }
+        it { should be true }
+      end
+    end
+    next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
+
+    describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+      clean_banner = banner_text.gsub(/[\r\n\s]/, '')
+      subject { file(banner_file).content.gsub(/[\r\n\s]/, '') }
+      it { should cmp clean_banner }
+    end
+  end
 end

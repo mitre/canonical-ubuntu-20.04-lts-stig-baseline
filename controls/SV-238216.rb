@@ -63,4 +63,12 @@ sudo systemctl reload sshd.service "
   tag fix_id: "F-41385r653822_fix "
   tag cci: ["CCI-001453","CCI-002421","CCI-002890"]
   tag nist: ["AC-17 (2)","SC-8 (1)","MA-4 (6)"]
+
+  @macs_array = inspec.sshd_config.params['macs']
+
+  @macs_array = @macs_array.first.split(',') unless @macs_array.nil?
+
+  describe @macs_array do
+    it { should be_in %w[hmac-sha2-256 hmac-sha2-512] }
+  end
 end

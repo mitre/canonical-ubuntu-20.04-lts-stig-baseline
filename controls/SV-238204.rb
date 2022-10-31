@@ -68,4 +68,8 @@ update-grub "
   tag fix_id: "F-41373r832935_fix "
   tag cci: ["CCI-000213"]
   tag nist: ["AC-3"]
+
+  describe file('/boot/grub/grub.cfg') do
+    its('content') { should match '^password_pbkdf2' }
+  end
 end

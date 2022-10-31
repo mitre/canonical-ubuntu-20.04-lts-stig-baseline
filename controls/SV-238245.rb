@@ -54,4 +54,18 @@ $ sudo chmod 0600 /var/log/audit/* "
   tag fix_id: "F-41414r653909_fix "
   tag cci: ["CCI-000162","CCI-000163"]
   tag nist: ["AU-9 a"]
+
+  log_file = auditd_conf.log_file
+
+  log_file_exists = !log_file.nil?
+  if log_file_exists
+    describe file(log_file) do
+      it { should_not be_more_permissive_than('0600') }
+    end
+  else
+    describe ('Audit log file ' + log_file + ' exists') do
+      subject { log_file_exists }
+      it { should be true }
+    end
+  end
 end
