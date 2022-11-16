@@ -53,3 +53,4 @@ Execution bit, set it to \"enable\". "
       it { should include 'nx' }
     end
   end
+end

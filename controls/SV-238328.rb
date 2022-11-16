@@ -90,4 +90,4 @@ e
   describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
     skip 'Status listings checks must be preformed manually'
   end
-endnd
+end
