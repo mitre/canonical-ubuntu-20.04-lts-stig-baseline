@@ -45,7 +45,7 @@ dcredit=-1 "
 
   if config_file_exists
     describe parse_config_file(config_file) do
-      its('dcredit') { should cmp -1 }
+      its('dcredit') { should cmp '-1' }
     end
   else
     describe (config_file + ' exists') do

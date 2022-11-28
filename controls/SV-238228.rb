@@ -81,8 +81,8 @@ Note: The value of \"retry\" should be between \"1\" and
     it { should be_installed }
   end
 
-  describe file('/etc/security/pwquality.conf') do
-    its('content') { should match '^enforcing\s+=\s+1$' }
+  describe parse_config_file('/etc/security/pwquality.conf') do
+    its('enforcing') { should cmp 1 }
   end
 
   describe file('/etc/pam.d/common-password') do

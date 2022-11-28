@@ -49,7 +49,7 @@ difok=8 "
 
   if config_file_exists
     describe parse_config_file(config_file) do
-      its('difok') { should cmp >= 8 }
+      its('difok') { should cmp >= '8' }
     end
   else
     describe (config_file + ' exists') do

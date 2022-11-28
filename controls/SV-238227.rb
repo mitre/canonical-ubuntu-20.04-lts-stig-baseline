@@ -37,7 +37,7 @@ dictcheck=1 "
 
   if config_file_exists
     describe parse_config_file(config_file) do
-      its('dictcheck') { should cmp 1 }
+      its('dictcheck') { should cmp '1' }
     end
   else
     describe (config_file + ' exists') do

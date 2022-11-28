@@ -41,7 +41,7 @@ minlen=15 "
 
   if config_file_exists
     describe parse_config_file(config_file) do
-      its('minlen') { should cmp >= 15 }
+      its('minlen') { should cmp >= '15' }
     end
   else
     describe (config_file + ' exists') do
