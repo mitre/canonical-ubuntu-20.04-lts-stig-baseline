@@ -52,8 +52,8 @@ sudo systemctl restart chrony.service "
   tag cci: ["CCI-002046"]
   tag nist: ["AU-8 (1) (b)"]
 
-  chrony_file_path = '/etc/chrony/chrony.conf'
-  chrony_file = file('/etc/chrony/chrony.conf')
+  chrony_file_path = input('chrony_config_file')
+  chrony_file = file(chrony_file_path)
 
   if chrony_file.exist?
     describe chrony_file do

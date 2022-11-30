@@ -40,7 +40,7 @@ enable FIPS. "
   tag cci: ["CCI-002450"]
   tag nist: ["SC-13 b"]
 
-  config_file = '/proc/sys/crypto/fips_enabled'
+  config_file = input('fips_config_file')
   config_file_exists = file(config_file).exist?
 
   if config_file_exists

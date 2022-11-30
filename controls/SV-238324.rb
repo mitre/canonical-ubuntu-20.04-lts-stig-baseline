@@ -55,7 +55,7 @@ $ sudo systemctl restart rsyslog.service "
   options = {
     assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/
   }
-  config_file = '/etc/rsyslog.d/50-default.conf'
+  config_file = input('rsyslog_config_file')
   auth_setting = parse_config_file(config_file, options).params['auth,authpriv.*']
   daemon_setting = parse_config_file(config_file, options).params['daemon.notice']
   describe auth_setting do

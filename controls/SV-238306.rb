@@ -81,7 +81,7 @@ $ sudo systemctl restart auditd.service "
   tag cci: ["CCI-001851"]
   tag nist: ["AU-4 (1)"]
 
-  config_file = '/etc/audisp/plugins.d/au-remote.conf'
+  config_file = input('audispremote_config_file')
   config_file_exists = file(config_file).exist?
   audit_sp_remote_server= input("audit_sp_remote_server")
 

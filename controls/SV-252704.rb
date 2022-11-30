@@ -74,4 +74,8 @@ sudo modprobe -r &lt;module name&gt; "
   tag fix_id: "F-56110r819056_fix "
   tag cci: ["CCI-002418"]
   tag nist: ["SC-8"]
+
+  describe command('ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs basename') do
+    its('stdout') { should be_in input('approved_wireless_interfaces')}
+  end
 end

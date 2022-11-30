@@ -76,7 +76,7 @@ systemctl restart chrony.service "
   
   if is_system_networked
 
-    chrony_conf = '/etc/chrony/chrony.conf'
+    chrony_conf = input('chrony_config_file')
     chrony_conf_exists = file(chrony_conf).exist?
     
     if chrony_conf_exists

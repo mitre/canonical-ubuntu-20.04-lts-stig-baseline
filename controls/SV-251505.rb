@@ -51,4 +51,12 @@ blacklist usb-storage &gt;&gt; /etc/modprobe.d/DISASTIG.conf\" "
   tag fix_id: "F-54894r808511_fix "
   tag cci: ["CCI-001958"]
   tag nist: ["IA-3"]
+
+  describe command('grep usb-storage /etc/modprobe.d/* | grep "/bin/true"') do
+    its('stdout') { should_not be_empty }
+  end
+
+  describe command('grep usb-storage /etc/modprobe.d/* | grep -i "blacklist"') do
+    its('stdout') { should_not be_empty }
+  end
 end

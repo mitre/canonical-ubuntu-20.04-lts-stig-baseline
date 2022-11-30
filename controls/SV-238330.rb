@@ -44,7 +44,7 @@ password expires. "
   tag cci: ["CCI-000795"]
   tag nist: ["IA-4 e"]
 
-  config_file = '/etc/default/useradd'
+  config_file = input('useradd_config_file')
   config_file_exists = file(config_file).exist?
 
   if config_file_exists

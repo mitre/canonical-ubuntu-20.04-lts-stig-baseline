@@ -40,7 +40,7 @@ be located in the \"/etc/cron.weekly\" directory. "
   tag cci: ["CCI-001851"]
   tag nist: ["AU-4 (1)"]
 
-  cron_file = '/etc/cron.weekly/audit-offload'
+  cron_file = input('auditoffload_config_file')
   cron_file_exists = file(cron_file).exist?
 
   if cron_file_exists

@@ -29,4 +29,8 @@ empty passwords. "
   tag fix_id: "F-54893r832976_fix "
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b"]
+
+  describe command("grep nullok /etc/pam.d/common-password") do
+    its('stdout') { should be_empty }
+  end
 end
