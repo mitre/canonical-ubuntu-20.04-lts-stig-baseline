@@ -79,7 +79,7 @@ $ sudo ufw deny
   tag fix_id: "F-41497r654158_fix "
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b"]
-e
+
   ufw_status = command('ufw status').stdout.strip.lines.first
   value = ufw_status.split(':')[1].strip
 
