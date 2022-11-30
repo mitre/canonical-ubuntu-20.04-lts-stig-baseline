@@ -144,3 +144,8 @@ inputs:
     description: Location of audit offload config file
     type: String
     value: '/etc/cron.weekly/audit-offload'
+
+  - name: audispremote_config_file
+    description: Location of audisp-remote plugin config file
+    type: String
+    value: '/etc/audisp/plugins.d/au-remote.conf'
