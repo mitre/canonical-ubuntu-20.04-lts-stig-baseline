@@ -40,7 +40,7 @@ inputs:
     value: [ "ubuntu" ]
 
   - name: tmout
-    desciption:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
+    description:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
     type: numeric
     value: 600
 
