@@ -16,6 +16,7 @@ inputs:
     description: Temporary user accounts
     type: Array
     value: []
+
   - name: banner_text
     description: Standard Mandatory DoD Notice and Consent Banner
     type: String
@@ -32,18 +33,22 @@ inputs:
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
 
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.'
+
   - name: sudo_accounts
     description: Array of users who need access to security functions are part of the sudo group.
     type: Array
     value: [ "ubuntu" ]
+
   - name: tmout
     desciption:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
     type: numeric
     value: 600
+
   - name: action_mail_acct
     description: Email to be notified when allocated audit record storage volume reaches 
     type: string
     value: root
+
   - name: audit_tools
     description: Audit tools
     type: Array
@@ -56,38 +61,47 @@ inputs:
       '/sbin/audispd',
       '/sbin/augenrules'
     ]
+
   - name: standard_audit_log_size
     description: Set audit log size in bytes (default:1073741824 per control specification)
     type: Numeric
     value: 8894028
+
   - name: aide_conf_path
     description: Path to aide.conf
     type: String
     value: '/etc/aide/aide.conf'
+
   - name: action_mail_acct
     description: Email to be notified when allocated audit record storage volume reaches 
     type: string
     value: root
+
   - name: maxlogins
     description: Maximum number of concurrent sessions
     type: Numeric
     value: 10
+
   - name: is_kdump_required
     description: Is kdump service required? (check with SA and documented with ISSO)
     type: Boolean
     value: false
+
   - name: is_system_networked
     description: Set to true if the system is networked for NTP check
     type: Boolean
     value: true
+
   - name: sssd_conf_path
     description: Path to sssd.conf
     type: String
     value: '/etc/sssd/sssd.conf'
+
   - name: allowed_ca_fingerprints_regex
     description: Certificate fingerprint regex for DoD PKI-established certificate authorities
     type: string
     value: (9676F287356C89A12683D65234098CB77C4F1C18F23C0E541DE0E196725B7EBE|B107B33F453E5510F68E513110C6F6944BACC263DF0137F821C1B3C2F8F863D2|559A5189452B13F8233F0022363C06F26E3C517C1D4B77445035959DF3244F74|1F4EDE9DC2A241F6521BF518424ACD49EBE84420E69DAF5BAC57AF1F8EE294A9)
+
   - name: allowed_network_interfaces
     description: Array of allowed network interfaces (wired & wireless)
     type: Array
@@ -95,7 +109,38 @@ inputs:
       'lo',
       'eth0'
     ]
+
   - name: audit_sp_remote_server
     description: Address of the remote server receiving the audit log
     type: String
     value: '192.0.0.1'
+
+  - name: approved_wireless_interfaces
+    description: List of approved wireless interfaces
+    type: array
+    value: []
+
+  - name: fips_config_file
+    description: Location of fips_enabled config file
+    type: String
+    value: '/proc/sys/crypto/fips_enabled'
+
+  - name: chrony_config_file
+    description: Location of chrony config file
+    type: String
+    value: '/etc/chrony/chrony.conf'
+
+  - name: useradd_config_file
+    description: Location of useradd config file
+    type: String
+    value: '/etc/default/useradd'
+
+  - name: rsyslog_config_file
+    description: Location of rsyslog config file
+    type: String
+    value: '/etc/rsyslog.d/50-default.conf'
+
+  - name: auditoffload_config_file
+    description: Location of audit offload config file
+    type: String
+    value: '/etc/cron.weekly/audit-offload'
