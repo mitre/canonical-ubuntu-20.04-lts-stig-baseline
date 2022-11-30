@@ -149,3 +149,8 @@ inputs:
     description: Location of audisp-remote plugin config file
     type: String
     value: '/etc/audisp/plugins.d/au-remote.conf'
+
+  - name: gdm3_config_file
+    description: Location of gdm3 config file
+    type: String
+    value: '/etc/gdm3/greeter.dconf-defaults'

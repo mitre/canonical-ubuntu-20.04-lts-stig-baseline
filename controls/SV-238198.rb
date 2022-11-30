@@ -123,9 +123,17 @@ systemctl restart gdm3 "
 
   banner_text = input('banner_text')
   clean_banner = banner_text.gsub(/[\r\n\s]/, '')
-  gdm3_defaults_file="/etc/gdm3/greeter.dconf-defaults"
-  describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-    subject { file(gdm3_defaults_file).content.gsub(/[\r\n\s]/, '')}
-    it { should cmp clean_banner }
+  gdm3_defaults_file = input('gdm3_config_file')
+
+  if package('gdm3').installed?
+    describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+      subject { file(gdm3_defaults_file).content.gsub(/[\r\n\s]/, '')}
+      it { should cmp clean_banner }
+    end
+  else
+    impact 0.0
+    describe "Package gdm3 not installed" do
+      skip "Package gdm3 not installed, this control Not Applicable"
+    end
   end
 end
