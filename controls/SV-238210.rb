@@ -80,6 +80,7 @@ auth    [success=2 default=ignore] pam_pkcs11.so
 Set the sshd option
 \"PubkeyAuthentication yes\" in the \"/etc/ssh/sshd_config\" file."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000105-GPOS-00052 "
   tag satisfies: ["SRG-OS-000105-GPOS-00052", "SRG-OS-000106-GPOS-00053", "SRG-OS-000107-GPOS-00054", "SRG-OS-000108-GPOS-00055"]

@@ -54,6 +54,7 @@ $ sudo chmod
 Replace \"[audit_tool]\" with the audit tool that does not have the
 correct permissions."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000256-GPOS-00097 "
   tag satisfies: ["SRG-OS-000256-GPOS-00097", "SRG-OS-000257-GPOS-00098"]

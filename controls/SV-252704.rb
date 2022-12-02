@@ -55,37 +55,29 @@ basename
 
 If a wireless interface is configured and has not been documented and approved by
 the ISSO, this is a finding."
-  desc "fix", "List all the wireless interfaces with the following command:
-
-$ ls -L -d
-/sys/class/net/*/wireless | xargs dirname | xargs basename
-
-For each interface,
-configure the system to disable wireless network interfaces with the following command:
-
-$
-sudo ifdown &lt;interface name&gt;
-
-For each interface listed, find their respective
-module with the following command:
-
-$ basename $(readlink -f
-/sys/class/net/&lt;interface name&gt;/device/driver)
-
-where &lt;interface name&gt;
-must be substituted by the actual interface name.
-
-Create a file in the \"/etc/modprobe.d\"
-directory and for each module, add the following line:
-
-install &lt;module name&gt;
-/bin/true
-
-For each module from the system, execute the  following command to remove it:
-
-$
-sudo modprobe -r &lt;module name&gt;"
+  desc "fix", "List all the wireless interfaces with the following command: 
+ 
+$ ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs basename 
+ 
+For each interface, configure the system to disable wireless network interfaces with the following command: 
+ 
+$ sudo ifdown <interface name> 
+ 
+For each interface listed, find their respective module with the following command: 
+ 
+$ basename $(readlink -f /sys/class/net/<interface name>/device/driver) 
+ 
+where <interface name> must be substituted by the actual interface name. 
+ 
+Create a file in the \"/etc/modprobe.d\" directory and for each module, add the following line: 
+ 
+install <module name> /bin/true 
+ 
+For each module from the system, execute the  following command to remove it: 
+ 
+$ sudo modprobe -r <module name>"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000481-GPOS-00481 "
   tag gid: "V-252704 "

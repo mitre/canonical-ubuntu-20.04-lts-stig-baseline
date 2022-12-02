@@ -55,6 +55,7 @@ daemon for the changes to take effect:
 
 $ sudo systemctl restart sshd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000163-GPOS-00072 "
   tag gid: "V-238213 "

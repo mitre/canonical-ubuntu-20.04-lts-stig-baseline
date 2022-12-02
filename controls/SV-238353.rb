@@ -61,6 +61,7 @@ Enable the log service with the following command:
 $ sudo systemctl enable --now
 rsyslog"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000269-GPOS-00103 "
   tag gid: "V-238353 "

@@ -28,6 +28,7 @@ $ sudo systemctl disable kdump.service
 If kernel core dumps are required,
 document the need with the ISSO."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000184-GPOS-00078 "
   tag gid: "V-238334 "

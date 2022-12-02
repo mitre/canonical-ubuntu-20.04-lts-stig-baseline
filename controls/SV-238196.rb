@@ -57,6 +57,7 @@ Substitute
 $ sudo chage -E $(date -d \"+3 days\"
 +%F) system_account_name"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000002-GPOS-00002 "
   tag gid: "V-238196 "

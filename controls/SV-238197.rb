@@ -133,6 +133,7 @@ $ sudo dconf
 update
 $ sudo systemctl restart gdm3"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000023-GPOS-00006 "
   tag gid: "V-238197 "

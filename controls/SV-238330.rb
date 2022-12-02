@@ -15,19 +15,15 @@ obtained.
 
 Operating systems need to track periods of inactivity and disable application
 identifiers after 35 days of inactivity."
-  desc "check", "Verify the account identifiers (individuals, groups, roles, and devices) are disabled
-after 35 days of inactivity with the following command:
-
-Check the account inactivity value
-by performing the following command:
-
-$ sudo grep INACTIVE /etc/default/useradd
-
-
-INACTIVE=35
-
-If \"INACTIVE\" is not set to a value 0&lt;[VALUE]&lt;=35, or is commented out,
-this is a finding."
+  desc "check", "Verify the account identifiers (individuals, groups, roles, and devices) are disabled after 35 days of inactivity with the following command: 
+ 
+Check the account inactivity value by performing the following command: 
+ 
+$ sudo grep INACTIVE /etc/default/useradd 
+ 
+INACTIVE=35 
+ 
+If \"INACTIVE\" is not set to a value 0<[VALUE]<=35, or is commented out, this is a finding."
   desc "fix", "Configure the Ubuntu operating system to disable account identifiers after 35 days of
 inactivity after the password expiration.
 
@@ -40,6 +36,7 @@ Note: DoD recommendation is 35 days,
 but a lower value is acceptable. The value \"0\" will disable the account immediately after the
 password expires."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000118-GPOS-00060 "
   tag gid: "V-238330 "

@@ -34,6 +34,7 @@ running the following command:
 
 $ sudo chown syslog /var/log/syslog"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000206-GPOS-00084 "
   tag gid: "V-238342 "

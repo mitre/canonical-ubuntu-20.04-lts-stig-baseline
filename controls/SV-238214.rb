@@ -192,6 +192,7 @@ configuration file:
 
 $ sudo systemctl -s SIGHUP kill sshd"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000228-GPOS-00088 "
   tag satisfies: ["SRG-OS-000228-GPOS-00088", "SRG-OS-000023-GPOS-00006"]

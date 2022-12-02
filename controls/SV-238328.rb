@@ -72,20 +72,17 @@ ports, protocols, or services that are not included in the PPSM CLSA, this is a 
 If
 there are any ports, protocols, or services that are prohibited by the PPSM CAL, this is a
 finding."
-  desc "fix", "Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command:
-
-
-$ sudo ufw allow &lt;direction&gt; &lt;port/protocol/service&gt;
-
-where the
-direction is \"in\" or \"out\" and the port is the one corresponding to the protocol  or service
-allowed.
-
-To deny access to ports, protocols, or services, use:
-
-$ sudo ufw deny
-&lt;direction&gt; &lt;port/protocol/service&gt;"
+  desc "fix", "Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command: 
+ 
+$ sudo ufw allow <direction> <port/protocol/service> 
+ 
+where the direction is \"in\" or \"out\" and the port is the one corresponding to the protocol  or service allowed. 
+ 
+To deny access to ports, protocols, or services, use: 
+ 
+$ sudo ufw deny <direction> <port/protocol/service>"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000096-GPOS-00050 "
   tag gid: "V-238328 "

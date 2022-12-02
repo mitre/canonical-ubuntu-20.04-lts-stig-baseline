@@ -67,6 +67,7 @@ To reload the rules file, issue the following command:
 $
 sudo augenrules --load"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000326-GPOS-00126 "
   tag satisfies: ["SRG-OS-000326-GPOS-00126", "SRG-OS-000327-GPOS-00127"]

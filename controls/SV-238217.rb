@@ -82,6 +82,7 @@ take effect:
 
 $ sudo systemctl restart sshd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000424-GPOS-00188 "
   tag satisfies: ["SRG-OS-000424-GPOS-00188", "SRG-OS-000033-GPOS-00014", "SRG-OS-000394-GPOS-00174"]

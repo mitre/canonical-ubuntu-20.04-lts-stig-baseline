@@ -26,6 +26,7 @@ set to UTC or GMT, this is a finding."
 
 $ sudo timedatectl set-timezone [ZONE]"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000359-GPOS-00146 "
   tag gid: "V-238308 "

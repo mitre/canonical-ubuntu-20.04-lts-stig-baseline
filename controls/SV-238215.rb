@@ -71,6 +71,7 @@ ensure the \"ssh\" service is running
 $ sudo
 systemctl start sshd.service"
   impact 0.7
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "high "
   tag gtitle: "SRG-OS-000423-GPOS-00187 "
   tag satisfies: ["SRG-OS-000423-GPOS-00187", "SRG-OS-000425-GPOS-00189", "SRG-OS-000426-GPOS-00190"]

@@ -52,13 +52,13 @@ sudo:x:27:foo
 
 If the sudo group contains users not needing access to
 security functions, this is a finding."
-  desc "fix", "Configure the sudo group with only members requiring access to security functions.
-
-To
-remove a user from the sudo group, run:
-
-$ sudo gpasswd -d &lt;username&gt; sudo"
+  desc "fix", "Configure the sudo group with only members requiring access to security functions. 
+ 
+To remove a user from the sudo group, run: 
+ 
+$ sudo gpasswd -d <username> sudo"
   impact 0.7
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "high "
   tag gtitle: "SRG-OS-000134-GPOS-00068 "
   tag gid: "V-238206 "

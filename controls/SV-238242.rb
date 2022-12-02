@@ -48,6 +48,7 @@ the following command:
 
 $ sudo augenrules --load"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000004-GPOS-00004 "
   tag satisfies: ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089", "SRG-OS-000240-GPOS-00090", "SRG-OS-000241-GPOS-00091", "SRG-OS-000303-GPOS-00120", "SRG-OS-000458-GPOS-00203", "SRG-OS-000476-GPOS-00221"]

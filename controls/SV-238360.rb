@@ -73,6 +73,7 @@ properly configured profiles for applications and home directories. All configur
 will be based on the actual system setup and organization and normally are on a per role basis.
 See the AppArmor documentation for more information on configuring profiles."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000368-GPOS-00154 "
   tag satisfies: ["SRG-OS-000368-GPOS-00154", "SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123", "SRG-OS-000312-GPOS-00124", "SRG-OS-000324-GPOS-00125", "SRG-OS-000370-GPOS-00155"]

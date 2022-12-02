@@ -78,6 +78,7 @@ p+i+n+u+g+s+b+acl+xattrs+sha512
 /sbin/augenrules
 p+i+n+u+g+s+b+acl+xattrs+sha512"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000278-GPOS-00108 "
   tag gid: "V-238303 "

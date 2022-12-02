@@ -70,6 +70,7 @@ Restart the SSH daemon for the changes to take effect:
 $
 sudo systemctl reload sshd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000424-GPOS-00188 "
   tag satisfies: ["SRG-OS-000424-GPOS-00188", "SRG-OS-000250-GPOS-00093", "SRG-OS-000393-GPOS-00173"]

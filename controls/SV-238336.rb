@@ -42,6 +42,7 @@ the Ubuntu operating system to use ENSLTP.
 Install the \"mcafeetp\" package via the ePO
 server."
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000191-GPOS-00080 "
   tag gid: "V-238336 "

@@ -46,6 +46,7 @@ required system account:
 
 $ sudo chgrp root [FILE]"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000259-GPOS-00100 "
   tag gid: "V-238378 "

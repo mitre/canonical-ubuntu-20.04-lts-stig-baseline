@@ -21,6 +21,7 @@ Lock an account:
 $ sudo
 passwd -l [username]"
   impact 0.7
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "high "
   tag gtitle: "SRG-OS-000480-GPOS-00227 "
   tag gid: "V-251503 "

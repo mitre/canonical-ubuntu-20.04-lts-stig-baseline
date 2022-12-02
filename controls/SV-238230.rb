@@ -64,6 +64,7 @@ the following command:
 
 $ sudo apt install libpam-pkcs11"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000375-GPOS-00160 "
   tag gid: "V-238230 "

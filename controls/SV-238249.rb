@@ -50,6 +50,7 @@ have a mode more permissive than \"0640\", this is a finding."
 $
 sudo chmod -R 0640 /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/*"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000063-GPOS-00032 "
   tag gid: "V-238249 "

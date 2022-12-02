@@ -51,6 +51,7 @@ to allow graphical user interface session locks with the following command:
 $ sudo
 gsettings set org.gnome.desktop.screensaver lock-enabled true"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000028-GPOS-00009 "
   tag satisfies: ["SRG-OS-000028-GPOS-00009", "SRG-OS-000029-GPOS-00010"]

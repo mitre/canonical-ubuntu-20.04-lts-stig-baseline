@@ -52,6 +52,7 @@ directory path missing the sticky bit:
 
 $ sudo chmod +t  [Public Directory]"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000138-GPOS-00069 "
   tag gid: "V-238332 "

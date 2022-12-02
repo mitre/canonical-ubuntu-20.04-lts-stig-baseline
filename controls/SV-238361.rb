@@ -35,6 +35,7 @@ or
 
 $ sudo passwd -e [UserName]"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000380-GPOS-00165 "
   tag gid: "V-238361 "

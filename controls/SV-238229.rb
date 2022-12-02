@@ -76,6 +76,7 @@ If the system is missing an \"/etc/pam_pkcs11/\" directory and an
 accordingly at
 \"/usr/share/doc/libpam-pkcs11/examples/pam_pkcs11.conf.example.gz\"."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000066-GPOS-00034 "
   tag gid: "V-238229 "

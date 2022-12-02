@@ -75,6 +75,7 @@ be done on an interface. An example of adding a rate-limit on the eth0 interface
 $
 sudo ufw limit in on eth0"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000420-GPOS-00186 "
   tag gid: "V-238367 "

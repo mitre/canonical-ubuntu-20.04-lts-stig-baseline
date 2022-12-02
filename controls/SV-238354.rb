@@ -48,6 +48,7 @@ this is a finding."
 $ sudo apt-get install
 ufw"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000297-GPOS-00115 "
   tag gid: "V-238354 "

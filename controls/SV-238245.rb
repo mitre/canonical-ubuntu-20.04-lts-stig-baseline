@@ -47,6 +47,7 @@ less permissive by using the following command:
 
 $ sudo chmod 0600 /var/log/audit/*"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000057-GPOS-00027 "
   tag satisfies: ["SRG-OS-000057-GPOS-00027", "SRG-OS-000058-GPOS-00028"]

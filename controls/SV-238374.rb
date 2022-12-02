@@ -30,6 +30,7 @@ with the following command:
 
 $ sudo systemctl start ufw.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000480-GPOS-00232 "
   tag gid: "V-238374 "

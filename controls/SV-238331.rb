@@ -43,6 +43,7 @@ that account's creation, this is a finding."
 $ sudo chage -E $(date -d \"+3 days\" +%F)
 account_name"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000123-GPOS-00064 "
   tag gid: "V-238331 "

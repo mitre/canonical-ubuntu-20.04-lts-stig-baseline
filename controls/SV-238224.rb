@@ -45,6 +45,7 @@ the \"difok=8\" parameter:
 
 difok=8"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000072-GPOS-00040 "
   tag gid: "V-238224 "

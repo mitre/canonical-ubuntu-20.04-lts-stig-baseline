@@ -62,6 +62,7 @@ deny = 3
 fail_interval = 900
 unlock_time = 0"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000329-GPOS-00128 "
   tag satisfies: ["SRG-OS-000329-GPOS-00128", "SRG-OS-000021-GPOS-00005"]

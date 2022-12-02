@@ -30,6 +30,7 @@ command:
 
 $ sudo apt-get install vlock"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000030-GPOS-00011 "
   tag satisfies: ["SRG-OS-000030-GPOS-00011", "SRG-OS-000031-GPOS-00012"]

@@ -27,35 +27,26 @@ This requirement applies to each audit data storage repository (i.e., distinct
 information system component where audit records are stored), the centralized audit
 storage capacity of organizations (i.e., all audit data storage repositories combined), or
 both."
-  desc "check", "Verify that the SA and ISSO (at a minimum) are notified in the event of an audit processing
-failure with the following command:
-
-$ sudo grep '^action_mail_acct = root'
-/etc/audit/auditd.conf
-
-action_mail_acct = &lt;administrator_account&gt;
-
-If the
-value of the \"action_mail_acct\" keyword is not set to an accounts for security personnel, the
-\"action_mail_acct\" keyword is missing, or the returned line is commented out, this is a
-finding."
-  desc "fix", "Configure \"auditd\" service to notify the SA and ISSO in the event of an audit processing
-failure.
-
-Edit the following line in \"/etc/audit/auditd.conf\" to ensure administrators
-are notified via email for those situations:
-
-action_mail_acct =
-&lt;administrator_account&gt;
-
-Note: Change \"administrator_account\" to an account for
-security personnel.
-
-Restart the \"auditd\" service so the changes take effect:
-
-$ sudo
-systemctl restart auditd.service"
+  desc "check", "Verify that the SA and ISSO (at a minimum) are notified in the event of an audit processing failure with the following command: 
+ 
+$ sudo grep '^action_mail_acct = root' /etc/audit/auditd.conf 
+ 
+action_mail_acct = <administrator_account> 
+ 
+If the value of the \"action_mail_acct\" keyword is not set to an accounts for security personnel, the \"action_mail_acct\" keyword is missing, or the returned line is commented out, this is a finding."
+  desc "fix", "Configure \"auditd\" service to notify the SA and ISSO in the event of an audit processing failure.  
+ 
+Edit the following line in \"/etc/audit/auditd.conf\" to ensure administrators are notified via email for those situations: 
+ 
+action_mail_acct = <administrator_account> 
+ 
+Note: Change \"administrator_account\" to an account for security personnel. 
+ 
+Restart the \"auditd\" service so the changes take effect: 
+ 
+$ sudo systemctl restart auditd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000046-GPOS-00022 "
   tag gid: "V-238243 "

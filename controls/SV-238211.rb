@@ -41,6 +41,7 @@ Add or modify the following line to
 
 UsePAM yes"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000125-GPOS-00065 "
   tag gid: "V-238211 "

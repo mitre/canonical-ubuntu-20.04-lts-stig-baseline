@@ -37,6 +37,7 @@ Add the following line to the top of \"/etc/pam.d/login\":
 session
 required      pam_lastlog.so showfailed"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000480-GPOS-00227 "
   tag gid: "V-238373 "

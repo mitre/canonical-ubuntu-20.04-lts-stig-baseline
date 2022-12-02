@@ -17,6 +17,7 @@ If the package is installed, this is a finding."
 
 $ sudo apt-get remove telnetd"
   impact 0.7
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "high "
   tag gtitle: "SRG-OS-000074-GPOS-00042 "
   tag gid: "V-238326 "

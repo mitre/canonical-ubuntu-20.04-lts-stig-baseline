@@ -33,6 +33,7 @@ Unattended-Upgrade::Remove-Unused-Dependencies \"true\";
 
 Unattended-Upgrade::Remove-Unused-Kernel-Packages \"true\";"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000437-GPOS-00194 "
   tag gid: "V-238370 "

@@ -60,6 +60,7 @@ or remove \"AllowUnauthenticated\" entirely from each file. Below is an example 
 APT::Get::AllowUnauthenticated
 \"false\";"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000366-GPOS-00153 "
   tag gid: "V-238359 "
