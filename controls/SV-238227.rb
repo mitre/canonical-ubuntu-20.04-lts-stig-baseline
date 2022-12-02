@@ -24,6 +24,7 @@ Add or update the following line in the \"/etc/security/pwquality.conf\" file to
 
 dictcheck=1"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000480-GPOS-00225 "
   tag gid: "V-238227 "

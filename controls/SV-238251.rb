@@ -50,6 +50,7 @@ is owned by a group other than \"root\", this is a finding."
 $
 sudo chown :root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/*"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000063-GPOS-00032 "
   tag gid: "V-238251 "

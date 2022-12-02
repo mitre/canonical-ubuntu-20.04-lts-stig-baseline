@@ -48,11 +48,12 @@ To reload the rules file, issue the following command:
 $ sudo
 augenrules --load"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000004-GPOS-00004 "
   tag satisfies: ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089", "SRG-OS-000240-GPOS-00090", "SRG-OS-000241-GPOS-00091", "SRG-OS-000303-GPOS-00120", "SRG-OS-000458-GPOS-00203", "SRG-OS-000463-GPOS-00207", "SRG-OS-000476-GPOS-00221"]
   tag gid: "V-238238 "
-  tag rid: "SV-238238r853416_rule "
+  tag rid: "SV-238238r653889_rule"
   tag stig_id: "UBTU-20-010100 "
   tag fix_id: "F-41407r653888_fix "
   tag cci: ["CCI-000018", "CCI-000172", "CCI-001403", "CCI-001404", "CCI-001405", "CCI-002130"]

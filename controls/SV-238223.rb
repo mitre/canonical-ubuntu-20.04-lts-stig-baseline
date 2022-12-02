@@ -37,6 +37,7 @@ file to contain the \"dcredit\" parameter:
 
 dcredit=-1"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000071-GPOS-00039 "
   tag gid: "V-238223 "

@@ -27,50 +27,34 @@ syscall that all programs on the system makes. Therefore, it is very important t
 syscall rules when absolutely necessary since these affect performance. The more rules, the
 bigger the performance hit. The performance is helped, though, by combining syscalls into
 one rule whenever possible."
-  desc "check", "Verify the Ubuntu operating system generates audit records for any
-successful/unsuccessful use of \"unlink\", \"unlinkat\", \"rename\", \"renameat\", and \"rmdir\"
-system calls.
+  desc "check", "Verify the Ubuntu operating system generates audit records for any successful/unsuccessful use of \"unlink\", \"unlinkat\", \"rename\", \"renameat\", and \"rmdir\" system calls. 
+ 
+Check the currently configured audit rules with the following command: 
+ 
+$ sudo auditctl -l | grep 'unlink\\|rename\\|rmdir' 
+ 
+-a always,exit -F arch=b64 -S unlink,unlinkat,rename,renameat,rmdir -F auid>=1000 -F auid!=-1 -F key=delete 
+-a always,exit -F arch=b32 -S unlink,unlinkat,rename,renameat,rmdir -F auid>=1000 -F auid!=-1 -F key=delete 
+ 
+If the command does not return audit rules for the \"unlink\", \"unlinkat\", \"rename\", \"renameat\", and \"rmdir\" syscalls or the lines are commented out, this is a finding. 
+ 
+Notes: 
+For 32-bit architectures, only the 32-bit specific output lines from the commands are required. 
+The \"key\" allows for specifying an arbitrary identifier, and the string after it does not need to match the example output above."
+  desc "fix", "Configure the audit system to generate audit events for any successful/unsuccessful use of \"unlink\", \"unlinkat\", \"rename\", \"renameat\", and \"rmdir\" system calls. 
+ 
+Add or update the following rules in the \"/etc/audit/rules.d/stig.rules\" file:
+ 
+-a always,exit -F arch=b64 -S unlink,unlinkat,rename,renameat,rmdir -F auid>=1000 -F auid!=4294967295 -k delete 
+-a always,exit -F arch=b32 -S unlink,unlinkat,rename,renameat,rmdir -F auid>=1000 -F auid!=4294967295 -k delete 
 
-Check the currently configured audit rules with the following command:
-
-$
-sudo auditctl -l | grep 'unlink\\|rename\\|rmdir'
-
--a always,exit -F arch=b64 -S
-unlink,unlinkat,rename,renameat,rmdir -F auid&gt;=1000 -F auid!=-1 -F key=delete
--a
-always,exit -F arch=b32 -S unlink,unlinkat,rename,renameat,rmdir -F auid&gt;=1000 -F
-auid!=-1 -F key=delete
-
-If the command does not return audit rules for the \"unlink\",
-\"unlinkat\", \"rename\", \"renameat\", and \"rmdir\" syscalls or the lines are commented out, this
-is a finding.
-
-Notes:
-For 32-bit architectures, only the 32-bit specific output lines from
-the commands are required.
-The \"key\" allows for specifying an arbitrary identifier, and the
-string after it does not need to match the example output above."
-  desc "fix", "Configure the audit system to generate audit events for any successful/unsuccessful use of
-\"unlink\", \"unlinkat\", \"rename\", \"renameat\", and \"rmdir\" system calls.
-
-Add or update the
-following rules in the \"/etc/audit/rules.d/stig.rules\" file:
-
--a always,exit -F
-arch=b64 -S unlink,unlinkat,rename,renameat,rmdir -F auid&gt;=1000 -F
-auid!=4294967295 -k delete
--a always,exit -F arch=b32 -S
-unlink,unlinkat,rename,renameat,rmdir -F auid&gt;=1000 -F auid!=4294967295 -k delete
-
-
-Notes: For 32-bit architectures, only the 32-bit specific entries are required.
-
-To
-reload the rules file, issue the following command:
-
+Notes: For 32-bit architectures, only the 32-bit specific entries are required. 
+ 
+To reload the rules file, issue the following command: 
+ 
 $ sudo augenrules --load"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000468-GPOS-00212 "
   tag gid: "V-238310 "

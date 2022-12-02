@@ -30,6 +30,7 @@ Add or modify the \"remember\" parameter value to the following line in
 password [success=1 default=ignore] pam_unix.so
 obscure sha512 shadow remember=5 rounds=5000"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000077-GPOS-00045 "
   tag satisfies: ["SRG-OS-000077-GPOS-00045", "SRG-OS-000073-GPOS-00041"]

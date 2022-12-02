@@ -43,40 +43,32 @@ remote_server = 192.168.122.126
 If
 the \"remote_server\" parameter is not set, is set with a local address, or is set with an invalid
 address, this is a finding."
-  desc "fix", "Configure the audit event multiplexor to offload audit records to a different system or
-storage media from the system being audited.
-
-Install the audisp-remote plugin:
-
-$ sudo
-apt-get install audispd-plugins -y
-
-Set the audisp-remote plugin as active by editing the
-\"/etc/audisp/plugins.d/au-remote.conf\" file:
-
-$ sudo sed -i -E
-'s/active\\s*=\\s*no/active = yes/' /etc/audisp/plugins.d/au-remote.conf
-
-Set the
-address of the remote machine by editing the \"/etc/audisp/audisp-remote.conf\" file:
-
-$
-sudo sed -i -E 's/(remote_server\\s*=).*/\\1 &lt;remote addr&gt;/'
-/etc/audisp/audisp-remote.conf
-
-where &lt;remote addr&gt; must be substituted by the
-address of the remote server receiving the audit log.
-
-Make the audit service reload its
-configuration files:
-
+  desc "fix", "Configure the audit event multiplexor to offload audit records to a different system or storage media from the system being audited. 
+ 
+Install the audisp-remote plugin: 
+ 
+$ sudo apt-get install audispd-plugins -y 
+ 
+Set the audisp-remote plugin as active by editing the \"/etc/audisp/plugins.d/au-remote.conf\" file: 
+ 
+$ sudo sed -i -E 's/active\\s*=\\s*no/active = yes/' /etc/audisp/plugins.d/au-remote.conf 
+ 
+Set the address of the remote machine by editing the \"/etc/audisp/audisp-remote.conf\" file: 
+ 
+$ sudo sed -i -E 's/(remote_server\\s*=).*/\\1 <remote addr>/' /etc/audisp/audisp-remote.conf 
+ 
+where <remote addr> must be substituted by the address of the remote server receiving the audit log. 
+ 
+Make the audit service reload its configuration files: 
+ 
 $ sudo systemctl restart auditd.service"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000342-GPOS-00133 "
   tag satisfies: ["SRG-OS-000342-GPOS-00133", "SRG-OS-000479-GPOS-00224"]
   tag gid: "V-238306 "
-  tag rid: "SV-238306r853424_rule "
+  tag rid: "SV-238306r654093_rule"
   tag stig_id: "UBTU-20-010216 "
   tag fix_id: "F-41475r654092_fix "
   tag cci: ["CCI-001851"]

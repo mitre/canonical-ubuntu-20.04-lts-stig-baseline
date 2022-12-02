@@ -62,6 +62,7 @@ performing the following operations:
 
 $ sudo passwd -l root"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000109-GPOS-00056 "
   tag gid: "V-238329 "

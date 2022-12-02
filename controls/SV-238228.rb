@@ -71,6 +71,7 @@ requisite pam_pwquality.so retry=3
 Note: The value of \"retry\" should be between \"1\" and
 \"3\"."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000480-GPOS-00225 "
   tag gid: "V-238228 "

@@ -43,18 +43,13 @@ unauthorized disclosure and modification. Cryptographic mechanisms implemented t
 protect information integrity include, for example, cryptographic hash functions which
 have common application in digital signatures, checksums, and message authentication
 codes."
-  desc "check", "Verify the SSH daemon is configured to only use MACs that employ FIPS 140-2 approved ciphers
-with the following command:
-
-$ grep -ir macs /etc/ssh/sshd_config*
-
-MACs
-hmac-sha2-512,hmac-sha2-256
-
-If any ciphers other than \"hmac-sha2-512\" or
-\"hmac-sha2-256\" are listed, the order differs from the example above, or the returned line is
-commented out, this is a finding.
-If conflicting results are returned, this is a finding."
+  desc "check", "Verify the SSH daemon is configured to only use MACs that employ FIPS 140-2 approved ciphers with the following command: 
+ 
+$ grep -i macs /etc/ssh/sshd_config 
+ 
+MACs hmac-sha2-512,hmac-sha2-256 
+ 
+If any ciphers other than \"hmac-sha2-512\" or \"hmac-sha2-256\" are listed, the order differs from the example above, or the returned line is commented out, this is a finding."
   desc "fix", "Configure the Ubuntu operating system to allow the SSH daemon to only use MACs that employ FIPS
 140-2 approved ciphers.
 
@@ -70,11 +65,12 @@ Restart the SSH daemon for the changes to take effect:
 $
 sudo systemctl reload sshd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000424-GPOS-00188 "
   tag satisfies: ["SRG-OS-000424-GPOS-00188", "SRG-OS-000250-GPOS-00093", "SRG-OS-000393-GPOS-00173"]
   tag gid: "V-238216 "
-  tag rid: "SV-238216r860820_rule "
+  tag rid: "SV-238216r654316_rule"
   tag stig_id: "UBTU-20-010043 "
   tag fix_id: "F-41385r653822_fix "
   tag cci: ["CCI-001453", "CCI-002421", "CCI-002890"]

@@ -51,6 +51,7 @@ following command:
 $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin
 /usr/local/sbin ! -user root -type d -exec chown root '{}' \\;"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000258-GPOS-00099 "
   tag gid: "V-238345 "

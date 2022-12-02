@@ -29,6 +29,7 @@ Edit the \"UMASK\" parameter in the
 
 UMASK 077"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000480-GPOS-00228 "
   tag gid: "V-238209 "

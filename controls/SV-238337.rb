@@ -40,6 +40,7 @@ this is a finding."
 $ sudo find
 /var/log -perm /137 -type f -exec chmod 640 '{}' \\;"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000205-GPOS-00083 "
   tag gid: "V-238337 "

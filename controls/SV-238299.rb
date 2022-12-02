@@ -31,6 +31,7 @@ update the grub config file, run:
 
 $ sudo update-grub"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000254-GPOS-00095 "
   tag gid: "V-238299 "

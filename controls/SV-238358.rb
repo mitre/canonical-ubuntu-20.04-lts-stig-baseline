@@ -42,10 +42,11 @@ configurations are changed in an unauthorized manner.
 Modify the \"SILENTREPORTS\"
 parameter in the \"/etc/default/aide\" file with a value of \"no\" if it does not already exist."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000363-GPOS-00150 "
   tag gid: "V-238358 "
-  tag rid: "SV-238358r853433_rule "
+  tag rid: "SV-238358r654249_rule"
   tag stig_id: "UBTU-20-010437 "
   tag fix_id: "F-41527r654248_fix "
   tag cci: ["CCI-001744"]

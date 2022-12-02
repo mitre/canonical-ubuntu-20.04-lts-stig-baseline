@@ -65,10 +65,11 @@ partition or pseudo file systems (such as /proc or /sys) are not listed, this is
 Note: Encrypting a partition in an already-installed system is more difficult because it
 will need to be resized and existing partitions changed."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000404-GPOS-00183 "
   tag gid: "V-238365 "
-  tag rid: "SV-238365r853442_rule "
+  tag rid: "SV-238365r654270_rule"
   tag stig_id: "UBTU-20-010444 "
   tag fix_id: "F-41534r654269_fix "
   tag cci: ["CCI-002475"]

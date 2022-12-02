@@ -66,6 +66,7 @@ so the changes take effect:
 
 $ sudo systemctl restart auditd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000047-GPOS-00023 "
   tag gid: "V-238244 "

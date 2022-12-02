@@ -56,10 +56,11 @@ Restart the chrony service:
 $
 sudo systemctl restart chrony.service"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000356-GPOS-00144 "
   tag gid: "V-238357 "
-  tag rid: "SV-238357r853432_rule "
+  tag rid: "SV-238357r654246_rule"
   tag stig_id: "UBTU-20-010436 "
   tag fix_id: "F-41526r654245_fix "
   tag cci: ["CCI-002046"]

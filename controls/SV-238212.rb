@@ -41,21 +41,15 @@ information system use.
 This capability is typically reserved for specific Ubuntu
 operating system functionality where the system owner, data owner, or organization
 requires additional assurance."
-  desc "check", "Verify that all network connections associated with SSH traffic automatically terminate
-after a period of inactivity.
-
-Verify the \"ClientAliveCountMax\" variable is set in the
-\"/etc/ssh/sshd_config\" file by performing the following command:
-
-$ sudo grep -ir
-clientalivecountmax /etc/ssh/sshd_config*
-
-ClientAliveCountMax  1
-
-If
-\"ClientAliveCountMax\" is not set, is not set to \"1\", or is commented out, this is a finding.
-If
-conflicting results are returned, this is a finding."
+  desc "check", "Verify that all network connections associated with SSH traffic automatically terminate after a period of inactivity. 
+ 
+Verify the \"ClientAliveCountMax\" variable is set in the \"/etc/ssh/sshd_config\" file by performing the following command: 
+ 
+$ sudo grep -i clientalivecountmax /etc/ssh/sshd_config 
+ 
+ClientAliveCountMax  1 
+ 
+If \"ClientAliveCountMax\" is not set, is not set to \"1\", or is commented out, this is a finding."
   desc "fix", "Configure the Ubuntu operating system to automatically terminate inactive SSH sessions
 after a period of inactivity.
 
@@ -70,10 +64,11 @@ Restart the SSH daemon for the changes to take effect:
 $ sudo
 systemctl restart sshd.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000126-GPOS-00066 "
   tag gid: "V-238212 "
-  tag rid: "SV-238212r858521_rule "
+  tag rid: "SV-238212r653811_rule"
   tag stig_id: "UBTU-20-010036 "
   tag fix_id: "F-41381r653810_fix "
   tag cci: ["CCI-000879"]

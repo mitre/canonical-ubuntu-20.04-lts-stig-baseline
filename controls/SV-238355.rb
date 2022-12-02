@@ -56,10 +56,11 @@ firewall is installed, this is a finding."
 $ sudo systemctl enable
 --now ufw.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000297-GPOS-00115 "
   tag gid: "V-238355 "
-  tag rid: "SV-238355r853430_rule "
+  tag rid: "SV-238355r654240_rule"
   tag stig_id: "UBTU-20-010434 "
   tag fix_id: "F-41524r654239_fix "
   tag cci: ["CCI-002314"]

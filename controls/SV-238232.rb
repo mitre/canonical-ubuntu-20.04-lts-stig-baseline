@@ -35,10 +35,11 @@ authentication.
 Modify all of the \"cert_policy\" lines in
 \"/etc/pam_pkcs11/pam_pkcs11.conf\" to include \"ocsp_on\"."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000377-GPOS-00162 "
   tag gid: "V-238232 "
-  tag rid: "SV-238232r853412_rule "
+  tag rid: "SV-238232r653871_rule"
   tag stig_id: "UBTU-20-010065 "
   tag fix_id: "F-41401r653870_fix "
   tag cci: ["CCI-001954"]

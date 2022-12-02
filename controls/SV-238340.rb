@@ -35,6 +35,7 @@ directory by running the following command:
 
 $ sudo chmod 0750 /var/log"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000206-GPOS-00084 "
   tag gid: "V-238340 "

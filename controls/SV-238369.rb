@@ -53,10 +53,11 @@ configuration files:
 
 $ sudo sysctl --system"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000433-GPOS-00193 "
   tag gid: "V-238369 "
-  tag rid: "SV-238369r853446_rule "
+  tag rid: "SV-238369r654282_rule"
   tag stig_id: "UBTU-20-010448 "
   tag fix_id: "F-41538r654281_fix "
   tag cci: ["CCI-002824"]

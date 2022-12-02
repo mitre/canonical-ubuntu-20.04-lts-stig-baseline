@@ -34,6 +34,7 @@ If the \"ucredit\" parameter is greater than
 
 ucredit=-1"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000069-GPOS-00037 "
   tag gid: "V-238221 "

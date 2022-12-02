@@ -55,6 +55,7 @@ For the changes to take effect, restart the
 
 $ sudo systemctl restart rsyslog.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000032-GPOS-00013 "
   tag gid: "V-238324 "

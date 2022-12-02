@@ -47,28 +47,21 @@ internet).
 
 The DoD CAC with DoD-approved PKI is an example of multifactor
 authentication."
-  desc "check", "Verify the Ubuntu operating system has the packages required for multifactor
-authentication installed with the following commands:
-
-$ dpkg -l | grep libpam-pkcs11
-
-ii
-libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKCS#11 smart cards
-
-If the
-\"libpam-pkcs11\" package is not installed, this is a finding.
-
-Verify the sshd daemon allows
-public key authentication with the following command:
-
-$ grep -r ^Pubkeyauthentication
-/etc/ssh/sshd_config*
-
-PubkeyAuthentication yes
-
-If this option is set to \"no\" or is
-missing, this is a finding.
-If conflicting results are returned, this is a finding."
+  desc "check", "Verify the Ubuntu operating system has the packages required for multifactor authentication installed with the following commands: 
+ 
+$ dpkg -l | grep libpam-pkcs11 
+ 
+ii  libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKCS#11 smart cards 
+ 
+If the \"libpam-pkcs11\" package is not installed, this is a finding. 
+ 
+Verify the sshd daemon allows public key authentication with the following, 
+  
+$ grep ^Pubkeyauthentication /etc/ssh/sshd_config 
+ 
+PubkeyAuthentication yes 
+ 
+If this option is set to \"no\" or is missing, this is a finding."
   desc "fix", "Configure the Ubuntu operating system to use multifactor authentication for network access
 to accounts.
 
@@ -80,11 +73,12 @@ auth    [success=2 default=ignore] pam_pkcs11.so
 Set the sshd option
 \"PubkeyAuthentication yes\" in the \"/etc/ssh/sshd_config\" file."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000105-GPOS-00052 "
   tag satisfies: ["SRG-OS-000105-GPOS-00052", "SRG-OS-000106-GPOS-00053", "SRG-OS-000107-GPOS-00054", "SRG-OS-000108-GPOS-00055"]
   tag gid: "V-238210 "
-  tag rid: "SV-238210r858517_rule "
+  tag rid: "SV-238210r653805_rule"
   tag stig_id: "UBTU-20-010033 "
   tag fix_id: "F-41379r653804_fix "
   tag cci: ["CCI-000765", "CCI-000766", "CCI-000767", "CCI-000768"]

@@ -19,20 +19,15 @@ Typically, strong authentication requires authenticators that are resistant to r
 attacks and employ multifactor authentication. Strong authenticators include, for
 example, PKI where certificates are stored on a token protected by a password, passphrase, or
 biometric."
-  desc "check", "Verify the Ubuntu operating system is configured to use strong authenticators in the
-establishment of nonlocal maintenance and diagnostic maintenance.
-
-Verify that \"UsePAM\"
-is set to \"yes\" in \"/etc/ssh/sshd_config:
-
-$ grep -r ^UsePAM
-/etc/ssh/sshd_config*
-
-UsePAM yes
-
-If \"UsePAM\" is not set to \"yes\", this is a finding.
-If
-conflicting results are returned, this is a finding."
+  desc "check", "Verify the Ubuntu operating system is configured to use strong authenticators in the establishment of nonlocal maintenance and diagnostic maintenance. 
+ 
+Verify that \"UsePAM\" is set to \"yes\" in \"/etc/ssh/sshd_config: 
+ 
+$ grep ^UsePAM /etc/ssh/sshd_config 
+ 
+UsePAM yes 
+ 
+If \"UsePAM\" is not set to \"yes\", this is a finding."
   desc "fix", "Configure the Ubuntu operating system to use strong authentication when establishing
 nonlocal maintenance and diagnostic sessions.
 
@@ -41,10 +36,11 @@ Add or modify the following line to
 
 UsePAM yes"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000125-GPOS-00065 "
   tag gid: "V-238211 "
-  tag rid: "SV-238211r858519_rule "
+  tag rid: "SV-238211r653808_rule"
   tag stig_id: "UBTU-20-010035 "
   tag fix_id: "F-41380r653807_fix "
   tag cci: ["CCI-000877"]

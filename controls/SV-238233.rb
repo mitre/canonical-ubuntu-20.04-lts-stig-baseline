@@ -33,10 +33,11 @@ missing an \"/etc/pam_pkcs11/\" directory and an \"/etc/pam_pkcs11/pam_pkcs11.co
 an example to copy into place and modify accordingly at
 \"/usr/share/doc/libpam-pkcs11/examples/pam_pkcs11.conf.example.gz\"."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000384-GPOS-00167 "
   tag gid: "V-238233 "
-  tag rid: "SV-238233r853413_rule "
+  tag rid: "SV-238233r653874_rule"
   tag stig_id: "UBTU-20-010066 "
   tag fix_id: "F-41402r653873_fix "
   tag cci: ["CCI-001991"]

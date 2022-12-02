@@ -22,11 +22,12 @@ command, this is a finding."
   desc "fix", "Remove any occurrence of \"NOPASSWD\" or \"!authenticate\" found in \"/etc/sudoers\" file or
 files in the \"/etc/sudoers.d\" directory."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000373-GPOS-00156 "
   tag satisfies: ["SRG-OS-000373-GPOS-00156", "SRG-OS-000373-GPOS-00157"]
   tag gid: "V-238208 "
-  tag rid: "SV-238208r853405_rule "
+  tag rid: "SV-238208r653799_rule"
   tag stig_id: "UBTU-20-010014 "
   tag fix_id: "F-41377r653798_fix "
   tag cci: ["CCI-002038"]

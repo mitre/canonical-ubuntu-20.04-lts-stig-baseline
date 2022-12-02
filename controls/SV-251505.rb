@@ -32,24 +32,21 @@ usb-storage
 
 If the command does not return any output, or the line is commented out, this is a
 finding."
-  desc "fix", "Configure the Ubuntu operating system to disable using the USB storage kernel module.
-
+  desc "fix", "Configure the Ubuntu operating system to disable using the USB storage kernel module. 
 
 Create a file under \"/etc/modprobe.d\" to contain the following:
 
-# sudo su -c \"echo
-install usb-storage /bin/true &gt;&gt; /etc/modprobe.d/DISASTIG.conf\"
+# sudo su -c \"echo install usb-storage /bin/true >> /etc/modprobe.d/DISASTIG.conf\"
 
-Configure the
-operating system to disable the ability to use USB mass storage devices.
+Configure the operating system to disable the ability to use USB mass storage devices.
 
-# sudo su -c \"echo
-blacklist usb-storage &gt;&gt; /etc/modprobe.d/DISASTIG.conf\""
+# sudo su -c \"echo blacklist usb-storage >> /etc/modprobe.d/DISASTIG.conf\""
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000378-GPOS-00163 "
   tag gid: "V-251505 "
-  tag rid: "SV-251505r853450_rule "
+  tag rid: "SV-251505r808512_rule"
   tag stig_id: "UBTU-20-010461 "
   tag fix_id: "F-54894r808511_fix "
   tag cci: ["CCI-001958"]

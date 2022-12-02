@@ -25,6 +25,7 @@ or modify the following line in the \"/etc/login.defs\" file:
 
 PASS_MAX_DAYS    60"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000076-GPOS-00044 "
   tag gid: "V-238203 "

@@ -24,6 +24,7 @@ the parameter \"pam_faildelay\" to a value of  4000000 or greater:
 auth    required
 pam_faildelay.so    delay=4000000"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000480-GPOS-00226 "
   tag gid: "V-238237 "

@@ -42,10 +42,11 @@ installed to perform integrity checks, this is a finding."
 
 $ sudo apt-get install aide"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000445-GPOS-00199 "
   tag gid: "V-238371 "
-  tag rid: "SV-238371r853448_rule "
+  tag rid: "SV-238371r654288_rule"
   tag stig_id: "UBTU-20-010450 "
   tag fix_id: "F-41540r654287_fix "
   tag cci: ["CCI-002696"]

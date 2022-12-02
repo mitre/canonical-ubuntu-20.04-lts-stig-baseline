@@ -75,10 +75,11 @@ current sessions, execute the following command over the terminal session:
 $ export
 TMOUT=600"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000279-GPOS-00109 "
   tag gid: "V-238207 "
-  tag rid: "SV-238207r853404_rule "
+  tag rid: "SV-238207r653796_rule"
   tag stig_id: "UBTU-20-010013 "
   tag fix_id: "F-41376r653795_fix "
   tag cci: ["CCI-002361"]

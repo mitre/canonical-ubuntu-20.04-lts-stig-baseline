@@ -40,6 +40,7 @@ Add or update the following line in the
 
 ocredit=-1"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000266-GPOS-00101 "
   tag gid: "V-238226 "

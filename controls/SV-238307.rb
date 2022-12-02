@@ -63,10 +63,11 @@ the SA and ISSO.
 Edit \"/etc/audit/auditd.conf\" and set the \"space_left\" parameter to be at
 least 25% of the repository maximum audit record storage capacity."
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000343-GPOS-00134 "
   tag gid: "V-238307 "
-  tag rid: "SV-238307r853425_rule "
+  tag rid: "SV-238307r654096_rule"
   tag stig_id: "UBTU-20-010217 "
   tag fix_id: "F-41476r654095_fix "
   tag cci: ["CCI-001855"]

@@ -39,10 +39,11 @@ If \"nx\" is not showing up in
 \"/proc/cpuinfo\", and the system's BIOS setup configuration permits toggling the No
 Execution bit, set it to \"enable\"."
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000433-GPOS-00192 "
   tag gid: "V-238368 "
-  tag rid: "SV-238368r853445_rule "
+  tag rid: "SV-238368r654279_rule"
   tag stig_id: "UBTU-20-010447 "
   tag fix_id: "F-41537r654278_fix "
   tag cci: ["CCI-002824"]

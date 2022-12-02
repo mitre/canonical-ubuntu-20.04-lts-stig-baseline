@@ -29,10 +29,11 @@ Note: It is valid for this configuration to be in a
 file with a name that ends with \".conf\" and does not begin with a \".\" in the \"/etc/sssd/conf.d/\"
 directory instead of the \"/etc/sssd/sssd.conf\" file."
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000383-GPOS-00166 "
   tag gid: "V-238362 "
-  tag rid: "SV-238362r853437_rule "
+  tag rid: "SV-238362r654261_rule"
   tag stig_id: "UBTU-20-010441 "
   tag fix_id: "F-41531r654260_fix "
   tag cci: ["CCI-002007"]

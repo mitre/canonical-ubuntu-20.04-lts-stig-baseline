@@ -46,6 +46,7 @@ value, add or update the following line in \"/etc/sysctl.conf\":
 net.ipv4.tcp_syncookies
 = 1"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000142-GPOS-00071 "
   tag gid: "V-238333 "

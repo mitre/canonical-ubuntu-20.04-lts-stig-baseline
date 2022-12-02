@@ -73,10 +73,11 @@ If the \"chrony\" service was running and the value of \"maxpoll\" or
 $ sudo
 systemctl restart chrony.service"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000355-GPOS-00143 "
   tag gid: "V-238356 "
-  tag rid: "SV-238356r853431_rule "
+  tag rid: "SV-238356r808492_rule"
   tag stig_id: "UBTU-20-010435 "
   tag fix_id: "F-41525r808491_fix "
   tag cci: ["CCI-001891"]

@@ -33,6 +33,7 @@ Add or modify the \"minlen\" parameter value to the \"/etc/security/pwquality.co
 
 minlen=15"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000078-GPOS-00046 "
   tag gid: "V-238225 "

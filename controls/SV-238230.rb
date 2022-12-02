@@ -64,10 +64,11 @@ the following command:
 
 $ sudo apt install libpam-pkcs11"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000375-GPOS-00160 "
   tag gid: "V-238230 "
-  tag rid: "SV-238230r853410_rule "
+  tag rid: "SV-238230r653865_rule"
   tag stig_id: "UBTU-20-010063 "
   tag fix_id: "F-41399r653864_fix "
   tag cci: ["CCI-001948"]

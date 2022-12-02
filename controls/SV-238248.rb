@@ -60,6 +60,7 @@ directory containing the audit logs, configure the audit log directory to have a
 $ sudo chmod -R  g-w,o-rwx
 /var/log/audit"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000059-GPOS-00029 "
   tag gid: "V-238248 "

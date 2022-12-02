@@ -29,18 +29,13 @@ such as keystroke monitoring if the ForwardX11Trusted option is also enabled.
 If X11
 services are not required for the system's intended function, they should be disabled or
 restricted as appropriate to the system’s needs."
-  desc "check", "Verify that X11Forwarding is disabled with the following command:
-
-$ grep -ir
-x11forwarding /etc/ssh/sshd_config* | grep -v \"^#\"
-
-X11Forwarding no
-
-If the
-\"X11Forwarding\" keyword is set to \"yes\" and is not documented with the Information System
-Security Officer (ISSO) as an operational requirement or is missing, this is a finding.
-If
-conflicting results are returned, this is a finding."
+  desc "check", "Verify that X11Forwarding is disabled with the following command: 
+ 
+$ grep -i x11forwarding /etc/ssh/sshd_config | grep -v \"^#\" 
+ 
+X11Forwarding no 
+ 
+If the \"X11Forwarding\" keyword is set to \"yes\" and is not documented with the Information System Security Officer (ISSO) as an operational requirement or is missing, this is a finding."
   desc "fix", "Edit the \"/etc/ssh/sshd_config\" file to uncomment or add the line for the \"X11Forwarding\"
 keyword and set its value to \"no\" (this file may be named differently or be in a different
 location if using a version of SSH that is provided by a third-party vendor):
@@ -53,10 +48,11 @@ Restart the SSH daemon for the changes to take effect:
 $ sudo systemctl restart
 sshd.service"
   impact 0.7
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "high "
   tag gtitle: "SRG-OS-000480-GPOS-00227 "
   tag gid: "V-238219 "
-  tag rid: "SV-238219r858533_rule "
+  tag rid: "SV-238219r653832_rule"
   tag stig_id: "UBTU-20-010048 "
   tag fix_id: "F-41388r653831_fix "
   tag cci: ["CCI-000366"]

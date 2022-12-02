@@ -40,6 +40,7 @@ Add the following line to the top of the
 
 * hard maxlogins 10"
   impact 0.3
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "low "
   tag gtitle: "SRG-OS-000027-GPOS-00008 "
   tag gid: "V-238323 "

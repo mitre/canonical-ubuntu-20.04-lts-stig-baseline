@@ -51,12 +51,13 @@ Update the \"/etc/ssl/certs\" directory with the following command:
 $ sudo
 update-ca-certificates"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000403-GPOS-00182 "
   tag gid: "V-238364 "
-  tag rid: "SV-238364r860824_rule "
+  tag rid: "SV-238364r832965_rule"
   tag stig_id: "UBTU-20-010443 "
-  tag fix_id: "F-41533r860823_fix "
+  tag fix_id: "F-41533r832964_fix"
   tag cci: ["CCI-002470"]
   tag nist: ["SC-23 (5)"]
 

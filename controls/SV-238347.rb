@@ -35,6 +35,7 @@ command:
 
 $ sudo find /lib /lib64 /usr/lib -perm /022 -type f -exec chmod 755 '{}' \\;"
   impact 0.5
+  ref 'DPMS Target Canonical Ubuntu 20.04 LTS'
   tag severity: "medium "
   tag gtitle: "SRG-OS-000259-GPOS-00100 "
   tag gid: "V-238347 "
