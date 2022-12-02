@@ -1,4 +1,4 @@
-control 'SV-238335' do
+control "SV-238335" do
   title "Ubuntu operating systems handling data requiring \"data at rest\" protections must employ
 cryptographic mechanisms to prevent unauthorized disclosure and modification of the
 information at rest. "
@@ -10,8 +10,17 @@ This requirement addresses protection of user-generated data, as well as
 operating system-specific configuration data. Organizations may choose to employ
 different mechanisms to achieve confidentiality and integrity protections, as
 appropriate, in accordance with the security category and/or classification of the
-information. "
-  desc 'check', "If there is a documented and approved reason for not having data-at-rest encryption, this
+information."
+  desc "default", "Information at rest refers to the state of information when it is located on a secondary
+storage device (e.g., disk drive and tape drive, when used for backups) within an operating
+system.
+
+This requirement addresses protection of user-generated data, as well as
+operating system-specific configuration data. Organizations may choose to employ
+different mechanisms to achieve confidentiality and integrity protections, as
+appropriate, in accordance with the security category and/or classification of the
+information."
+  desc "check", "If there is a documented and approved reason for not having data-at-rest encryption, this
 requirement is Not Applicable.
 
 Verify the Ubuntu operating system prevents unauthorized
@@ -50,23 +59,24 @@ Every persistent disk
 partition present must have an entry in the file.
 
 If any partitions other than the boot
-partition or pseudo file systems (such as /proc or /sys) are not listed, this is a finding. "
-  desc 'fix', "To encrypt an entire partition, dedicate a partition for encryption in the partition layout.
+partition or pseudo file systems (such as /proc or /sys) are not listed, this is a finding."
+  desc "fix", "To encrypt an entire partition, dedicate a partition for encryption in the partition layout.
 
 
 Note: Encrypting a partition in an already-installed system is more difficult because it
-will need to be resized and existing partitions changed. "
+will need to be resized and existing partitions changed."
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000185-GPOS-00079 '
-  tag gid: 'V-238335 '
-  tag rid: 'SV-238335r654180_rule '
-  tag stig_id: 'UBTU-20-010414 '
-  tag fix_id: 'F-41504r654179_fix '
-  tag cci: ['CCI-001199']
-  tag nist: ['SC-28']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000185-GPOS-00079 "
+  tag gid: "V-238335 "
+  tag rid: "SV-238335r654180_rule "
+  tag stig_id: "UBTU-20-010414 "
+  tag fix_id: "F-41504r654179_fix "
+  tag cci: ["CCI-001199"]
+  tag nist: ["SC-28"]
 
   describe 'Not Applicable' do
     skip 'Encryption of data at rest is handled by the IaaS'
   end
+
 end
