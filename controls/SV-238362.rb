@@ -33,7 +33,7 @@ directory instead of the \"/etc/sssd/sssd.conf\" file."
   tag severity: "low "
   tag gtitle: "SRG-OS-000383-GPOS-00166 "
   tag gid: "V-238362 "
-  tag rid: "SV-238362r654261_rule"
+  tag rid: "SV-238362r853437_rule "
   tag stig_id: "UBTU-20-010441 "
   tag fix_id: "F-41531r654260_fix "
   tag cci: ["CCI-002007"]

@@ -38,7 +38,7 @@ be located in the \"/etc/cron.weekly\" directory."
   tag severity: "low "
   tag gtitle: "SRG-OS-000479-GPOS-00224 "
   tag gid: "V-238321 "
-  tag rid: "SV-238321r654138_rule"
+  tag rid: "SV-238321r853428_rule "
   tag stig_id: "UBTU-20-010300 "
   tag fix_id: "F-41490r654137_fix "
   tag cci: ["CCI-001851"]

@@ -55,9 +55,9 @@ update-ca-certificates"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000403-GPOS-00182 "
   tag gid: "V-238364 "
-  tag rid: "SV-238364r832965_rule"
+  tag rid: "SV-238364r860824_rule "
   tag stig_id: "UBTU-20-010443 "
-  tag fix_id: "F-41533r832964_fix"
+  tag fix_id: "F-41533r860823_fix "
   tag cci: ["CCI-002470"]
   tag nist: ["SC-23 (5)"]
 

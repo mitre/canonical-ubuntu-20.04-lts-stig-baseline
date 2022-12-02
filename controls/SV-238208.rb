@@ -27,7 +27,7 @@ files in the \"/etc/sudoers.d\" directory."
   tag gtitle: "SRG-OS-000373-GPOS-00156 "
   tag satisfies: ["SRG-OS-000373-GPOS-00156", "SRG-OS-000373-GPOS-00157"]
   tag gid: "V-238208 "
-  tag rid: "SV-238208r653799_rule"
+  tag rid: "SV-238208r853405_rule "
   tag stig_id: "UBTU-20-010014 "
   tag fix_id: "F-41377r653798_fix "
   tag cci: ["CCI-002038"]

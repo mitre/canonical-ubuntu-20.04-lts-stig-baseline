@@ -74,7 +74,7 @@ $  sudo cp -f
   tag severity: "medium "
   tag gtitle: "SRG-OS-000446-GPOS-00200 "
   tag gid: "V-238236 "
-  tag rid: "SV-238236r653883_rule"
+  tag rid: "SV-238236r853415_rule "
   tag stig_id: "UBTU-20-010074 "
   tag fix_id: "F-41405r653882_fix "
   tag cci: ["CCI-002699"]

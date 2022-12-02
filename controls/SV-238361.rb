@@ -39,7 +39,7 @@ $ sudo passwd -e [UserName]"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000380-GPOS-00165 "
   tag gid: "V-238361 "
-  tag rid: "SV-238361r654258_rule"
+  tag rid: "SV-238361r853436_rule "
   tag stig_id: "UBTU-20-010440 "
   tag fix_id: "F-41530r654257_fix "
   tag cci: ["CCI-002041"]

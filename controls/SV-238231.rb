@@ -39,7 +39,7 @@ opensc-pkcs11"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000376-GPOS-00161 "
   tag gid: "V-238231 "
-  tag rid: "SV-238231r653868_rule"
+  tag rid: "SV-238231r853411_rule "
   tag stig_id: "UBTU-20-010064 "
   tag fix_id: "F-41400r653867_fix "
   tag cci: ["CCI-001953"]

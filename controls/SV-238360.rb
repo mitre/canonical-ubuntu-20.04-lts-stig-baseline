@@ -78,7 +78,7 @@ See the AppArmor documentation for more information on configuring profiles."
   tag gtitle: "SRG-OS-000368-GPOS-00154 "
   tag satisfies: ["SRG-OS-000368-GPOS-00154", "SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123", "SRG-OS-000312-GPOS-00124", "SRG-OS-000324-GPOS-00125", "SRG-OS-000370-GPOS-00155"]
   tag gid: "V-238360 "
-  tag rid: "SV-238360r654255_rule"
+  tag rid: "SV-238360r853435_rule "
   tag stig_id: "UBTU-20-010439 "
   tag fix_id: "F-41529r654254_fix "
   tag cci: ["CCI-001764", "CCI-001774", "CCI-002165", "CCI-002235"]

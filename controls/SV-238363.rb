@@ -35,7 +35,7 @@ enable FIPS."
   tag gtitle: "SRG-OS-000396-GPOS-00176 "
   tag satisfies: ["SRG-OS-000396-GPOS-00176", "SRG-OS-000478-GPOS-00223"]
   tag gid: "V-238363 "
-  tag rid: "SV-238363r654320_rule"
+  tag rid: "SV-238363r853438_rule "
   tag stig_id: "UBTU-20-010442 "
   tag fix_id: "F-41532r654263_fix "
   tag cci: ["CCI-002450"]

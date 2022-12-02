@@ -81,7 +81,7 @@ $ sudo modprobe -r <module name>"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000481-GPOS-00481 "
   tag gid: "V-252704 "
-  tag rid: "SV-252704r819057_rule"
+  tag rid: "SV-252704r854182_rule "
   tag stig_id: "UBTU-20-010455 "
   tag fix_id: "F-56110r819056_fix "
   tag cci: ["CCI-002418"]

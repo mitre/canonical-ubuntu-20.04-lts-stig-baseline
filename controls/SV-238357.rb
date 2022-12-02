@@ -60,7 +60,7 @@ sudo systemctl restart chrony.service"
   tag severity: "low "
   tag gtitle: "SRG-OS-000356-GPOS-00144 "
   tag gid: "V-238357 "
-  tag rid: "SV-238357r654246_rule"
+  tag rid: "SV-238357r853432_rule "
   tag stig_id: "UBTU-20-010436 "
   tag fix_id: "F-41526r654245_fix "
   tag cci: ["CCI-002046"]

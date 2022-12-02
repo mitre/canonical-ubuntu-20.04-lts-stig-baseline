@@ -72,7 +72,7 @@ sudo augenrules --load"
   tag gtitle: "SRG-OS-000326-GPOS-00126 "
   tag satisfies: ["SRG-OS-000326-GPOS-00126", "SRG-OS-000327-GPOS-00127"]
   tag gid: "V-238304 "
-  tag rid: "SV-238304r654087_rule"
+  tag rid: "SV-238304r853422_rule "
   tag stig_id: "UBTU-20-010211 "
   tag fix_id: "F-41473r654086_fix "
   tag cci: ["CCI-002233", "CCI-002234"]

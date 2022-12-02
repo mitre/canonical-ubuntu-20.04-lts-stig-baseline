@@ -39,7 +39,7 @@ Modify all of the \"cert_policy\" lines in
   tag severity: "medium "
   tag gtitle: "SRG-OS-000377-GPOS-00162 "
   tag gid: "V-238232 "
-  tag rid: "SV-238232r653871_rule"
+  tag rid: "SV-238232r853412_rule "
   tag stig_id: "UBTU-20-010065 "
   tag fix_id: "F-41401r653870_fix "
   tag cci: ["CCI-001954"]

@@ -53,7 +53,7 @@ augenrules --load"
   tag gtitle: "SRG-OS-000004-GPOS-00004 "
   tag satisfies: ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089", "SRG-OS-000240-GPOS-00090", "SRG-OS-000241-GPOS-00091", "SRG-OS-000303-GPOS-00120", "SRG-OS-000458-GPOS-00203", "SRG-OS-000476-GPOS-00221"]
   tag gid: "V-238241 "
-  tag rid: "SV-238241r653898_rule"
+  tag rid: "SV-238241r853419_rule "
   tag stig_id: "UBTU-20-010103 "
   tag fix_id: "F-41410r653897_fix "
   tag cci: ["CCI-000172", "CCI-001403", "CCI-001404", "CCI-001405", "CCI-002130"]

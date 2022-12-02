@@ -67,7 +67,7 @@ unlock_time = 0"
   tag gtitle: "SRG-OS-000329-GPOS-00128 "
   tag satisfies: ["SRG-OS-000329-GPOS-00128", "SRG-OS-000021-GPOS-00005"]
   tag gid: "V-238235 "
-  tag rid: "SV-238235r802383_rule"
+  tag rid: "SV-238235r853414_rule "
   tag stig_id: "UBTU-20-010072 "
   tag fix_id: "F-41404r802382_fix "
   tag cci: ["CCI-000044", "CCI-002238"]

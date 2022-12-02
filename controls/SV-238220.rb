@@ -11,14 +11,19 @@ displays if the sshd proxy display is configured to listen on the wildcard addre
 default, sshd binds the forwarding server to the loopback address and sets the hostname part
 of the DISPLAY environment variable to localhost. This prevents remote hosts from
 connecting to the proxy display."
-  desc "check", "Verify the SSH daemon prevents remote hosts from connecting to the proxy display. 
- 
-Check the SSH X11UseLocalhost setting with the following command: 
- 
-$ sudo grep -i x11uselocalhost /etc/ssh/sshd_config 
-X11UseLocalhost yes 
- 
-If the \"X11UseLocalhost\" keyword is set to \"no\", is missing, or is commented out, this is a finding."
+  desc "check", "Verify the SSH daemon prevents remote hosts from connecting to the proxy display.
+
+Check the
+SSH X11UseLocalhost setting with the following command:
+
+$ sudo grep -ir x11uselocalhost
+/etc/ssh/sshd_config*
+X11UseLocalhost yes
+
+If the \"X11UseLocalhost\" keyword is set to
+\"no\", is missing, or is commented out, this is a finding.
+If conflicting results are
+returned, this is a finding."
   desc "fix", "Configure the SSH daemon to prevent remote hosts from connecting to the proxy display.
 
 Edit
@@ -38,7 +43,7 @@ systemctl restart sshd.service"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000480-GPOS-00227 "
   tag gid: "V-238220 "
-  tag rid: "SV-238220r653835_rule"
+  tag rid: "SV-238220r858535_rule "
   tag stig_id: "UBTU-20-010049 "
   tag fix_id: "F-41389r653834_fix "
   tag cci: ["CCI-000366"]

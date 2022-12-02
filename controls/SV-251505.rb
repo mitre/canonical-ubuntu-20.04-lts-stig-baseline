@@ -46,7 +46,7 @@ Configure the operating system to disable the ability to use USB mass storage de
   tag severity: "medium "
   tag gtitle: "SRG-OS-000378-GPOS-00163 "
   tag gid: "V-251505 "
-  tag rid: "SV-251505r808512_rule"
+  tag rid: "SV-251505r853450_rule "
   tag stig_id: "UBTU-20-010461 "
   tag fix_id: "F-54894r808511_fix "
   tag cci: ["CCI-001958"]

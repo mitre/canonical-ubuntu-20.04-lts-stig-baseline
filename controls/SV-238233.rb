@@ -37,7 +37,7 @@ an example to copy into place and modify accordingly at
   tag severity: "medium "
   tag gtitle: "SRG-OS-000384-GPOS-00167 "
   tag gid: "V-238233 "
-  tag rid: "SV-238233r653874_rule"
+  tag rid: "SV-238233r853413_rule "
   tag stig_id: "UBTU-20-010066 "
   tag fix_id: "F-41402r653873_fix "
   tag cci: ["CCI-001991"]

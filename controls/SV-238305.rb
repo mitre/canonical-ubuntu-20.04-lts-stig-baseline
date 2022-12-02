@@ -64,7 +64,7 @@ where <log mountpoint> is the aforementioned mount point."
   tag severity: "low "
   tag gtitle: "SRG-OS-000341-GPOS-00132 "
   tag gid: "V-238305 "
-  tag rid: "SV-238305r654090_rule"
+  tag rid: "SV-238305r853423_rule "
   tag stig_id: "UBTU-20-010215 "
   tag fix_id: "F-41474r654089_fix "
   tag cci: ["CCI-001849"]

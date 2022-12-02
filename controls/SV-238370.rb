@@ -37,7 +37,7 @@ Unattended-Upgrade::Remove-Unused-Kernel-Packages \"true\";"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000437-GPOS-00194 "
   tag gid: "V-238370 "
-  tag rid: "SV-238370r654285_rule"
+  tag rid: "SV-238370r853447_rule "
   tag stig_id: "UBTU-20-010449 "
   tag fix_id: "F-41539r654284_fix "
   tag cci: ["CCI-002617"]

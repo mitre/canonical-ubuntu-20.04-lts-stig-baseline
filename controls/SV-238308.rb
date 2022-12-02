@@ -30,7 +30,7 @@ $ sudo timedatectl set-timezone [ZONE]"
   tag severity: "low "
   tag gtitle: "SRG-OS-000359-GPOS-00146 "
   tag gid: "V-238308 "
-  tag rid: "SV-238308r654099_rule"
+  tag rid: "SV-238308r853426_rule "
   tag stig_id: "UBTU-20-010230 "
   tag fix_id: "F-41477r654098_fix "
   tag cci: ["CCI-001890"]

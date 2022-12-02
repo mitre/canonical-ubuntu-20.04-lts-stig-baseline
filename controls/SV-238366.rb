@@ -69,7 +69,7 @@ will need to be resized and existing partitions changed."
   tag severity: "medium "
   tag gtitle: "SRG-OS-000405-GPOS-00184 "
   tag gid: "V-238366 "
-  tag rid: "SV-238366r654273_rule"
+  tag rid: "SV-238366r853443_rule "
   tag stig_id: "UBTU-20-010445 "
   tag fix_id: "F-41535r654272_fix "
   tag cci: ["CCI-002476"]

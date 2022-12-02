@@ -64,7 +64,7 @@ APT::Get::AllowUnauthenticated
   tag severity: "medium "
   tag gtitle: "SRG-OS-000366-GPOS-00153 "
   tag gid: "V-238359 "
-  tag rid: "SV-238359r654319_rule"
+  tag rid: "SV-238359r853434_rule "
   tag stig_id: "UBTU-20-010438 "
   tag fix_id: "F-41528r654251_fix "
   tag cci: ["CCI-001749"]

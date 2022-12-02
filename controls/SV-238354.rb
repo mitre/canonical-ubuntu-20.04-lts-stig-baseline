@@ -52,7 +52,7 @@ ufw"
   tag severity: "medium "
   tag gtitle: "SRG-OS-000297-GPOS-00115 "
   tag gid: "V-238354 "
-  tag rid: "SV-238354r654237_rule"
+  tag rid: "SV-238354r853429_rule "
   tag stig_id: "UBTU-20-010433 "
   tag fix_id: "F-41523r654236_fix "
   tag cci: ["CCI-002314"]
