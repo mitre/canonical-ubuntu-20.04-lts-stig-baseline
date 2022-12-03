@@ -1,0 +1,6 @@
+driver:
+  name: dummy
+
+verifier:
+  input_files:
+    - container.inputs.yml
