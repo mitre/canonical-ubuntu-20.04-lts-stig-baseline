@@ -1,0 +1,17 @@
+---
+driver:
+  name: vagrant
+
+verifier:
+  input_files:
+    - vagrant.inputs.yml
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        echo "NOTICE - Updating the vagrant user to keep sudo working"
+        sudo chage -d $(( $( date +%s ) / 86400 )) vagrant
+        echo "NOTICE - Updating root passwd"
+        echo 'password' | sudo passwd --stdin root
+        echo "NOTICE - updating vagrant sudo config"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/vagrant/d" /etc/sudoers && sudo chmod 400 /etc/sudoers

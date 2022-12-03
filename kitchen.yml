@@ -1,45 +1,4 @@
 ---
-driver:
-  name: vagrant
-  # driver_config:
-  #   ssl_verify_mode: ":verify_none"
-  #   customize:
-  #     cpus: 4
-  #     memory: 8192
-  #     accelerate3d: "off"
-  #     accelerate2dvideo: "off"
-  #     audio: "none"
-  #     usbcardreader: "off"
-  #     vrde: "off"
-  #     usb: "off"
-  #     nictype1: "82540EM"
-  #     clipboard: "disabled"
-
-lifecycle:
-  pre_converge:
-    - remote: |
-        echo "NOTICE - Updating the vagrant user to keep sudo working"
-        sudo chage -d $(( $( date +%s ) / 86400 )) vagrant
-        echo "NOTICE - Updating root passwd"
-        echo 'password' | sudo passwd --stdin root
-        echo "NOTICE - updating vagrant sudo config"
-        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/vagrant/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
-
-transport:
-  name: ssh
-  max_ssh_sessions: 2
-
-verifier:
-  name: inspec
-  sudo: true
-  reporter:
-    - cli
-    - json:spec/results/%{platform}_%{suite}.json
-  inspec_tests:
-    - name: Ubuntu 20.04 LTS STIG V1R5
-      path: .
-  load_plugins: true
-
 provisioner:
   name: ansible_playbook
   hosts: all
@@ -54,10 +13,35 @@ provisioner:
     - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
     - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp
 
+transport:
+  name: ssh
+  max_ssh_sessions: 2
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        echo "NOTICE - Updating the vagrant user to keep sudo working"
+        sudo chage -d $(( $( date +%s ) / 86400 )) vagrant
+        echo "NOTICE - Updating root passwd"
+        echo 'password' | sudo passwd --stdin root
+        echo "NOTICE - updating vagrant sudo config"
+        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/vagrant/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+
+verifier:
+  name: inspec
+  sudo: true
+  reporter:
+    - cli
+    - json:spec/results/%{platform}_%{suite}.json
+  inspec_tests:
+    - name: Ubuntu 20.04 LTS STIG V1R5
+      path: .
+  load_plugins: true
+
 platforms:
   - name: ubuntu-20.04
 
-suites:      
+suites:
   - name: hardened
     provisioner:
       playbook: spec/ansible/roles/hardening.yml
