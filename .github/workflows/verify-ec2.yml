@@ -26,6 +26,7 @@ jobs:
         env:
           AWS_SG_ID: ${{ secrets.SAF_AWS_SG_ID }}
           AWS_SUBNET_ID: ${{ secrets.SAF_AWS_SUBNET_ID }}
+          AWS_REGION: ${{ secrets.SAF_AWS_REGION }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.SAF_AWS_ACCESS_KEY_ID }}
