@@ -2,9 +2,9 @@
 driver:
   name: ec2
   aws_ssh_key_id: <%= ENV['SAF_AWS_SSH_KEY_ID'] %>
-  user_data: ./user_data.sh
+  # user_data: ./user_data.sh
   tags:
-    POC: <%= ENV['POC_TAG'] %>
+    POC: 'SAF Github Actions'
   security_group_ids: <%= ENV['SAF_AWS_SG_ID'] %>
   region: <%= ENV['SAF_AWS_REGION'] %>
   subnet_id: <%= ENV['SAF_AWS_SUBNET_ID'] %>
@@ -24,7 +24,7 @@ pre_converge:
 
 transport:
   name: ssh
-  username: <%= ENV['AWS_EC2_USER'] %>
-  ssh_key: <%= ENV['AWS_EC2_SSH_KEY'] %>
+  username: <%= ENV['SAF_AWS_EC2_USER'] %>
+  ssh_key: <%= ENV['SAF_AWS_EC2_SSH_KEY'] %>
   connection_timeout: 10
   connection_retries: 5
