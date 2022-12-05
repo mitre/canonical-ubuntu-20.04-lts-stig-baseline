@@ -29,3 +29,4 @@ Puppet*
 _config*
 inputs.nolong*
 profile.json
+*.pem
