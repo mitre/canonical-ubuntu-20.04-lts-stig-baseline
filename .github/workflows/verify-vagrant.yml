@@ -38,15 +38,15 @@ jobs:
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Run kitchen test
-        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-20.04 || true
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
-          command_string: 'view summary -i spec/results/ubuntu-2004_${{ matrix.suite }}.json'
+          command_string: 'view summary -i spec/results/ubuntu-20.04_${{ matrix.suite }}.json'
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: 'validate threshold -i spec/results/ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
+          command_string: 'validate threshold -i spec/results/ubuntu-20.04_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:
