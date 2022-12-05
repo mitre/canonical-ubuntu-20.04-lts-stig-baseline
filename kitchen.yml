@@ -29,8 +29,7 @@ verifier:
   load_plugins: true
 
 platforms:
-  - name: ubuntu-2004
-    platform: ubuntu-20.04
+  - name: ubuntu-20.04
 
 suites:
   - name: hardened
