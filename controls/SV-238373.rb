@@ -39,9 +39,16 @@ required      pam_lastlog.so showfailed "
   tag cci: ['CCI-000052']
   tag nist: ['AC-9']
 
-  describe command('grep pam_lastlog /etc/pam.d/login') do
-    its('exit_status') { should eq 0 }
-    its('stdout.strip') { should match /^\s*session\s+required\s+pam_lastlog.so/ }
-    its('stdout.strip') { should_not match /^\s*session\s+required\s+pam_lastlog.so[\s\w\d\=]+.*silent/ }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe command('grep pam_lastlog /etc/pam.d/login') do
+      its('exit_status') { should eq 0 }
+      its('stdout.strip') { should match /^\s*session\s+required\s+pam_lastlog.so/ }
+      its('stdout.strip') { should_not match /^\s*session\s+required\s+pam_lastlog.so[\s\w\d\=]+.*silent/ }
+    end
   end
 end

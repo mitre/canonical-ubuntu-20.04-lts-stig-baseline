@@ -40,20 +40,27 @@ an example to copy into place and modify accordingly at
   tag cci: ['CCI-001991']
   tag nist: ['IA-5 (2) (d)']
 
-  config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
-  if config_file_exists
-    describe.one do
-      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
-        its('cert_policy') { should include 'crl_auto' }
-      end
-      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
-        its('cert_policy') { should include 'crl_offline' }
-      end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
-      subject { config_file_exists }
-      it { should be true }
+    config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
+    if config_file_exists
+      describe.one do
+        describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+          its('cert_policy') { should include 'crl_auto' }
+        end
+        describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+          its('cert_policy') { should include 'crl_offline' }
+        end
+      end
+    else
+      describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end

@@ -52,14 +52,21 @@ sudo chmod -R 0640 /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/* "
   tag cci: ['CCI-000171']
   tag nist: ['AU-12 b']
 
-  files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
-  files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
+    files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries
 
-  audit_conf_files = files1 + files2
+    audit_conf_files = files1 + files2
 
-  audit_conf_files.each do |conf|
-    describe file(conf) do
-      it { should_not be_more_permissive_than('0640') }
+    audit_conf_files.each do |conf|
+      describe file(conf) do
+        it { should_not be_more_permissive_than('0640') }
+      end
     end
   end
 end

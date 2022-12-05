@@ -52,14 +52,21 @@ sudo chown :root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/* "
   tag cci: ['CCI-000171']
   tag nist: ['AU-12 b']
 
-  files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
-  files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
+    files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries
 
-  audit_conf_files = files1 + files2
+    audit_conf_files = files1 + files2
 
-  audit_conf_files.each do |conf|
-    describe file(conf) do
-      its('group') { should cmp 'root' }
+    audit_conf_files.each do |conf|
+      describe file(conf) do
+        its('group') { should cmp 'root' }
+      end
     end
   end
 end

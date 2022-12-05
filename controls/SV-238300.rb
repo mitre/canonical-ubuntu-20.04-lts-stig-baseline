@@ -53,11 +53,18 @@ correct permissions. "
   tag cci: %w(CCI-001493 CCI-001494)
   tag nist: ['AU-9 a', 'AU-9']
 
-  audit_tools = input('audit_tools')
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    audit_tools = input('audit_tools')
 
-  audit_tools.each do |tool|
-    describe file(tool) do
-      it { should_not be_more_permissive_than('0755') }
+    audit_tools.each do |tool|
+      describe file(tool) do
+        it { should_not be_more_permissive_than('0755') }
+      end
     end
   end
 end

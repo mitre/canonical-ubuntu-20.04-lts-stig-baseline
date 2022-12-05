@@ -37,15 +37,22 @@ Modify all of the \"cert_policy\" lines in
   tag cci: ['CCI-001954']
   tag nist: ['IA-2 (12)']
 
-  config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
-  if config_file_exists
-    describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
-      its('cert_policy') { should include 'ocsp_on' }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
-      subject { config_file_exists }
-      it { should be true }
+    config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
+    if config_file_exists
+      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+        its('cert_policy') { should include 'ocsp_on' }
+      end
+    else
+      describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end

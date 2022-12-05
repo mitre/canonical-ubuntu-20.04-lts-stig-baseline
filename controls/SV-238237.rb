@@ -31,18 +31,25 @@ pam_faildelay.so    delay=4000000 "
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe file('/etc/pam.d/common-auth') do
-    it { should exist }
-  end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe file('/etc/pam.d/common-auth') do
+      it { should exist }
+    end
 
-  describe command('grep pam_faildelay /etc/pam.d/common-auth') do
-    its('exit_status') { should eq 0 }
-    its('stdout.strip') { should match /^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=([4-9][\d]{6,}|[1-9][\d]{7,}).*$/ }
-  end
+    describe command('grep pam_faildelay /etc/pam.d/common-auth') do
+      its('exit_status') { should eq 0 }
+      its('stdout.strip') { should match /^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=([4-9][\d]{6,}|[1-9][\d]{7,}).*$/ }
+    end
 
-  file('/etc/pam.d/common-auth').content.to_s.scan(/^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=(\d+).*$/).flatten.each do |entry|
-    describe entry do
-      it { should cmp >= 4_000_000 }
+    file('/etc/pam.d/common-auth').content.to_s.scan(/^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=(\d+).*$/).flatten.each do |entry|
+      describe entry do
+        it { should cmp >= 4_000_000 }
+      end
     end
   end
 end

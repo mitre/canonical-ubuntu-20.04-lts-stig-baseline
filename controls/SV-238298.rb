@@ -83,12 +83,19 @@ $ sudo augenrules
   tag cci: %w(CCI-000130 CCI-000131 CCI-000132 CCI-000133 CCI-000134 CCI-000135 CCI-000154 CCI-000158 CCI-000169 CCI-000172 CCI-001875 CCI-001876 CCI-001877 CCI-001878 CCI-001879 CCI-001880 CCI-001881 CCI-001882 CCI-001914)
   tag nist: ['AU-3 a', 'AU-3 b', 'AU-3 c', 'AU-3 d', 'AU-3 e', 'AU-3 (1)', 'AU-6 (4)', 'AU-7 (1)', 'AU-12 a', 'AU-12 c', 'AU-7 a', 'AU-7 b', 'AU-12 (3)']
 
-  describe package('auditd') do
-    it { should be_installed }
-  end
-  describe service('auditd') do
-    it { should be_installed }
-    it { should be_enabled }
-    it { should be_running }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe package('auditd') do
+      it { should be_installed }
+    end
+    describe service('auditd') do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
   end
 end

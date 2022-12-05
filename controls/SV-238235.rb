@@ -71,13 +71,20 @@ unlock_time = 0 "
   tag cci: %w(CCI-000044 CCI-002238)
   tag nist: ['AC-7 a', 'AC-7 b']
 
-  describe file('/etc/pam.d/common-auth') do
-    it { should exist }
-  end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe file('/etc/pam.d/common-auth') do
+      it { should exist }
+    end
 
-  describe command('grep pam_tally /etc/pam.d/common-auth') do
-    its('exit_status') { should eq 0 }
-    its('stdout.strip') { should match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3($|\s+.*$)/ }
-    its('stdout.strip') { should_not match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3\s+.*unlock_time.*$/ }
+    describe command('grep pam_tally /etc/pam.d/common-auth') do
+      its('exit_status') { should eq 0 }
+      its('stdout.strip') { should match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3($|\s+.*$)/ }
+      its('stdout.strip') { should_not match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3\s+.*unlock_time.*$/ }
+    end
   end
 end

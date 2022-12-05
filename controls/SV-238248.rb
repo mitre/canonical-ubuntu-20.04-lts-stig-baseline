@@ -58,17 +58,24 @@ $ sudo chmod -R  g-w,o-rwx
   tag cci: ['CCI-000164']
   tag nist: ['AU-9 a']
 
-  log_file = auditd_conf.log_file
-
-  log_dir_exists = !log_file.nil? && !File.dirname(log_file).nil?
-  if log_dir_exists
-    describe directory(File.dirname(log_file)) do
-      it { should_not be_more_permissive_than('0750') }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe('Audit directory for file ' + log_file + ' exists') do
-      subject { log_dir_exists }
-      it { should be true }
+    log_file = auditd_conf.log_file
+
+    log_dir_exists = !log_file.nil? && !File.dirname(log_file).nil?
+    if log_dir_exists
+      describe directory(File.dirname(log_file)) do
+        it { should_not be_more_permissive_than('0750') }
+      end
+    else
+      describe('Audit directory for file ' + log_file + ' exists') do
+        subject { log_dir_exists }
+        it { should be true }
+      end
     end
   end
 end

@@ -36,17 +36,24 @@ directory instead of the \"/etc/sssd/sssd.conf\" file. "
   tag cci: ['CCI-002007']
   tag nist: ['IA-5 (13)']
 
-  config_file = input('sssd_conf_path')
-  config_file_exists = file(config_file).exist?
-
-  if config_file_exists
-    describe parse_config_file(config_file) do
-      its('offline_credentials_expiration') { should cmp '1' }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe(config_file + ' exists') do
-      subject { config_file_exists }
-      it { should be true }
+    config_file = input('sssd_conf_path')
+    config_file_exists = file(config_file).exist?
+
+    if config_file_exists
+      describe parse_config_file(config_file) do
+        its('offline_credentials_expiration') { should cmp '1' }
+      end
+    else
+      describe(config_file + ' exists') do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end

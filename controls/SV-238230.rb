@@ -51,7 +51,14 @@ $ sudo apt install libpam-pkcs11 "
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
 
-  describe package('libpam-pkcs11') do
-    it { should be_installed }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe package('libpam-pkcs11') do
+      it { should be_installed }
+    end
   end
 end

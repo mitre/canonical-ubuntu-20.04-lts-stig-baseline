@@ -52,11 +52,18 @@ systemctl restart auditd.service "
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
 
-  action_mail_acct = auditd_conf.action_mail_acct
-  security_accounts = input('action_mail_acct')
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    action_mail_acct = auditd_conf.action_mail_acct
+    security_accounts = input('action_mail_acct')
 
-  describe 'System Administrator (SA) and Information System Security Officer (ISSO) are notified in the event of an audit processing failure' do
-    subject { security_accounts }
-    it { should cmp action_mail_acct }
+    describe 'System Administrator (SA) and Information System Security Officer (ISSO) are notified in the event of an audit processing failure' do
+      subject { security_accounts }
+      it { should cmp action_mail_acct }
+    end
   end
 end

@@ -55,8 +55,15 @@ $ sudo systemctl restart auditd.service "
   tag cci: ['CCI-000140']
   tag nist: ['AU-5 b']
 
-  describe auditd_conf do
-    its('disk_full_action') { should_not be_empty }
-    its('disk_full_action') { should cmp /(?:SYSLOG|SINGLE|HALT)/i }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe auditd_conf do
+      its('disk_full_action') { should_not be_empty }
+      its('disk_full_action') { should cmp /(?:SYSLOG|SINGLE|HALT)/i }
+    end
   end
 end

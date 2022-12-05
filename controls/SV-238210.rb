@@ -69,11 +69,18 @@ Set the sshd option
   tag cci: %w(CCI-000765 CCI-000766 CCI-000767 CCI-000768)
   tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
 
-  describe package('libpam-pkcs11') do
-    it { should be_installed }
-  end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
+    end
+  else
+    describe package('libpam-pkcs11') do
+      it { should be_installed }
+    end
 
-  describe sshd_config do
-    its('PubkeyAuthentication') { should cmp 'yes' }
+    describe sshd_config do
+      its('PubkeyAuthentication') { should cmp 'yes' }
+    end
   end
 end

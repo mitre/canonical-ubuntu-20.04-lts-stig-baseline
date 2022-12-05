@@ -79,23 +79,30 @@ $ sudo systemctl restart auditd.service "
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
 
-  config_file = input('audispremote_config_file')
-  config_file_exists = file(config_file).exist?
-  audit_sp_remote_server = input('audit_sp_remote_server')
-
-  describe package('audispd-plugins') do
-    it { should be_installed }
-  end
-
-  if config_file_exists
-    describe parse_config_file(config_file) do
-      its('active') { should cmp 'yes' }
-      its('remote_server') { should cmp audit_sp_remote_server }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe(config_file + ' exists') do
-      subject { config_file_exists }
-      it { should be true }
+    config_file = input('audispremote_config_file')
+    config_file_exists = file(config_file).exist?
+    audit_sp_remote_server = input('audit_sp_remote_server')
+
+    describe package('audispd-plugins') do
+      it { should be_installed }
+    end
+
+    if config_file_exists
+      describe parse_config_file(config_file) do
+        its('active') { should cmp 'yes' }
+        its('remote_server') { should cmp audit_sp_remote_server }
+      end
+    else
+      describe(config_file + ' exists') do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end

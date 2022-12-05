@@ -30,17 +30,24 @@ accordingly at
   tag cci: ['CCI-000187']
   tag nist: ['IA-5 (2) (a) (2)']
 
-  config_file = '/etc/pam_pkcs11/pam_pkcs11.conf'
-  config_file_exists = file(config_file).exist?
-
-  if config_file_exists
-    describe parse_config_file(config_file) do
-      its('use_mappers') { should cmp 'pwent' }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe "Control not applicable to a container" do
+      skip "Control not applicable to a container"
     end
   else
-    describe(config_file + ' exists') do
-      subject { config_file_exists }
-      it { should be true }
+    config_file = '/etc/pam_pkcs11/pam_pkcs11.conf'
+    config_file_exists = file(config_file).exist?
+
+    if config_file_exists
+      describe parse_config_file(config_file) do
+        its('use_mappers') { should cmp 'pwent' }
+      end
+    else
+      describe(config_file + ' exists') do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end
