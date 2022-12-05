@@ -16,7 +16,7 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
-        suite: ['vanilla', 'hardened']
+        suite: ['hardened']
       fail-fast: false
     steps:
       - name: Add jq for output formatting

@@ -45,3 +45,6 @@ suites:
   - name: hardened
     provisioner:
       playbook: spec/ansible/roles/hardening.yml
+  # - name: vanilla
+  #   provisioner:
+  #     playbook: spec/ansible/roles/vanilla.yml
