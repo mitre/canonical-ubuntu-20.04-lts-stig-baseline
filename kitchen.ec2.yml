@@ -14,6 +14,8 @@ driver:
 verifier:
   input_files:
     - ec2.inputs.yml
+  reporter:
+    - json:spec/results/ec2_%{platform}_%{suite}.json
 
 pre_converge:
   - remote: |
