@@ -6,7 +6,7 @@ driver:
   tags:
     POC: 'SAF Github Actions'
   # security_group_ids: <%= ENV['SAF_AWS_SG_ID'] %>
-  region: <%= ENV['SAF_AWS_REGION'] %>
+  #region: <%= ENV['SAF_AWS_REGION'] %>
   # subnet_id: <%= ENV['SAF_AWS_SUBNET_ID'] %>
   instance_type: t2.large
   associate_public_ip: true
