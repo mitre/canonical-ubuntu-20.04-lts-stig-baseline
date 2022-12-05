@@ -154,3 +154,8 @@ inputs:
     description: Location of gdm3 config file
     type: String
     value: '/etc/gdm3/greeter.dconf-defaults'
+
+  - name: disable_fips
+    description: Is fips disabled or enabled due to FIPS 140 image
+    type: boolean
+    value: false

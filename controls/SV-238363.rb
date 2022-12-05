@@ -38,17 +38,28 @@ enable FIPS. "
   tag cci: ['CCI-002450']
   tag nist: ['SC-13 b']
 
-  config_file = input('fips_config_file')
-  config_file_exists = file(config_file).exist?
-
-  if config_file_exists
-    describe file(config_file) do
-      its('content') { should match /\A1\Z/ }
+  if input('disable_fips')?
+    impact 0.0
+    describe "Control not applicable" do
+      skip "Control not applicable"
+    end
+  elsif virtualization.system.eql?('docker')
+    describe "Manual test" do
+      skip "This control must be reviewed manually"
     end
   else
-    describe('FIPS is enabled') do
-      subject { config_file_exists }
-      it { should be true }
+    config_file = input('fips_config_file')
+    config_file_exists = file(config_file).exist?
+
+    if config_file_exists
+      describe file(config_file) do
+        its('content') { should match /\A1\Z/ }
+      end
+    else
+      describe('FIPS is enabled') do
+        subject { config_file_exists }
+        it { should be true }
+      end
     end
   end
 end
