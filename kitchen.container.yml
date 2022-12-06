@@ -25,6 +25,7 @@ verifier:
   input_files:
     - container.inputs.yml
   reporter:
+    - cli
     - json:spec/results/container_ubuntu-2004_%{suite}.json
 
 suites:
