@@ -1,4 +1,4 @@
-control 'SV-238230' do
+control "SV-238230" do
   title "The Ubuntu operating system must implement multifactor authentication for remote access to
 privileged accounts in such a way that one of the factors is provided by a device separate from
 the system gaining access. "
@@ -23,8 +23,8 @@ dial-up, broadband, and wireless.
 This requirement only applies to components where this
 is specific to the function of the device or has the concept of an organizational user (e.g.,
 VPN, proxy capability). This does not apply to authentication for the purpose of configuring
-the device itself (management). "
-  desc 'check', "Verify the Ubuntu operating system has the packages required for multifactor
+the device itself (management)."
+  desc "check", "Verify the Ubuntu operating system has the packages required for multifactor
 authentication installed with the following commands:
 
 $ dpkg -l | grep libpam-pkcs11
@@ -33,23 +33,23 @@ ii
 libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKCS#11 smart cards
 
 If the
-\"libpam-pkcs11\" package is not installed, this is a finding. "
-  desc 'fix', "Configure the Ubuntu operating system to implement multifactor authentication by
+\"libpam-pkcs11\" package is not installed, this is a finding."
+  desc "fix", "Configure the Ubuntu operating system to implement multifactor authentication by
 installing the required packages.
 
 Install the \"libpam-pkcs11\" package on the system with
 the following command:
 
-$ sudo apt install libpam-pkcs11 "
+$ sudo apt install libpam-pkcs11"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000375-GPOS-00160 '
-  tag gid: 'V-238230 '
-  tag rid: 'SV-238230r853410_rule '
-  tag stig_id: 'UBTU-20-010063 '
-  tag fix_id: 'F-41399r653864_fix '
-  tag cci: ['CCI-001948']
-  tag nist: ['IA-2 (11)']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000375-GPOS-00160 "
+  tag gid: "V-238230 "
+  tag rid: "SV-238230r853410_rule "
+  tag stig_id: "UBTU-20-010063 "
+  tag fix_id: "F-41399r653864_fix "
+  tag cci: ["CCI-001948"]
+  tag nist: ["IA-2 (11)"]
 
   describe package('libpam-pkcs11') do
     it { should be_installed }

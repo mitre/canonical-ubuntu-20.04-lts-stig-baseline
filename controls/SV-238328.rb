@@ -1,4 +1,4 @@
-control 'SV-238328' do
+control "SV-238328" do
   title "The Ubuntu operating system must be configured to prohibit or restrict the use of functions,
 ports, protocols, and/or services, as defined in the PPSM CAL and vulnerability
 assessments. "
@@ -18,8 +18,8 @@ To support the requirements and principles of least
 functionality, the operating system must support the organizational requirements,
 providing only essential capabilities and limiting the use of ports, protocols, and/or
 services to only those required, authorized, and approved to conduct official business or to
-address authorized quality of life issues. "
-  desc 'check', "Verify the Ubuntu operating system is configured to prohibit or restrict the use of
+address authorized quality of life issues."
+  desc "check", "Verify the Ubuntu operating system is configured to prohibit or restrict the use of
 functions, ports, protocols, and/or services as defined in the Ports, Protocols, and
 Services Management (PPSM) Category Assignments List (CAL) and vulnerability
 assessments.
@@ -54,8 +54,8 @@ ports, protocols, or services that are not included in the PPSM CLSA, this is a 
 
 If
 there are any ports, protocols, or services that are prohibited by the PPSM CAL, this is a
-finding. "
-  desc 'fix', "Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command:
+finding."
+  desc "fix", "Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command:
 
 
 $ sudo ufw allow &lt;direction&gt; &lt;port/protocol/service&gt;
@@ -67,16 +67,16 @@ allowed.
 To deny access to ports, protocols, or services, use:
 
 $ sudo ufw deny
-&lt;direction&gt; &lt;port/protocol/service&gt; "
+&lt;direction&gt; &lt;port/protocol/service&gt;"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000096-GPOS-00050 '
-  tag gid: 'V-238328 '
-  tag rid: 'SV-238328r654159_rule '
-  tag stig_id: 'UBTU-20-010407 '
-  tag fix_id: 'F-41497r654158_fix '
-  tag cci: ['CCI-000382']
-  tag nist: ['CM-7 b']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000096-GPOS-00050 "
+  tag gid: "V-238328 "
+  tag rid: "SV-238328r654159_rule "
+  tag stig_id: "UBTU-20-010407 "
+  tag fix_id: "F-41497r654158_fix "
+  tag cci: ["CCI-000382"]
+  tag nist: ["CM-7 b"]
 
   ufw_status = command('ufw status').stdout.strip.lines.first
   value = ufw_status.split(':')[1].strip

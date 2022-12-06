@@ -1,4 +1,4 @@
-control 'SV-238214' do
+control "SV-238214" do
   title "The Ubuntu operating system must display the Standard Mandatory DoD Notice and Consent
 Banner before granting any local or remote connection to the system. "
   desc "Display of a standardized and approved use notification before granting access to the
@@ -47,10 +47,8 @@ following verbiage for operating systems that have severe limitations on the num
 characters that can be displayed in the banner:
 
 \"I've read & consent to terms in IS user
-agreem't.\"
-
- "
-  desc 'check', "Verify the Ubuntu operating system displays the Standard Mandatory DoD Notice and Consent
+agreem't.\""
+  desc "check", "Verify the Ubuntu operating system displays the Standard Mandatory DoD Notice and Consent
 Banner before granting access to the Ubuntu operating system via an SSH logon with the
 following command:
 
@@ -101,8 +99,8 @@ assistants. Such communications and work product are private and confidential. S
 Agreement for details.\"
 
 If the banner text does not match the Standard Mandatory DoD Notice
-and Consent Banner exactly, this is a finding. "
-  desc 'fix', "Set the parameter Banner in \"/etc/ssh/sshd_config\" to point to the \"/etc/issue.net\" file:
+and Consent Banner exactly, this is a finding."
+  desc "fix", "Set the parameter Banner in \"/etc/ssh/sshd_config\" to point to the \"/etc/issue.net\" file:
 
 
 $ sudo sed -i '/^Banner/d' /etc/ssh/sshd_config
@@ -145,17 +143,17 @@ Restart the
 SSH daemon for the changes to take effect and then signal the SSH server to reload the
 configuration file:
 
-$ sudo systemctl -s SIGHUP kill sshd "
+$ sudo systemctl -s SIGHUP kill sshd"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000228-GPOS-00088 '
-  tag satisfies: %w(SRG-OS-000228-GPOS-00088 SRG-OS-000023-GPOS-00006)
-  tag gid: 'V-238214 '
-  tag rid: 'SV-238214r858525_rule '
-  tag stig_id: 'UBTU-20-010038 '
-  tag fix_id: 'F-41383r653816_fix '
-  tag cci: %w(CCI-000048 CCI-001384 CCI-001385 CCI-001386 CCI-001387 CCI-001388)
-  tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 3']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000228-GPOS-00088 "
+  tag satisfies: ["SRG-OS-000228-GPOS-00088", "SRG-OS-000023-GPOS-00006"]
+  tag gid: "V-238214 "
+  tag rid: "SV-238214r858525_rule "
+  tag stig_id: "UBTU-20-010038 "
+  tag fix_id: "F-41383r653816_fix "
+  tag cci: ["CCI-000048", "CCI-001384", "CCI-001385", "CCI-001386", "CCI-001387", "CCI-001388"]
+  tag nist: ["AC-8 a", "AC-8 c 1", "AC-8 c 2", "AC-8 c 3"]
 
   banner_text = input('banner_text')
   banner_files = [sshd_config.banner].flatten

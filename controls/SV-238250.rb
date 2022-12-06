@@ -1,4 +1,4 @@
-control 'SV-238250' do
+control "SV-238250" do
   title "The Ubuntu operating system must permit only authorized accounts to own the audit
 configuration files. "
   desc "Without the capability to restrict which roles and individuals can select which events are
@@ -7,8 +7,8 @@ audited, unauthorized personnel may be able to prevent the auditing of critical 
 
 Misconfigured audits may degrade the system's performance by overwhelming the audit log.
 Misconfigured audits may also make it more difficult to establish, correlate, and
-investigate the events relating to an incident or identify those responsible for one. "
-  desc 'check', "Verify that \"/etc/audit/audit.rules\", \"/etc/audit/rules.d/*\" and
+investigate the events relating to an incident or identify those responsible for one."
+  desc "check", "Verify that \"/etc/audit/audit.rules\", \"/etc/audit/rules.d/*\" and
 \"/etc/audit/auditd.conf\" files are owned by root account by using the following command:
 
 
@@ -46,21 +46,21 @@ drwxr-x--- 3 root root
 
 If the
 \"/etc/audit/audit.rules\", \"/etc/audit/rules.d/*\", or \"/etc/audit/auditd.conf\" file
-is owned by a user other than \"root\", this is a finding. "
-  desc 'fix', "Configure \"/etc/audit/audit.rules\", \"/etc/audit/rules.d/*\" and
+is owned by a user other than \"root\", this is a finding."
+  desc "fix", "Configure \"/etc/audit/audit.rules\", \"/etc/audit/rules.d/*\" and
 \"/etc/audit/auditd.conf\" files to be owned by root user by using the following command:
 
 $
-sudo chown root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/* "
+sudo chown root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/*"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000063-GPOS-00032 '
-  tag gid: 'V-238250 '
-  tag rid: 'SV-238250r653925_rule '
-  tag stig_id: 'UBTU-20-010134 '
-  tag fix_id: 'F-41419r653924_fix '
-  tag cci: ['CCI-000171']
-  tag nist: ['AU-12 b']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000063-GPOS-00032 "
+  tag gid: "V-238250 "
+  tag rid: "SV-238250r653925_rule "
+  tag stig_id: "UBTU-20-010134 "
+  tag fix_id: "F-41419r653924_fix "
+  tag cci: ["CCI-000171"]
+  tag nist: ["AU-12 b"]
 
   files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
   files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries

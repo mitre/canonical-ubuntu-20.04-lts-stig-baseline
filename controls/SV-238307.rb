@@ -1,10 +1,10 @@
-control 'SV-238307' do
+control "SV-238307" do
   title "The Ubuntu operating system must immediately notify the SA and ISSO (at a minimum) when
 allocated audit record storage volume reaches 75% of the repository maximum audit record
 storage capacity. "
   desc "If security personnel are not notified immediately when storage volume reaches 75%
-utilization, they are unable to plan for audit record storage capacity expansion. "
-  desc 'check', "Verify the Ubuntu operating system notifies the SA and ISSO (at a minimum) when allocated
+utilization, they are unable to plan for audit record storage capacity expansion."
+  desc "check", "Verify the Ubuntu operating system notifies the SA and ISSO (at a minimum) when allocated
 audit record storage volume reaches 75% of the repository maximum audit record storage
 capacity with the following command:
 
@@ -47,8 +47,8 @@ a finding.
 
 Note: If the email address of the System Administrator
  is on a remote system, a
-mail package must be available. "
-  desc 'fix', "Edit \"/etc/audit/auditd.conf\" and set the \"space_left_action\" parameter to \"exec\" or
+mail package must be available."
+  desc "fix", "Edit \"/etc/audit/auditd.conf\" and set the \"space_left_action\" parameter to \"exec\" or
 \"email\".
 
 If the \"space_left_action\" parameter is set to \"email\", set the
@@ -59,16 +59,16 @@ If the
 the SA and ISSO.
 
 Edit \"/etc/audit/auditd.conf\" and set the \"space_left\" parameter to be at
-least 25% of the repository maximum audit record storage capacity. "
+least 25% of the repository maximum audit record storage capacity."
   impact 0.3
-  tag severity: 'low '
-  tag gtitle: 'SRG-OS-000343-GPOS-00134 '
-  tag gid: 'V-238307 '
-  tag rid: 'SV-238307r853425_rule '
-  tag stig_id: 'UBTU-20-010217 '
-  tag fix_id: 'F-41476r654095_fix '
-  tag cci: ['CCI-001855']
-  tag nist: ['AU-5 (1)']
+  tag severity: "low "
+  tag gtitle: "SRG-OS-000343-GPOS-00134 "
+  tag gid: "V-238307 "
+  tag rid: "SV-238307r853425_rule "
+  tag stig_id: "UBTU-20-010217 "
+  tag fix_id: "F-41476r654095_fix "
+  tag cci: ["CCI-001855"]
+  tag nist: ["AU-5 (1)"]
 
   log_file = auditd_conf.log_file
   log_dir_exists = !log_file.nil? && !File.dirname(log_file).nil?
