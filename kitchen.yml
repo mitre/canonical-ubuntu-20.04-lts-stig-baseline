@@ -22,14 +22,14 @@ verifier:
   sudo: true
   reporter:
     - cli
-    - json:spec/results/%{platform}_%{suite}.json
+    - json:spec/results/ubuntu-2004_%{suite}.json
   inspec_tests:
     - name: Ubuntu 20.04 LTS STIG V1R5
       path: .
   load_plugins: true
 
 platforms:
-  - name: ubuntu-2004
+  - name: ubuntu-20.04
 
 suites:
   - name: hardened
