@@ -15,7 +15,7 @@ verifier:
   input_files:
     - ec2.inputs.yml
   reporter:
-    - json:spec/results/ec2_%{platform}_%{suite}.json
+    - json:spec/results/ec2_ubuntu-2004_%{suite}.json
 
 pre_converge:
   - remote: |
