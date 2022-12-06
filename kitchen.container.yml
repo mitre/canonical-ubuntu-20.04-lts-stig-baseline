@@ -7,20 +7,6 @@ transport:
 provisioner:
   name: dummy
 
-
-# platforms:
-# - name: ubuntu-20.04
-#   driver_config:
-#     image: canonical/ubuntu-pro-stig-20.04
-#     platform: ubuntu
-
-lifecycle:
-  pre_create: |
-    docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag canonical/ubuntu-pro-stig-20.04:latest
-    # cd ./spec
-    # git clone https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git ubuntu-pro-cis-stig-20.04 || true
-    # cd ./ubuntu-pro-cis-stig-20.04
-    
 verifier:
   input_files:
     - container.inputs.yml
@@ -42,3 +28,7 @@ suites:
         driver_config:
           image: canonical/ubuntu-pro-stig-20.04
           platform: ubuntu
+        lifecycle:
+          pre_create: |
+            docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag canonical/ubuntu-pro-stig-20.04:latest
+            
