@@ -17,3 +17,5 @@ platforms:
 verifier:
   input_files:
     - container.inputs.yml
+  reporter:
+    - json:spec/results/container_ubuntu-2004_%{suite}.json
