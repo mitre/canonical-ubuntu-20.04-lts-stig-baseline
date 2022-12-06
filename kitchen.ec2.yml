@@ -17,13 +17,14 @@ verifier:
   reporter:
     - json:spec/results/ec2_ubuntu-2004_%{suite}.json
 
-pre_converge:
-  - remote: |
-      echo "NOTICE - Updating the ec2-user to keep sudo working"
-      sudo chage -d $(( $( date +%s ) / 86400 )) ec2-user
-      echo "NOTICE - updating ec2-user sudo config"
-      sudo chmod 600 /etc/sudoers && sudo sed -i'' "/ec2-user/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
-
+lifecycle:
+  pre_converge:
+    - remote: |
+        whoami
+        echo "running apt update"
+        sudo apt update
+        echo "installing pip3"
+        sudo apt install python3-pip -y
 transport:
   name: ssh
   # username: <%= ENV['SAF_AWS_EC2_USER'] %>
