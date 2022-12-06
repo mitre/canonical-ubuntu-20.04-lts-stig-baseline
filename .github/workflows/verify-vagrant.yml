@@ -50,6 +50,7 @@ jobs:
   artifact-upload:
     name: Upload artifacts
     runs-on: macos-12
+    if: ${{ always() }}
     needs: validate
     steps:
       - name: Save Test Result JSONs
