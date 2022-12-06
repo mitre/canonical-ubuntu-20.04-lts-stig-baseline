@@ -16,12 +16,12 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     strategy:
       matrix:
-        suite: ['hardened']
+        suite: ['vanilla','hardened']
       fail-fast: false
     steps:
       - name: add needed packages
         run: sudo apt-get install -y jq
-      - name: Check out repository
+      - name: Checkout InSpec profile repository
         uses: actions/checkout@v2
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
