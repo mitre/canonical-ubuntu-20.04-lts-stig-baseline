@@ -68,14 +68,16 @@ $ sudo systemctl restart sshd.service "
   tag cci: %w(CCI-000068 CCI-002421 CCI-003123)
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
 
-  if input('disable_fips')?
+  disable_fips = input('disable_fips')
+
+  if disable_fips?
     impact 0.0
-    describe "Control not applicable" do
-      skip "Control not applicable"
+    describe 'Control not applicable' do
+      skip 'Control not applicable'
     end
   elsif virtualization.system.eql?('docker')
-    describe "Manual test" do
-      skip "This control must be reviewed manually"
+    describe 'Manual test' do
+      skip 'This control must be reviewed manually'
     end
   else
     @ciphers_array = inspec.sshd_config.params['ciphers']

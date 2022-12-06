@@ -64,8 +64,8 @@ $ sudo augenrules --load "
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable to a container" do
-      skip "Control not applicable to a container"
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
     end
   else
     @audit_file = '/var/log/sudo.log'

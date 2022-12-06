@@ -72,8 +72,8 @@ least 25% of the repository maximum audit record storage capacity. "
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable to a container" do
-      skip "Control not applicable to a container"
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
     end
   else
     log_file = auditd_conf.log_file

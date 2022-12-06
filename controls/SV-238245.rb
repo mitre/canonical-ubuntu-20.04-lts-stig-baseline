@@ -55,8 +55,8 @@ $ sudo chmod 0600 /var/log/audit/* "
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable to a container" do
-      skip "Control not applicable to a container"
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
     end
   else
     log_file = auditd_conf.log_file

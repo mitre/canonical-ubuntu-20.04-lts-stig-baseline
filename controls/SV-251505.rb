@@ -52,8 +52,8 @@ blacklist usb-storage &gt;&gt; /etc/modprobe.d/DISASTIG.conf\" "
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable to a container" do
-      skip "Control not applicable to a container"
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
     end
   else
     describe command('grep usb-storage /etc/modprobe.d/* | grep "/bin/true"') do

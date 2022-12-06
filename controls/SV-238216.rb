@@ -62,7 +62,9 @@ sudo systemctl reload sshd.service "
   tag cci: %w(CCI-001453 CCI-002421 CCI-002890)
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
 
-  if input('disable_fips')?
+  disable_fips = input('disable_fips')
+
+  if disable_fips?
     impact 0.0
     describe "Control not applicable" do
       skip "Control not applicable"

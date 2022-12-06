@@ -54,10 +54,10 @@ augenrules --load "
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe "Control not applicable to a container" do
-      skip "Control not applicable to a container"
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
     end
-  else 
+  else
     @audit_file = '/etc/group'
     audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
     if audit_lines_exist

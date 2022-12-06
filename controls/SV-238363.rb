@@ -38,7 +38,9 @@ enable FIPS. "
   tag cci: ['CCI-002450']
   tag nist: ['SC-13 b']
 
-  if input('disable_fips')?
+  disable_fips = input('disable_fips')
+
+  if disable_fips?
     impact 0.0
     describe "Control not applicable" do
       skip "Control not applicable"

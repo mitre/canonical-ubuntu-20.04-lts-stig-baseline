@@ -34,14 +34,16 @@ ENCRYPT_METHOD SHA512 "
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 
-  if input('disable_fips')?
+  disable_fips = input('disable_fips')
+
+  if disable_fips?
     impact 0.0
-    describe "Control not applicable" do
-      skip "Control not applicable"
+    describe 'Control not applicable' do
+      skip 'Control not applicable'
     end
   elsif virtualization.system.eql?('docker')
-    describe "Manual test" do
-      skip "This control must be reviewed manually"
+    describe 'Manual test' do
+      skip 'This control must be reviewed manually'
     end
   else
     describe login_defs do
