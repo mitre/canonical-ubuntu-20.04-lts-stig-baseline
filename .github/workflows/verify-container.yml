@@ -19,8 +19,6 @@ jobs:
         suite: ['vanilla','hardened']
       fail-fast: false
     steps:
-      - name: debug
-        run: pwd && ls -lah
       - name: add needed packages
         run: sudo apt-get install -y jq
       - name: Checkout InSpec profile repository
@@ -39,8 +37,6 @@ jobs:
           bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
-      - name: debug
-        run: pwd && ls -lah
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
       - name: Display our ${{ matrix.suite }} results summary
