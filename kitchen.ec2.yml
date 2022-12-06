@@ -20,9 +20,10 @@ verifier:
 lifecycle:
   pre_converge:
     - remote: |
-        whoami
-        echo "running apt update"
+        echo "prepping apt"
+        sudo apt -f install
         sudo apt update
+        sudo apt dist-upgrade
         echo "installing pip3"
         sudo apt install python3-pip -y
 transport:
