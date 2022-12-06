@@ -1,0 +1,53 @@
+name: Container Testing Matrix
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate my profile
+    runs-on: ubuntu-latest
+    env:
+      CHEF_LICENSE: accept-silent
+      KITCHEN_LOCAL_YAML: kitchen.container.yml
+      LC_ALL: "en_US.UTF-8"
+    strategy:
+      matrix:
+        suite: ['hardened']
+      fail-fast: false
+    steps:
+      - name: add needed packages
+        run: sudo apt-get install -y jq
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Clone full repository so we can push
+        run: git fetch --prune --unshallow
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Disable ri and rdoc
+        run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
+      - run: bundle install
+      - name: Regenerate current `profile.json`
+        run: |
+          bundle exec inspec json . | jq . > profile.json
+      - name: Lint the Inspec profile
+        run: bundle exec inspec check .
+      - name: Run kitchen test
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
+      - name: Display our ${{ matrix.suite }} results summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: 'view summary -i spec/results/container_ubuntu-2004_${{ matrix.suite }}.json'
+      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: 'validate threshold -i spec/results/container_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
+      - name: Save Test Result JSON
+        uses: actions/upload-artifact@v2
+        with:
+          path: spec/results/
