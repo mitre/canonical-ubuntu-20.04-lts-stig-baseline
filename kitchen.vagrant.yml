@@ -6,6 +6,9 @@ verifier:
   input_files:
     - vagrant.inputs.yml
 
+platforms:
+  image: bento/ubuntu-20.04
+
 lifecycle:
   pre_converge:
     - remote: |
