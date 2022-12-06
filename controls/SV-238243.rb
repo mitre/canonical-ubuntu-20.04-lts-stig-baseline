@@ -1,4 +1,4 @@
-control 'SV-238243' do
+control "SV-238243" do
   title "The Ubuntu operating system must alert the ISSO and SA (at a minimum) in the event of an audit
 processing failure. "
   desc "It is critical for the appropriate personnel to be aware if a system is at risk of failing to
@@ -13,8 +13,8 @@ exceeded.
 This requirement applies to each audit data storage repository (i.e., distinct
 information system component where audit records are stored), the centralized audit
 storage capacity of organizations (i.e., all audit data storage repositories combined), or
-both. "
-  desc 'check', "Verify that the SA and ISSO (at a minimum) are notified in the event of an audit processing
+both."
+  desc "check", "Verify that the SA and ISSO (at a minimum) are notified in the event of an audit processing
 failure with the following command:
 
 $ sudo grep '^action_mail_acct = root'
@@ -25,8 +25,8 @@ action_mail_acct = &lt;administrator_account&gt;
 If the
 value of the \"action_mail_acct\" keyword is not set to an accounts for security personnel, the
 \"action_mail_acct\" keyword is missing, or the returned line is commented out, this is a
-finding. "
-  desc 'fix', "Configure \"auditd\" service to notify the SA and ISSO in the event of an audit processing
+finding."
+  desc "fix", "Configure \"auditd\" service to notify the SA and ISSO in the event of an audit processing
 failure.
 
 Edit the following line in \"/etc/audit/auditd.conf\" to ensure administrators
@@ -41,16 +41,16 @@ security personnel.
 Restart the \"auditd\" service so the changes take effect:
 
 $ sudo
-systemctl restart auditd.service "
+systemctl restart auditd.service"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000046-GPOS-00022 '
-  tag gid: 'V-238243 '
-  tag rid: 'SV-238243r653904_rule '
-  tag stig_id: 'UBTU-20-010117 '
-  tag fix_id: 'F-41412r653903_fix '
-  tag cci: ['CCI-000139']
-  tag nist: ['AU-5 a']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000046-GPOS-00022 "
+  tag gid: "V-238243 "
+  tag rid: "SV-238243r653904_rule "
+  tag stig_id: "UBTU-20-010117 "
+  tag fix_id: "F-41412r653903_fix "
+  tag cci: ["CCI-000139"]
+  tag nist: ["AU-5 a"]
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -1,5 +1,5 @@
-control 'SV-238353' do
-  title 'The Ubuntu operating system must be configured to preserve log records from failure events. '
+control "SV-238353" do
+  title "The Ubuntu operating system must be configured to preserve log records from failure events. "
   desc "Failure to a known state can address safety or security in accordance with the
 mission/business needs of the organization. Failure to a known secure state helps prevent a
 loss of confidentiality, integrity, or availability in the event of a failure of the
@@ -7,8 +7,8 @@ information system or a component of the system.
 
 Preserving operating system state
 information helps to facilitate operating system restart and return to the operational mode
-of the organization with least disruption to mission/business processes. "
-  desc 'check', "Verify the log service is configured to collect system failure events.
+of the organization with least disruption to mission/business processes."
+  desc "check", "Verify the log service is configured to collect system failure events.
 
 Check that the log
 service is installed properly with the following command:
@@ -39,8 +39,8 @@ $ systemctl is-active rsyslog
 active
 
 
-If the command above returns \"inactive\", this is a finding. "
-  desc 'fix', "Configure the log service to collect failure events.
+If the command above returns \"inactive\", this is a finding."
+  desc "fix", "Configure the log service to collect failure events.
 
 Install the log service (if the log
 service is not already installed) with the following command:
@@ -51,16 +51,16 @@ rsyslog
 Enable the log service with the following command:
 
 $ sudo systemctl enable --now
-rsyslog "
+rsyslog"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000269-GPOS-00103 '
-  tag gid: 'V-238353 '
-  tag rid: 'SV-238353r654234_rule '
-  tag stig_id: 'UBTU-20-010432 '
-  tag fix_id: 'F-41522r654233_fix '
-  tag cci: ['CCI-001665']
-  tag nist: ['SC-24']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000269-GPOS-00103 "
+  tag gid: "V-238353 "
+  tag rid: "SV-238353r654234_rule "
+  tag stig_id: "UBTU-20-010432 "
+  tag fix_id: "F-41522r654233_fix "
+  tag cci: ["CCI-001665"]
+  tag nist: ["SC-24"]
 
   describe service('rsyslog') do
     it { should be_installed }

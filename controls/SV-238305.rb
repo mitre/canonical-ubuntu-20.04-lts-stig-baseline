@@ -1,4 +1,4 @@
-control 'SV-238305' do
+control "SV-238305" do
   title "The Ubuntu operating system must allocate audit record storage capacity to store at least one
 weeks' worth of audit records, when audit records are not immediately sent to a central audit
 record storage facility. "
@@ -7,8 +7,8 @@ audit logs, operating systems need to be able to allocate audit record storage c
 
 
 The task of allocating audit record storage capacity is usually performed during initial
-installation of the operating system. "
-  desc 'check', "Verify the Ubuntu operating system allocates audit record storage capacity to store at least
+installation of the operating system."
+  desc "check", "Verify the Ubuntu operating system allocates audit record storage capacity to store at least
 one week's worth of audit records when audit records are not immediately sent to a central
 audit record storage facility.
 
@@ -41,8 +41,8 @@ In normal circumstances, 10.0 GB of storage space for audit records will be suff
 
 If
 the audit record partition is not allocated for sufficient storage capacity, this is a
-finding. "
-  desc 'fix', "Allocate enough storage capacity for at least one week's worth of audit records when audit
+finding."
+  desc "fix", "Allocate enough storage capacity for at least one week's worth of audit records when audit
 records are not immediately sent to a central audit record storage facility.
 
 If audit
@@ -61,16 +61,16 @@ $ sudo sed
 /etc/audit/auditd.conf
 
 where &lt;log mountpoint&gt; is the aforementioned mount
-point. "
+point."
   impact 0.3
-  tag severity: 'low '
-  tag gtitle: 'SRG-OS-000341-GPOS-00132 '
-  tag gid: 'V-238305 '
-  tag rid: 'SV-238305r853423_rule '
-  tag stig_id: 'UBTU-20-010215 '
-  tag fix_id: 'F-41474r654089_fix '
-  tag cci: ['CCI-001849']
-  tag nist: ['AU-4']
+  tag severity: "low "
+  tag gtitle: "SRG-OS-000341-GPOS-00132 "
+  tag gid: "V-238305 "
+  tag rid: "SV-238305r853423_rule "
+  tag stig_id: "UBTU-20-010215 "
+  tag fix_id: "F-41474r654089_fix "
+  tag cci: ["CCI-001849"]
+  tag nist: ["AU-4"]
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -1,12 +1,12 @@
-control 'SV-238228' do
+control "SV-238228" do
   title "The Ubuntu operating system must be configured so that when passwords are changed or new
 passwords are established, pwquality must be used. "
   desc "Use of a complex password helps to increase the time and resources required to compromise the
 password. Password complexity, or strength, is a measure of the effectiveness of a password
 in resisting attempts at guessing and brute-force attacks. \"pwquality\" enforces complex
 password construction configuration and has the ability to limit brute-force attacks on the
-system. "
-  desc 'check', "Verify the Ubuntu operating system has the \"libpam-pwquality\" package installed by running
+system."
+  desc "check", "Verify the Ubuntu operating system has the \"libpam-pwquality\" package installed by running
 the following command:
 
 $ dpkg -l libpam-pwquality
@@ -43,8 +43,8 @@ If no output is returned or the line is
 commented out, this is a finding.
 
 If the value of \"retry\" is set to \"0\" or greater than \"3\",
-this is a finding. "
-  desc 'fix', "Configure the operating system to use \"pwquality\" to enforce password complexity rules.
+this is a finding."
+  desc "fix", "Configure the operating system to use \"pwquality\" to enforce password complexity rules.
 
 
 Install the \"pam_pwquality\" package by using the following command:
@@ -64,16 +64,16 @@ password
 requisite pam_pwquality.so retry=3
 
 Note: The value of \"retry\" should be between \"1\" and
-\"3\". "
+\"3\"."
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000480-GPOS-00225 '
-  tag gid: 'V-238228 '
-  tag rid: 'SV-238228r653859_rule '
-  tag stig_id: 'UBTU-20-010057 '
-  tag fix_id: 'F-41397r653858_fix '
-  tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000480-GPOS-00225 "
+  tag gid: "V-238228 "
+  tag rid: "SV-238228r653859_rule "
+  tag stig_id: "UBTU-20-010057 "
+  tag fix_id: "F-41397r653858_fix "
+  tag cci: ["CCI-000366"]
+  tag nist: ["CM-6 b"]
 
   if virtualization.system.eql?('docker')
     impact 0.0

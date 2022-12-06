@@ -1,4 +1,4 @@
-control 'SV-238217' do
+control "SV-238217" do
   title "The Ubuntu operating system must configure the SSH daemon to use FIPS 140-2 approved ciphers
 to prevent the unauthorized disclosure of information and/or detect changes to information
 during transmission. "
@@ -27,10 +27,8 @@ codes.
 
 By specifying a cipher list with the order of ciphers being in a \"strongest to
 weakest\" orientation, the system will automatically attempt to use the strongest cipher for
-securing SSH connections.
-
- "
-  desc 'check', "Verify the SSH daemon is configured to only implement FIPS-approved algorithms by running
+securing SSH connections."
+  desc "check", "Verify the SSH daemon is configured to only implement FIPS-approved algorithms by running
 the following command:
 
 $ grep -r 'Ciphers' /etc/ssh/sshd_config*
@@ -42,8 +40,8 @@ If any ciphers other than \"aes256-ctr\",
 \"aes192-ctr\", or \"aes128-ctr\" are listed, the order differs from the example above, the
 \"Ciphers\" keyword is missing, or the returned line is commented out, this is a finding.
 If
-conflicting results are returned, this is a finding. "
-  desc 'fix', "Configure the Ubuntu operating system to allow the SSH daemon to only implement
+conflicting results are returned, this is a finding."
+  desc "fix", "Configure the Ubuntu operating system to allow the SSH daemon to only implement
 FIPS-approved algorithms.
 
 Add the following line (or modify the line to have the required
@@ -56,17 +54,17 @@ Ciphers aes256-ctr,aes192-ctr,aes128-ctr
 Restart the SSH daemon for the changes to
 take effect:
 
-$ sudo systemctl restart sshd.service "
+$ sudo systemctl restart sshd.service"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000424-GPOS-00188 '
-  tag satisfies: %w(SRG-OS-000424-GPOS-00188 SRG-OS-000033-GPOS-00014 SRG-OS-000394-GPOS-00174)
-  tag gid: 'V-238217 '
-  tag rid: 'SV-238217r860821_rule '
-  tag stig_id: 'UBTU-20-010044 '
-  tag fix_id: 'F-41386r653825_fix '
-  tag cci: %w(CCI-000068 CCI-002421 CCI-003123)
-  tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000424-GPOS-00188 "
+  tag satisfies: ["SRG-OS-000424-GPOS-00188", "SRG-OS-000033-GPOS-00014", "SRG-OS-000394-GPOS-00174"]
+  tag gid: "V-238217 "
+  tag rid: "SV-238217r860821_rule "
+  tag stig_id: "UBTU-20-010044 "
+  tag fix_id: "F-41386r653825_fix "
+  tag cci: ["CCI-000068", "CCI-002421", "CCI-003123"]
+  tag nist: ["AC-17 (2)", "SC-8 (1)", "MA-4 (6)"]
 
   if input('disable_fips')?
     impact 0.0

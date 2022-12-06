@@ -1,4 +1,4 @@
-control 'SV-238271' do
+control "SV-238271" do
   title "The Ubuntu operating system must generate audit records for successful/unsuccessful uses
 of the creat, open, openat, open_by_handle_at, truncate, and ftruncate system calls. "
   desc "Without generating audit records that are specific to the security and mission needs of the
@@ -13,10 +13,8 @@ The system call rules are loaded into a matching engine that intercepts each
 syscall that all programs on the system makes. Therefore, it is very important to only use
 syscall rules when absolutely necessary since these affect performance. The more rules, the
 bigger the performance hit. The performance is helped, though, by combining syscalls into
-one rule whenever possible.
-
- "
-  desc 'check', "Verify the Ubuntu operating system generates an audit record upon unsuccessful attempts to
+one rule whenever possible."
+  desc "check", "Verify the Ubuntu operating system generates an audit record upon unsuccessful attempts to
 use the \"creat\", \"open\", \"openat\", \"open_by_handle_at\", \"truncate\", and \"ftruncate\"
 system calls.
 
@@ -47,8 +45,8 @@ For 32-bit architectures, only the
 32-bit specific output lines from the commands are required.
 The \"-k\" allows for specifying
 an arbitrary identifier, and the string after it does not need to match the example output
-above. "
-  desc 'fix', "Configure the audit system to generate an audit event for any unsuccessful use of the\"creat\",
+above."
+  desc "fix", "Configure the audit system to generate an audit event for any unsuccessful use of the\"creat\",
 \"open\", \"openat\", \"open_by_handle_at\", \"truncate\", and \"ftruncate\" system calls.
 
 Add
@@ -73,17 +71,17 @@ the 32-bit specific entries are required.
 To reload the rules file, issue the following
 command:
 
-$ sudo augenrules --load "
+$ sudo augenrules --load"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000064-GPOS-00033 '
-  tag satisfies: %w(SRG-OS-000064-GPOS-00033 SRG-OS-000474-GPOS-00219)
-  tag gid: 'V-238271 '
-  tag rid: 'SV-238271r808483_rule '
-  tag stig_id: 'UBTU-20-010155 '
-  tag fix_id: 'F-41440r808482_fix '
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000064-GPOS-00033 "
+  tag satisfies: ["SRG-OS-000064-GPOS-00033", "SRG-OS-000474-GPOS-00219"]
+  tag gid: "V-238271 "
+  tag rid: "SV-238271r808483_rule "
+  tag stig_id: "UBTU-20-010155 "
+  tag fix_id: "F-41440r808482_fix "
+  tag cci: ["CCI-000172"]
+  tag nist: ["AU-12 c"]
 
   if virtualization.system.eql?('docker')
     impact 0.0

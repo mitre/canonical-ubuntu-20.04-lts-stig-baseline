@@ -1,4 +1,4 @@
-control 'SV-238284' do
+control "SV-238284" do
   title "The Ubuntu operating system must generate audit records for successful/unsuccessful uses
 of the chacl command. "
   desc "Without generating audit records that are specific to the security and mission needs of the
@@ -7,8 +7,8 @@ relating to an incident or identify those responsible for one.
 
 Audit records can be
 generated from various components within the information system (e.g., module or policy
-filter). "
-  desc 'check', "Verify the Ubuntu operating system generates an audit record upon successful/unsuccessful
+filter)."
+  desc "check", "Verify the Ubuntu operating system generates an audit record upon successful/unsuccessful
 attempts to use the \"chacl\" command.
 
 Check the currently configured audit rules with the
@@ -24,8 +24,8 @@ that matches the example or the line is commented out, this is a finding.
 
 Note: The \"-k\"
 allows for specifying an arbitrary identifier, and the string after it does not need to match
-the example output above. "
-  desc 'fix', "Configure the audit system to generate an audit event for any successful/unsuccessful use of
+the example output above."
+  desc "fix", "Configure the audit system to generate an audit event for any successful/unsuccessful use of
 the \"chacl\" command.
 
 Add or update the following rules in the
@@ -37,16 +37,16 @@ perm=x -F auid&gt;=1000 -F auid!=4294967295 -k perm_chng
 To reload the rules file, issue
 the following command:
 
-$ sudo augenrules --load "
+$ sudo augenrules --load"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000064-GPOS-00033 '
-  tag gid: 'V-238284 '
-  tag rid: 'SV-238284r654027_rule '
-  tag stig_id: 'UBTU-20-010168 '
-  tag fix_id: 'F-41453r654026_fix '
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000064-GPOS-00033 "
+  tag gid: "V-238284 "
+  tag rid: "SV-238284r654027_rule "
+  tag stig_id: "UBTU-20-010168 "
+  tag fix_id: "F-41453r654026_fix "
+  tag cci: ["CCI-000172"]
+  tag nist: ["AU-12 c"]
 
   if virtualization.system.eql?('docker')
     impact 0.0

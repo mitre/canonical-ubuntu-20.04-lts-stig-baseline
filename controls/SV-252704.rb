@@ -1,5 +1,5 @@
-control 'SV-252704' do
-  title 'The Ubuntu operating system must disable all wireless network adapters. '
+control "SV-252704" do
+  title "The Ubuntu operating system must disable all wireless network adapters. "
   desc "Without protection of communications with wireless peripherals, confidentiality and
 integrity may be compromised because unprotected communications can be intercepted and
 either read, altered, or used to compromise the operating system.
@@ -21,8 +21,8 @@ wireless peripherals can be accomplished by physical means (e.g., employing phys
 barriers to wireless radio frequencies) or by logical means (e.g., employing cryptographic
 techniques). If physical means of protection are employed, then logical means
 (cryptography) do not have to be employed, and vice versa. If the wireless peripheral is only
-passing telemetry data, encryption of the data may not be required. "
-  desc 'check', "Note: This requirement is Not Applicable for systems that do not have physical wireless
+passing telemetry data, encryption of the data may not be required."
+  desc "check", "Note: This requirement is Not Applicable for systems that do not have physical wireless
 network radios.
 
 Verify that there are no wireless interfaces configured on the system with
@@ -32,8 +32,8 @@ $ ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs
 basename
 
 If a wireless interface is configured and has not been documented and approved by
-the ISSO, this is a finding. "
-  desc 'fix', "List all the wireless interfaces with the following command:
+the ISSO, this is a finding."
+  desc "fix", "List all the wireless interfaces with the following command:
 
 $ ls -L -d
 /sys/class/net/*/wireless | xargs dirname | xargs basename
@@ -62,16 +62,16 @@ install &lt;module name&gt;
 For each module from the system, execute the  following command to remove it:
 
 $
-sudo modprobe -r &lt;module name&gt; "
+sudo modprobe -r &lt;module name&gt;"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000481-GPOS-00481 '
-  tag gid: 'V-252704 '
-  tag rid: 'SV-252704r854182_rule '
-  tag stig_id: 'UBTU-20-010455 '
-  tag fix_id: 'F-56110r819056_fix '
-  tag cci: ['CCI-002418']
-  tag nist: ['SC-8']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000481-GPOS-00481 "
+  tag gid: "V-252704 "
+  tag rid: "SV-252704r854182_rule "
+  tag stig_id: "UBTU-20-010455 "
+  tag fix_id: "F-56110r819056_fix "
+  tag cci: ["CCI-002418"]
+  tag nist: ["SC-8"]
 
   describe command('ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs basename') do
     its('stdout') { should be_in input('approved_wireless_interfaces') }

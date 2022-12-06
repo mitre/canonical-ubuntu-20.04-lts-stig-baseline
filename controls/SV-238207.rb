@@ -1,4 +1,4 @@
-control 'SV-238207' do
+control "SV-238207" do
   title "The Ubuntu operating system must automatically terminate a user session after inactivity
 timeouts have expired. "
   desc "Automatic session termination addresses the termination of user-initiated logical
@@ -20,8 +20,8 @@ information system use.
 
 This capability is typically reserved for specific operating
 system functionality where the system owner, data owner, or organization requires
-additional assurance. "
-  desc 'check', "Verify the operating system automatically terminates a user session after inactivity
+additional assurance."
+  desc "check", "Verify the operating system automatically terminates a user session after inactivity
 timeouts have expired.
 
 Check that \"TMOUT\" environment variable is set in the
@@ -34,8 +34,8 @@ $ grep -E \"\\bTMOUT=[0-9]+\" /etc/bash.bashrc
 TMOUT=600
 
 If \"TMOUT\" is not set, or if the value is \"0\" or is commented
-out, this is a finding. "
-  desc 'fix', "Configure the operating system to automatically terminate a user session after inactivity
+out, this is a finding."
+  desc "fix", "Configure the operating system to automatically terminate a user session after inactivity
 timeouts have expired or at shutdown.
 
 Create the file
@@ -53,16 +53,16 @@ To set the timeout for the
 current sessions, execute the following command over the terminal session:
 
 $ export
-TMOUT=600 "
+TMOUT=600"
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000279-GPOS-00109 '
-  tag gid: 'V-238207 '
-  tag rid: 'SV-238207r853404_rule '
-  tag stig_id: 'UBTU-20-010013 '
-  tag fix_id: 'F-41376r653795_fix '
-  tag cci: ['CCI-002361']
-  tag nist: ['AC-12']
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000279-GPOS-00109 "
+  tag gid: "V-238207 "
+  tag rid: "SV-238207r853404_rule "
+  tag stig_id: "UBTU-20-010013 "
+  tag fix_id: "F-41376r653795_fix "
+  tag cci: ["CCI-002361"]
+  tag nist: ["AC-12"]
 
   profile_files = command('find /etc/profile.d/ /etc/bash.bashrc -type f').stdout.strip.split("\n").entries
   timeout = input('tmout').to_s

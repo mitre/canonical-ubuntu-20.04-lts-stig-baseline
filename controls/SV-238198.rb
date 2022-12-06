@@ -1,4 +1,4 @@
-control 'SV-238198' do
+control "SV-238198" do
   title "The Ubuntu operating system must display the Standard Mandatory DoD Notice and Consent
 Banner before granting local access to the system via a graphical user logon. "
   desc "Display of a standardized and approved use notification before granting access to the Ubuntu
@@ -47,8 +47,8 @@ following verbiage for operating systems that have severe limitations on the num
 characters that can be displayed in the banner:
 
 \"I've read & consent to terms in IS user
-agreem't.\" "
-  desc 'check', "Verify the Ubuntu operating system displays the Standard Mandatory DoD Notice and Consent
+agreem't.\""
+  desc "check", "Verify the Ubuntu operating system displays the Standard Mandatory DoD Notice and Consent
 Banner before granting access to the operating system via a graphical user logon.
 
 Note: If
@@ -80,8 +80,8 @@ work product are private and confidential. See User Agreement for details.\"
 
 If the
 banner-message-text is missing, commented out, or does not match the Standard Mandatory DoD
-Notice and Consent Banner exactly, this is a finding. "
-  desc 'fix', "Edit the \"/etc/gdm3/greeter.dconf-defaults\" file.
+Notice and Consent Banner exactly, this is a finding."
+  desc "fix", "Edit the \"/etc/gdm3/greeter.dconf-defaults\" file.
 
 Set the \"banner-message-text\" line
 to contain the appropriate banner message text as shown below:
@@ -108,16 +108,15 @@ Update the GDM with the new configuration:
 
 $ sudo dconf update
 $ sudo
-systemctl restart gdm3 "
-  impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000023-GPOS-00006 '
-  tag gid: 'V-238198 '
-  tag rid: 'SV-238198r653769_rule '
-  tag stig_id: 'UBTU-20-010003 '
-  tag fix_id: 'F-41367r653768_fix '
-  tag cci: ['CCI-000048']
-  tag nist: ['AC-8 a']
+systemctl restart gdm3"
+  tag severity: "medium "
+  tag gtitle: "SRG-OS-000023-GPOS-00006 "
+  tag gid: "V-238198 "
+  tag rid: "SV-238198r653769_rule "
+  tag stig_id: "UBTU-20-010003 "
+  tag fix_id: "F-41367r653768_fix "
+  tag cci: ["CCI-000048"]
+  tag nist: ["AC-8 a"]
 
   banner_text = input('banner_text')
   clean_banner = banner_text.gsub(/[\r\n\s]/, '')
