@@ -47,11 +47,11 @@ jobs:
         uses: mitre/saf_action@v1
         with:
           command_string: 'validate threshold -i spec/results/container_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
-    artifact-upload:
-      name: Upload artifacts
-      runs-on: macos-12
-      steps:
-        - name: Save Test Result JSONs
-          uses: actions/upload-artifact@v2
-          with:
-            path: spec/results/
+  artifact-upload:
+    name: Upload artifacts
+    runs-on: macos-12
+    steps:
+      - name: Save Test Result JSONs
+        uses: actions/upload-artifact@v2
+        with:
+          path: spec/results/
