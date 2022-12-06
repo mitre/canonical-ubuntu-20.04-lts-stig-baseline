@@ -15,6 +15,7 @@ verifier:
   input_files:
     - ec2.inputs.yml
   reporter:
+    - cli
     - json:spec/results/ec2_ubuntu-2004_%{suite}.json
 
 lifecycle:
