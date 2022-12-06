@@ -19,6 +19,8 @@ jobs:
         suite: ['vanilla','hardened']
       fail-fast: false
     steps:
+      - name: debug
+        run: pwd && ls -lah
       - name: add needed packages
         run: sudo apt-get install -y jq
       - name: Checkout InSpec profile repository
