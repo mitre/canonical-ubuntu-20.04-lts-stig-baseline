@@ -61,6 +61,7 @@ jobs:
   artifact-upload:
     name: Upload artifacts
     runs-on: macos-12
+    needs: validate
     steps:
       - name: Save Test Result JSONs
         uses: actions/upload-artifact@v2
