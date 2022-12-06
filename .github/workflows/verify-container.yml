@@ -39,6 +39,8 @@ jobs:
           bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
+      - name: debug
+        run: pwd && ls -lah
       - name: Run kitchen test
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
       - name: Display our ${{ matrix.suite }} results summary
@@ -55,6 +57,8 @@ jobs:
     if: ${{ always() }}
     needs: validate
     steps:
+      - name: debug
+        run: pwd && ls -lah
       - name: Save Test Result JSONs
         uses: actions/upload-artifact@v2
         with:
