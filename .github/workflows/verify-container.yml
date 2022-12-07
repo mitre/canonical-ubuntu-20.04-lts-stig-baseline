@@ -16,10 +16,8 @@ jobs:
       LC_ALL: "en_US.UTF-8"
       VANILLA_IMAGE: "public.ecr.aws/lts/ubuntu:focal"
       HARDENED_IMAGE: "canonical/ubuntu-pro-stig-20.04:latest"
-    # strategy:
-    #   matrix:
-    #     suite: ['vanilla','hardened']
-    #   fail-fast: false
+    strategy:
+      fail-fast: false
     steps:
       - name: add needed packages
         run: sudo apt-get install -y jq
@@ -40,8 +38,7 @@ jobs:
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       -name: Build the Hardened Container
-        run: docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development \
-  --tag $HARDENED_IMAGE
+        run: docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag $HARDENED_IMAGE
       - name: Start the Vanilla Container
         run: docker run -itd --rm --name vanilla-ubuntu $VANILLA_IMAGE
       - name: Start the Hardened Container
