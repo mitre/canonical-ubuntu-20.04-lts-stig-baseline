@@ -1,15 +1,15 @@
 #!/bin/bash
 
-VANILLA_IMAGE=public.ecr.aws/lts/ubuntu:focal
-HARDENED_IMAGE=canonical/ubuntu-pro-stig-20.04:latest
+export VANILLA_IMAGE="public.ecr.aws/lts/ubuntu:focal"
+export HARDENED_IMAGE="canonical/ubuntu-pro-stig-20.04:latest"
 
 echo "BUILD: build the hardened ubuntu image"
 docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development \
   --tag $HARDENED_IMAGE
 
 echo "CREATE: create target containers for testing"
-docker run -dit --rm --name vanilla-ubuntu $VANILLA_IMAGE
-docker run -dit --rm --name hardened-ubuntu $HARDENED_IMAGE\
+docker run -itd --rm --name vanilla-ubuntu $VANILLA_IMAGE
+docker run -itd --rm --name hardened-ubuntu $HARDENED_IMAGE
 
 docker ps -f name=-ubuntu
 
