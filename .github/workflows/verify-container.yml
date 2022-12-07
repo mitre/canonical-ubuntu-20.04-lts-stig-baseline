@@ -55,11 +55,11 @@ jobs:
       - name: Ensure the scan meets our Vanilla results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: "validate threshold -i vanilla.json -F vanilla.threshold.yml"
+          command_string: "validate threshold -i vanilla.json -F container.vanilla.threshold.yml"
       - name: Ensure the scan meets our Hardened results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: "validate threshold -i hardened.json -F hardened.threshold.yml"
+          command_string: "validate threshold -i hardened.json -F container.hardened.threshold.yml"
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
