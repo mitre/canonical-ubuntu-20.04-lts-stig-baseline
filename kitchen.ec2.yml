@@ -21,12 +21,12 @@ verifier:
 lifecycle:
   pre_converge:
     - remote: |
-        echo "prepping apt"
-        sudo apt -f install
-        sudo apt update -y
-        sudo apt dist-upgrade -y
+        echo "prepping apt-get to install dependencies"
+        sudo apt-get -f install
+        sudo apt-get update -y
+        sudo apt-get dist-upgrade -y
         echo "installing pip3"
-        sudo apt install python3-pip -y
+        sudo apt-get install python3-pip -y
 transport:
   name: ssh
   # username: <%= ENV['SAF_AWS_EC2_USER'] %>
