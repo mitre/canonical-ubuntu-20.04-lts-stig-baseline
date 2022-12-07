@@ -61,8 +61,8 @@ jobs:
           command_string: "validate threshold -i hardened.json -F hardened.threshold.yml"
       - name: Save Test Result JSONs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          path:
-            - hardened.json
-            - vanilla.json
+          path: |
+            vanilla.json
+            hardened.json
