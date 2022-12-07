@@ -16,8 +16,11 @@ verifier:
 lifecycle:
   pre_converge:
     - remote: |
+
         sudo add-apt-repository universe
+        sudo apt -f install
         sudo apt-get -y update
+        sudo apt-get -y dist-upgrade
         sudo apt-get -y install python3-pip
 transport:
   name: ssh
