@@ -2,9 +2,9 @@ name: Container Testing Matrix
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   validate:
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - name: Bundle install
@@ -36,7 +36,7 @@ jobs:
       #     bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
-      -name: Build the Hardened Container
+      - name: Build the Hardened Container
         run: docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag $HARDENED_IMAGE
       - name: Start the Vanilla Container
         run: docker run -itd --rm --name vanilla-ubuntu $VANILLA_IMAGE
