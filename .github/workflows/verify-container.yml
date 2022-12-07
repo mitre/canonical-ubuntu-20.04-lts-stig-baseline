@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    name: Validate my profile
+    name: Validate my Profile on Containers
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-silent
@@ -31,7 +31,8 @@ jobs:
           ruby-version: '2.7'
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
-      - run: bundle install
+      - name: Bundle install
+        run: bundle install
       # - name: Regenerate current `profile.json`
       #   run: |
       #     bundle exec inspec json . | jq . > profile.json
