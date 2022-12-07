@@ -11,8 +11,6 @@ jobs:
     name: Validate my Profile on Containers
     runs-on: ubuntu-latest
     env:
-      CHEF_LICENSE: accept-silent
-      KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
       VANILLA_IMAGE: "public.ecr.aws/lts/ubuntu:focal"
       HARDENED_IMAGE: "canonical/ubuntu-pro-stig-20.04:latest"
@@ -31,9 +29,6 @@ jobs:
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - name: Bundle install
         run: bundle install
-      # - name: Regenerate current `profile.json`
-      #   run: |
-      #     bundle exec inspec json . | jq . > profile.json
       - name: Lint the Inspec profile
         run: bundle exec inspec check .
       - name: Build the Hardened Container
@@ -44,20 +39,30 @@ jobs:
         run: docker run -itd --rm --name hardened-ubuntu $HARDENED_IMAGE
       - name: Verify both our containers are running
         run: docker ps -f name=-ubuntu
-      - name: Test $VANILLA_IMAGE
-        run: inspec exec . --input-file=container.inputs.yml -t docker://vanilla-ubuntu --reporter json:vanilla.json progress-bar
-      # # - name: Run kitchen test
-      # #   run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
-      # - name: Display our ${{ matrix.suite }} results summary
-      #   uses: mitre/saf_action@v1
-      #   with:
-      #     command_string: 'view summary -i spec/results/container_ubuntu-2004_${{ matrix.suite }}.json'
-      # - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-      #   uses: mitre/saf_action@v1
-      #   with:
-      #     command_string: 'validate threshold -i spec/results/container_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
-      # - name: Save Test Result JSONs
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     path: spec/results/
+      - name: Test Vanilla Container
+        run: inspec exec . --input-file=container.inputs.yml -t docker://vanilla-ubuntu --reporter cli json:vanilla.json || true
+      - name: Test Hardened Container
+        run: inspec exec . --input-file=container.inputs.yml -t docker://hardened-ubuntu --reporter cli json:hardened.json || true
+      - name: Display our Vanilla Summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "view summary -i vanilla.json"
+      - name: Display our Hardened Summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "view summary -i hardened.json"
+      - name: Ensure the scan meets our Vanilla results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "validate threshold -i vanilla.json -F vanilla.threshold.yml"
+      - name: Ensure the scan meets our Hardened results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "validate threshold -i hardened.json -F hardened.threshold.yml"
+      - name: Save Test Result JSONs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path:
+            - hardened.json
+            - vanilla.json
