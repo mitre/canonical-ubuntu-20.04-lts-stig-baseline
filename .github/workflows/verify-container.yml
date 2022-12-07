@@ -16,8 +16,6 @@ jobs:
       LC_ALL: "en_US.UTF-8"
       VANILLA_IMAGE: "public.ecr.aws/lts/ubuntu:focal"
       HARDENED_IMAGE: "canonical/ubuntu-pro-stig-20.04:latest"
-    strategy:
-      fail-fast: false
     steps:
       - name: add needed packages
         run: sudo apt-get install -y jq
