@@ -14,7 +14,7 @@ jobs:
       LC_ALL: "en_US.UTF-8"
       VANILLA_IMAGE: "public.ecr.aws/lts/ubuntu:focal"
       HARDENED_IMAGE: "canonical/ubuntu-pro-stig-20.04:latest"
-      CHEF_LICENSE: "accpet-silent"
+      CHEF_LICENSE: "accept-silent"
     steps:
       - name: add needed packages
         run: sudo apt-get install -y jq
