@@ -3,6 +3,7 @@ driver:
   name: vagrant
 
 verifier:
+  sudo: true
   input_files:
     - vagrant.inputs.yml
 

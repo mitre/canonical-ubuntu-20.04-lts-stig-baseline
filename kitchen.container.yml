@@ -8,6 +8,7 @@ provisioner:
   name: dummy
 
 verifier:
+  sudo: true
   input_files:
     - container.inputs.yml
   reporter:
@@ -17,11 +18,11 @@ verifier:
 suites:
   - name: vanilla
     platforms:
-    - name: ubuntu-20.04
-      driver_config:
-        image: public.ecr.aws/lts/ubuntu:focal
-        platform: ubuntu
-      
+      - name: ubuntu-20.04
+        driver_config:
+          image: public.ecr.aws/lts/ubuntu:focal
+          platform: ubuntu
+
   - name: hardened
     platforms:
       - name: ubuntu-20.04
@@ -31,4 +32,3 @@ suites:
         lifecycle:
           pre_create: |
             docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag canonical/ubuntu-pro-stig-20.04:latest
-            

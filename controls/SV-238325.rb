@@ -34,12 +34,14 @@ ENCRYPT_METHOD SHA512 "
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
 
-  disable_fips = input('disable_fips')
-
-  if disable_fips?
+  if input('disable_fips')
     impact 0.0
-    describe 'Control not applicable' do
-      skip 'Control not applicable'
+    describe 'FIPS testing has been disabled' do
+      skip 'This control has been set to Not Applicable, FIPS validation has been disabled with the `disable_fips` input'
+    end
+  elsif virtualization.system.eql?('docker')
+    describe 'FIPS validation in a container must be reviewed manually' do
+      skip 'FIPS validation in a container must be reviewed manually'
     end
   elsif virtualization.system.eql?('docker')
     describe 'Manual test' do

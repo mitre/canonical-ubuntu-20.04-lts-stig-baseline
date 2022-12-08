@@ -7,6 +7,7 @@ driver:
   associate_public_ip: true
 
 verifier:
+  sudo: true
   input_files:
     - ec2.inputs.yml
   reporter:

@@ -30,7 +30,7 @@ enable FIPS. "
   impact 0.7
   tag severity: 'high '
   tag gtitle: 'SRG-OS-000396-GPOS-00176 '
-  tag satisfies: %w(SRG-OS-000396-GPOS-00176 SRG-OS-000478-GPOS-00223)
+  tag satisfies: %w[SRG-OS-000396-GPOS-00176 SRG-OS-000478-GPOS-00223]
   tag gid: 'V-238363 '
   tag rid: 'SV-238363r853438_rule '
   tag stig_id: 'UBTU-20-010442 '
@@ -38,16 +38,14 @@ enable FIPS. "
   tag cci: ['CCI-002450']
   tag nist: ['SC-13 b']
 
-  disable_fips = input('disable_fips')
-
-  if disable_fips?
+  if input('disable_fips')
     impact 0.0
-    describe "Control not applicable" do
-      skip "Control not applicable"
+    describe 'FIPS testing has been disabled' do
+      skip 'This control has been set to Not Applicable, FIPS validation has been disabled with the `disable_fips` input'
     end
   elsif virtualization.system.eql?('docker')
-    describe "Manual test" do
-      skip "This control must be reviewed manually"
+    describe 'FIPS validation in a container must be reviewed manually' do
+      skip 'FIPS validation in a container must be reviewed manually'
     end
   else
     config_file = input('fips_config_file')
@@ -55,7 +53,7 @@ enable FIPS. "
 
     if config_file_exists
       describe file(config_file) do
-        its('content') { should match /\A1\Z/ }
+        its('content') { should match(/\A1\Z/) }
       end
     else
       describe('FIPS is enabled') do
