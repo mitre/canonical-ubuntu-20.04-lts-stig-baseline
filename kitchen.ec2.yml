@@ -13,7 +13,7 @@ verifier:
     - cli
     - json:spec/results/ec2_ubuntu-2004_%{suite}.json
 
-lifecycle:s
+lifecycle:
   pre_converge:
     - remote: |
         sudo add-apt-repository universe
