@@ -6,9 +6,10 @@ provisioner:
   require_ruby_for_busser: false
   require_ansible_repo: true
   ansible_verbose: true
+  ansible_verbosity: 3
   ansible_version: latest
-  roles_path: spec/ansible/roles/
   galaxy_ignore_certs: true
+  roles_path: spec/ansible/roles/
   env_vars:
     - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
     - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp

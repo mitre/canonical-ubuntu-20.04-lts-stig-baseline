@@ -1,5 +1,6 @@
 install_fips: no
 install_aide: yes
+install_protect_kernel_defaults: true
 install_chrony: yes
 install_audispd_plugins: yes
 remove_existing_ca_certs: no
@@ -7,34 +8,34 @@ UBUNTU_ADVANTAGE_PASSWORD: "{{ lookup('env','UBUNTU_ADVANTAGE_PASSWORD') }}"
 UBUNTU_ADVANTAGE_PASSWORD_UPDATES: "{{ lookup('env','UBUNTU_ADVANTAGE_PASSWORD_UPDATES') }}"
 UBUNTU_FIPS_SUBSCRIPTION_ID: "{{ lookup('env','UBUNTU_FIPS_SUBSCRIPTION_ID') }}"
 install_packages:
-- apparmor
-- apparmor-profiles
-- apparmor-utils
-- auditd
-- ca-certificates
-- libpam-pkcs11
-- libpam-pwquality
-- libpwquality-common
-- opensc-pkcs11
-- openssh-client
-- openssh-server
-- ufw
-- unattended-upgrades
-- vlock
+  - apparmor
+  - apparmor-profiles
+  - apparmor-utils
+  - auditd
+  - ca-certificates
+  - libpam-pkcs11
+  - libpam-pwquality
+  - libpwquality-common
+  - opensc-pkcs11
+  - openssh-client
+  - openssh-server
+  - ufw
+  - unattended-upgrades
+  - vlock
 remove_packages:
-- rsh-server
-- telnetd
-- tftpd
-- nis
-- at
-- landscape-client
-- landscape-common
-- mlocate
-- pollinate
-- postfix
-- screen
-- byobu
-- os-prober
+  - rsh-server
+  - telnetd
+  - tftpd
+  - nis
+  - at
+  - landscape-client
+  - landscape-common
+  - mlocate
+  - pollinate
+  - postfix
+  - screen
+  - byobu
+  - os-prober
 login_banner: |
   You are accessing a U.S. Government (USG) Information System (IS) that is
   provided for USG-authorized use only.
@@ -60,15 +61,15 @@ limits_maxlogins: 10
 autologout_timeout: 600
 pam_fail_delay: 4
 sudo_users:
-- ubuntu
+  - ubuntu
 audit_tools:
-- /sbin/audispd
-- /sbin/auditctl
-- /sbin/auditd
-- /sbin/augenrules
-- /sbin/aureport
-- /sbin/ausearch
-- /sbin/autrace
+  - /sbin/audispd
+  - /sbin/auditctl
+  - /sbin/auditd
+  - /sbin/augenrules
+  - /sbin/aureport
+  - /sbin/ausearch
+  - /sbin/autrace
 chrony_time_sources:
-- 169.254.169.123
+  - 169.254.169.123
 audit_sp_remote_server: 192.0.0.1

@@ -20,7 +20,6 @@ lifecycle:
         sudo apt -f install
         sudo apt -y update
         sudo apt -y full-upgrade
-#        sudo apt -y install python3-pip
 transport:
   name: ssh
   connection_timeout: 10
