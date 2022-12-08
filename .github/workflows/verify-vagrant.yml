@@ -1,22 +1,18 @@
 name: Vagrant Testing Matrix
-
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [published]
 
 jobs:
   validate:
     name: Validate my profile
-    # macos-latest no longer has Vagrant. Must use the specified version per documentation.
     runs-on: macos-12
     env:
       CHEF_LICENSE: accept-silent
       KITCHEN_LOCAL_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
-        suite: ['hardened']
+        suite: ["hardened"]
       fail-fast: false
     steps:
       - name: Add jq for output formatting
@@ -26,7 +22,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - name: ensure bundler up-to-date
@@ -42,11 +38,11 @@ jobs:
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
-          command_string: 'view summary -i spec/results/ubuntu-2004_${{ matrix.suite }}.json'
+          command_string: "view summary -i spec/results/ubuntu-2004_${{ matrix.suite }}.json"
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: 'validate threshold -i spec/results/ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
+          command_string: "validate threshold -i spec/results/ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
