@@ -13,14 +13,14 @@ verifier:
     - cli
     - json:spec/results/ec2_ubuntu-2004_%{suite}.json
 
-lifecycle:
+lifecycle:s
   pre_converge:
     - remote: |
         sudo add-apt-repository universe
         sudo apt -f install
-        sudo apt-get -y update
-        sudo apt-get -y dist-upgrade
-        sudo apt-get -y install python3-pip
+        sudo apt -y update
+        sudo apt -y full-upgrade
+        sudo apt -y install python3-pip
 transport:
   name: ssh
   connection_timeout: 10
