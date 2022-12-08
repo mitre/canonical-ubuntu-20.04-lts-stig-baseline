@@ -74,6 +74,6 @@ sudo modprobe -r &lt;module name&gt; "
   tag nist: ['SC-8']
 
   describe command('ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs basename') do
-    its('stdout') { should be_in input('approved_wireless_interfaces') }
+    its('stdout.lines') { should be_in input('approved_wireless_interfaces') }
   end
 end

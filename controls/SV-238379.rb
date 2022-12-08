@@ -50,8 +50,9 @@ dconf settings:
       its('count') { should_not eq 0 }
     end
   else
+    impact 0.0
     describe command('which Xorg').exit_status do
-      skip("GUI not installed.\nwhich Xorg exit_status: " + command('which Xorg').exit_status.to_s)
+      skip('This control is Not Applicable since a GUI not installed.')
     end
   end
 end

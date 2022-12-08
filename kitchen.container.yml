@@ -8,7 +8,6 @@ provisioner:
   name: dummy
 
 verifier:
-  sudo: true
   input_files:
     - container.inputs.yml
   reporter:

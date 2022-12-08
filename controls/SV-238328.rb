@@ -78,14 +78,21 @@ $ sudo ufw deny
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
 
-  ufw_status = command('ufw status').stdout.strip.lines.first
-  value = ufw_status.split(':')[1].strip
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
+    end
+  else
+    ufw_status = command('ufw status').stdout.strip.lines.first
+    value = ufw_status.split(':')[1].strip
 
-  describe 'UFW status' do
-    subject { value }
-    it { should cmp 'active' }
-  end
-  describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
-    skip 'Status listings checks must be preformed manually'
+    describe 'UFW status' do
+      subject { value }
+      it { should cmp 'active' }
+    end
+    describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
+      skip 'Status listings checks must be preformed manually'
+    end
   end
 end

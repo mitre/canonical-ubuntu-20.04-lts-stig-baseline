@@ -14,10 +14,10 @@ docker run -itd --rm --name hardened-ubuntu $HARDENED_IMAGE
 docker ps -f name=-ubuntu
 
 echo "TEST: run InSpec against the vanilla container"
-inspec exec . --input-file=container.inputs.yml -t docker://vanilla-ubuntu --reporter json:vanilla.json progress-bar
+inspec exec . --input-file=container.inputs.yml -t docker://vanilla-ubuntu --reporter json:vanilla.json cli
 
 echo "TEST: run InSpec against the hardened container"
-inspec exec . --input-file=container.inputs.yml -t docker://hardened-ubuntu --reporter json:hardened.json progress-bar
+inspec exec . --input-file=container.inputs.yml -t docker://hardened-ubuntu --reporter json:hardened.json cli
 
 echo "TEST: summary of vanilla results"
 saf view summary -i vanilla.json
@@ -26,7 +26,7 @@ echo "TEST: summary of hardened results"
 saf view summary -i hardened.json
 
 echo "VALIDATE: validating vanilla results passed thresholds. . ."
-saf validate:threshold -i vanilla.json -F vanilla.threshold.yml
+saf validate:threshold -i vanilla.json -F container.vanilla.threshold.yml
 
 echo "VALIDATE: validating hardened results passed thresholds. . ."
-saf validate:threshold -i hardened.json -F hardened.threshold.yml
+saf validate:threshold -i hardened.json -F container.hardened.threshold.yml
