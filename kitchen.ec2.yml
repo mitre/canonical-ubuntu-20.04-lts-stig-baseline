@@ -16,7 +16,6 @@ verifier:
 lifecycle:
   pre_converge:
     - remote: |
-
         sudo add-apt-repository universe
         sudo apt -f install
         sudo apt-get -y update
