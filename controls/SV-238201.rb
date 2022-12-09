@@ -32,8 +32,13 @@ accordingly at
 
   if virtualization.system.eql?('docker')
     impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
+    describe 'This control is Not Applicable inside a container' do
+      skip 'This control is Not Applicable inside a container'
+    end
+  elsif input('pki_disabled')
+    impact 0.0
+    describe 'This system is not using PKI for authentication so the controls is Not Applicable.' do
+      skip 'This system is not using PKI for authentication so the controls is Not Applicable.'
     end
   else
     config_file = '/etc/pam_pkcs11/pam_pkcs11.conf'

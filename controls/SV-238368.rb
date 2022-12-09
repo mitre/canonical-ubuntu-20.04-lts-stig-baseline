@@ -47,7 +47,7 @@ Execution bit, set it to \"enable\". "
     end
   else
     options = {
-      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
+      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/,
     }
     describe.one do
       describe command('dmesg | grep NX').stdout.strip do

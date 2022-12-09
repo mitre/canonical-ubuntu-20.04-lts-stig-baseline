@@ -53,6 +53,7 @@ gsettings set org.gnome.desktop.screensaver lock-enabled true "
   tag nist: ['AC-11 b', 'AC-11 a']
 
   xorg_status = command('which Xorg').exit_status
+
   if xorg_status == 0
     describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
       its('stdout') { should cmp 'true' }

@@ -30,7 +30,7 @@ enable FIPS. "
   impact 0.7
   tag severity: 'high '
   tag gtitle: 'SRG-OS-000396-GPOS-00176 '
-  tag satisfies: %w[SRG-OS-000396-GPOS-00176 SRG-OS-000478-GPOS-00223]
+  tag satisfies: %w(SRG-OS-000396-GPOS-00176 SRG-OS-000478-GPOS-00223)
   tag gid: 'V-238363 '
   tag rid: 'SV-238363r853438_rule '
   tag stig_id: 'UBTU-20-010442 '

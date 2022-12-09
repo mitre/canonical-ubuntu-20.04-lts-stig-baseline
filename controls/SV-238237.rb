@@ -43,7 +43,7 @@ pam_faildelay.so    delay=4000000 "
 
     describe command('grep pam_faildelay /etc/pam.d/common-auth') do
       its('exit_status') { should eq 0 }
-      its('stdout.strip') { should match /^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=([4-9][\d]{6,}|[1-9][\d]{7,}).*$/ }
+      its('stdout.strip') { should match(/^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=([4-9][\d]{6,}|[1-9][\d]{7,}).*$/) }
     end
 
     file('/etc/pam.d/common-auth').content.to_s.scan(/^\s*auth\s+required\s+pam_faildelay.so\s+.*delay=(\d+).*$/).flatten.each do |entry|

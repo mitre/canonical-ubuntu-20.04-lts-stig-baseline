@@ -63,7 +63,7 @@ $ sudo systemctl restart auditd.service "
   else
     describe auditd_conf do
       its('disk_full_action') { should_not be_empty }
-      its('disk_full_action') { should cmp /(?:SYSLOG|SINGLE|HALT)/i }
+      its('disk_full_action') { should cmp(/(?:SYSLOG|SINGLE|HALT)/i) }
     end
   end
 end

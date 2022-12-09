@@ -60,12 +60,12 @@ $ sudo systemctl restart sshd.service "
   impact 0.5
   tag severity: 'medium '
   tag gtitle: 'SRG-OS-000424-GPOS-00188 '
-  tag satisfies: %w[SRG-OS-000424-GPOS-00188 SRG-OS-000033-GPOS-00014 SRG-OS-000394-GPOS-00174]
+  tag satisfies: %w(SRG-OS-000424-GPOS-00188 SRG-OS-000033-GPOS-00014 SRG-OS-000394-GPOS-00174)
   tag gid: 'V-238217 '
   tag rid: 'SV-238217r860821_rule '
   tag stig_id: 'UBTU-20-010044 '
   tag fix_id: 'F-41386r653825_fix '
-  tag cci: %w[CCI-000068 CCI-002421 CCI-003123]
+  tag cci: %w(CCI-000068 CCI-002421 CCI-003123)
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
 
   if input('disable_fips')
@@ -83,7 +83,7 @@ $ sudo systemctl restart sshd.service "
     @ciphers_array = @ciphers_array.first.split(',') unless @ciphers_array.nil?
 
     describe @ciphers_array do
-      it { should be_in %w[aes256-ctr aes192-ctr aes128-ctr] }
+      it { should be_in %w(aes256-ctr aes192-ctr aes128-ctr) }
     end
   end
 end

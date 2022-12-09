@@ -51,9 +51,7 @@ $ sudo chage -E $(date -d \"+3 days\"
   tag cci: ['CCI-000016']
   tag nist: ['AC-2 (2)']
 
-  temporary_accounts = input('temporary_accounts')
-
-  if temporary_accounts.empty?
+  if input('temporary_accounts').empty?
     describe 'Temporary accounts' do
       subject { temporary_accounts }
       it { should be_empty }
@@ -61,7 +59,7 @@ $ sudo chage -E $(date -d \"+3 days\"
   else
     temporary_accounts.each do |acct|
       describe command("chage -l #{acct} | grep 'Account expires'") do
-        its('stdout.strip') { should_not match /:\s*never/ }
+        its('stdout.strip') { should_not match(/:\s*never/) }
       end
     end
   end

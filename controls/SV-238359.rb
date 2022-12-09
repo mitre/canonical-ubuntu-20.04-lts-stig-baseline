@@ -68,7 +68,7 @@ APT::Get::AllowUnauthenticated
     apt_allowunauth.each do |line|
       describe "#{line} contains AllowUnauthenctication" do
         subject { line }
-        it { should_not match /.*false.*/ }
+        it { should_not match(/.*false.*/) }
       end
     end
   end

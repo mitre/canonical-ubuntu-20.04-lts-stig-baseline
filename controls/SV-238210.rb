@@ -74,6 +74,11 @@ Set the sshd option
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'
     end
+  elsif input('pki_disabled')
+    impact 0.0
+    describe 'This system is not using PKI for authentication so the controls is Not Applicable.' do
+      skip 'This system is not using PKI for authentication so the controls is Not Applicable.'
+    end
   else
     describe package('libpam-pkcs11') do
       it { should be_installed }

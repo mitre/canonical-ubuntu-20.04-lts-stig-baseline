@@ -56,7 +56,7 @@ sudo systemctl restart chrony.service "
   if chrony_file.exist?
     describe chrony_file do
       subject { chrony_file }
-      its('content') { should match /^makestep 1 -1/ }
+      its('content') { should match(/^makestep 1 -1/) }
     end
   else
     describe(chrony_file_path + ' exists') do

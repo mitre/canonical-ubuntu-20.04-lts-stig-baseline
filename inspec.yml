@@ -159,3 +159,8 @@ inputs:
     description: Is fips disabled or enabled due to FIPS 140 image
     type: boolean
     value: false
+
+  - name: pki_disabled
+    description: Is PKI authentication used for this system
+    type: boolean
+    value: false

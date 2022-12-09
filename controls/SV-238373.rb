@@ -47,8 +47,8 @@ required      pam_lastlog.so showfailed "
   else
     describe command('grep pam_lastlog /etc/pam.d/login') do
       its('exit_status') { should eq 0 }
-      its('stdout.strip') { should match /^\s*session\s+required\s+pam_lastlog.so/ }
-      its('stdout.strip') { should_not match /^\s*session\s+required\s+pam_lastlog.so[\s\w\d\=]+.*silent/ }
+      its('stdout.strip') { should match(/^\s*session\s+required\s+pam_lastlog.so/) }
+      its('stdout.strip') { should_not match(/^\s*session\s+required\s+pam_lastlog.so[\s\w\d\=]+.*silent/) }
     end
   end
 end

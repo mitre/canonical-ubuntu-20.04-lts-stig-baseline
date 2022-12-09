@@ -149,12 +149,12 @@ $ sudo systemctl -s SIGHUP kill sshd "
   impact 0.5
   tag severity: 'medium '
   tag gtitle: 'SRG-OS-000228-GPOS-00088 '
-  tag satisfies: %w[SRG-OS-000228-GPOS-00088 SRG-OS-000023-GPOS-00006]
+  tag satisfies: %w(SRG-OS-000228-GPOS-00088 SRG-OS-000023-GPOS-00006)
   tag gid: 'V-238214 '
   tag rid: 'SV-238214r858525_rule '
   tag stig_id: 'UBTU-20-010038 '
   tag fix_id: 'F-41383r653816_fix '
-  tag cci: %w[CCI-000048 CCI-001384 CCI-001385 CCI-001386 CCI-001387 CCI-001388]
+  tag cci: %w(CCI-000048 CCI-001384 CCI-001385 CCI-001386 CCI-001387 CCI-001388)
   tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 3']
 
   if !service('sshd').enabled? or !package('sshd-server').installed? or virtualization.system.eql?('docker')

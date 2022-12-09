@@ -53,6 +53,6 @@ $ sudo passwd -l root "
     end
   end
   describe command('passwd -S root').stdout.strip do
-    it { should match /^root\s+L\s+.*$/ }
+    it { should match(/^root\s+L\s+.*$/) }
   end
 end

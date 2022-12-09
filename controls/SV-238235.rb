@@ -83,8 +83,8 @@ unlock_time = 0 "
 
     describe command('grep pam_tally /etc/pam.d/common-auth') do
       its('exit_status') { should eq 0 }
-      its('stdout.strip') { should match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3($|\s+.*$)/ }
-      its('stdout.strip') { should_not match /^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3\s+.*unlock_time.*$/ }
+      its('stdout.strip') { should match(/^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3($|\s+.*$)/) }
+      its('stdout.strip') { should_not match(/^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3\s+.*unlock_time.*$/) }
     end
   end
 end

@@ -67,8 +67,8 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin
   else
     describe "Number of directories that contain system commands found in /bin, /sbin, /usr/bin, /usr/sbin,
       /usr/local/bin or /usr/local/sbin, that are NOT owned by root" do
-      subject { valid_system_commands }
-      its('count') { should eq 0 }
-    end
+        subject { valid_system_commands }
+        its('count') { should eq 0 }
+      end
   end
 end

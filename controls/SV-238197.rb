@@ -96,10 +96,11 @@ $ sudo systemctl restart gdm3 "
   tag nist: ['AC-8 a']
 
   xorg_status = command('which Xorg').exit_status
+
   if xorg_status == 0
     describe 'banner-message-enable must be set to true' do
       subject { command('grep banner-message-enable /etc/dconf/db/local.d/*') }
-      its('stdout') { should match /(banner-message-enable).+=.+(true)/ }
+      its('stdout') { should match(/(banner-message-enable).+=.+(true)/) }
     end
   else
     describe command('which Xorg').exit_status do

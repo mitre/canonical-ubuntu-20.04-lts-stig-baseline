@@ -54,12 +54,12 @@ sudo systemctl reload sshd.service "
   impact 0.5
   tag severity: 'medium '
   tag gtitle: 'SRG-OS-000424-GPOS-00188 '
-  tag satisfies: %w[SRG-OS-000424-GPOS-00188 SRG-OS-000250-GPOS-00093 SRG-OS-000393-GPOS-00173]
+  tag satisfies: %w(SRG-OS-000424-GPOS-00188 SRG-OS-000250-GPOS-00093 SRG-OS-000393-GPOS-00173)
   tag gid: 'V-238216 '
   tag rid: 'SV-238216r860820_rule '
   tag stig_id: 'UBTU-20-010043 '
   tag fix_id: 'F-41385r653822_fix '
-  tag cci: %w[CCI-001453 CCI-002421 CCI-002890]
+  tag cci: %w(CCI-001453 CCI-002421 CCI-002890)
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
 
   if input('disable_fips')
@@ -77,7 +77,7 @@ sudo systemctl reload sshd.service "
     @macs_array = @macs_array.first.split(',') unless @macs_array.nil?
 
     describe @macs_array do
-      it { should be_in %w[hmac-sha2-256 hmac-sha2-512] }
+      it { should be_in %w(hmac-sha2-256 hmac-sha2-512) }
     end
   end
 end
