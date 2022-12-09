@@ -69,6 +69,7 @@ least 25% of the repository maximum audit record storage capacity. "
   tag fix_id: 'F-41476r654095_fix '
   tag cci: ['CCI-001855']
   tag nist: ['AU-5 (1)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -32,6 +32,7 @@ root -type d -exec chown root '{}' \\; "
   tag fix_id: 'F-41519r654224_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   library_dirs = if os.arch == 'x86_64'
                    command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-user root \-type d').stdout.strip.split("\n").entries

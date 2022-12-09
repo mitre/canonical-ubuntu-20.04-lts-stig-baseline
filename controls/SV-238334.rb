@@ -33,6 +33,7 @@ document the need with the ISSO. "
   tag fix_id: 'F-41503r654176_fix '
   tag cci: ['CCI-001190']
   tag nist: ['SC-24']
+  tag 'host', 'container'
 
   is_kdump_required = input('is_kdump_required')
   if is_kdump_required

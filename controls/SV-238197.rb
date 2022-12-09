@@ -94,6 +94,7 @@ $ sudo systemctl restart gdm3 "
   tag fix_id: 'F-41366r653765_fix '
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host', 'container'
 
   xorg_status = command('which Xorg').exit_status
 

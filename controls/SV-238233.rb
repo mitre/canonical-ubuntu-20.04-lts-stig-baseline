@@ -39,6 +39,7 @@ an example to copy into place and modify accordingly at
   tag fix_id: 'F-41402r653873_fix '
   tag cci: ['CCI-001991']
   tag nist: ['IA-5 (2) (d)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -53,6 +53,7 @@ $ sudo sysctl --system "
   tag fix_id: 'F-41538r654281_fix '
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
+  tag 'host', 'container'
 
   describe kernel_parameter('kernel.randomize_va_space') do
     its('value') { should cmp 2 }

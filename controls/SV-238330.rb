@@ -41,6 +41,7 @@ password expires. "
   tag fix_id: 'F-41499r654164_fix '
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e']
+  tag 'host', 'container'
 
   config_file = input('useradd_config_file')
   config_file_exists = file(config_file).exist?

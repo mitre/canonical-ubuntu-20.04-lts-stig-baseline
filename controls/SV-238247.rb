@@ -55,6 +55,7 @@ $ sudo systemctl kill auditd -s SIGHUP "
   tag fix_id: 'F-41416r832946_fix '
   tag cci: ['CCI-000162']
   tag nist: ['AU-9 a']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

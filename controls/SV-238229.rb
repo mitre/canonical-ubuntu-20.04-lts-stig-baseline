@@ -64,6 +64,7 @@ accordingly at
   tag fix_id: 'F-41398r653861_fix '
   tag cci: ['CCI-000185']
   tag nist: ['IA-5 (2) (b) (1)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

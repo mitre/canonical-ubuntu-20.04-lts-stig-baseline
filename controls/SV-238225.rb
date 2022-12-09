@@ -33,6 +33,7 @@ minlen=15 "
   tag fix_id: 'F-41394r653849_fix '
   tag cci: ['CCI-000205']
   tag nist: ['IA-5 (1) (a)']
+  tag 'host', 'container'
 
   config_file = '/etc/security/pwquality.conf'
   config_file_exists = file(config_file).exist?

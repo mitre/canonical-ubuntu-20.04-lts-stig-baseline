@@ -51,6 +51,7 @@ gsettings set org.gnome.desktop.screensaver lock-enabled true "
   tag fix_id: 'F-41368r653771_fix '
   tag cci: %w(CCI-000056 CCI-000057)
   tag nist: ['AC-11 b', 'AC-11 a']
+  tag 'host', 'container'
 
   xorg_status = command('which Xorg').exit_status
 

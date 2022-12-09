@@ -29,6 +29,7 @@ PASS_MAX_DAYS    60 "
   tag fix_id: 'F-41372r653783_fix '
   tag cci: ['CCI-000199']
   tag nist: ['IA-5 (1) (d)']
+  tag 'host', 'container'
 
   describe login_defs do
     its('PASS_MAX_DAYS') { should cmp <= 60 }

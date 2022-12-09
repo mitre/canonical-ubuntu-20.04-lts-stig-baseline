@@ -61,6 +61,7 @@ rsyslog "
   tag fix_id: 'F-41522r654233_fix '
   tag cci: ['CCI-001665']
   tag nist: ['SC-24']
+  tag 'host', 'container'
 
   describe service('rsyslog') do
     it { should be_installed }

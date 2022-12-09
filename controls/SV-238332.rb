@@ -44,6 +44,7 @@ $ sudo chmod +t  [Public Directory] "
   tag fix_id: 'F-41501r654170_fix '
   tag cci: ['CCI-001090']
   tag nist: ['SC-4']
+  tag 'host', 'container'
 
   lines = command('find / -xdev -type d  \( -perm -0002 -a ! -perm -1000 \) -print 2>/dev/null').stdout.strip.split("\n").entries
   if lines.count > 0

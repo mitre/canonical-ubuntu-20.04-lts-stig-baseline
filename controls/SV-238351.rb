@@ -33,6 +33,7 @@ $ sudo chgrp root [FILE] "
   tag fix_id: 'F-41520r832961_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   library_files = if os.arch == 'x86_64'
                     command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-group root \-type f').stdout.strip.split("\n").entries

@@ -43,6 +43,7 @@ dconf settings:
   tag fix_id: 'F-41548r654311_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   xorg_status = command('which Xorg').exit_status
   if xorg_status == 0

@@ -58,6 +58,7 @@ systemctl restart sshd.service "
   tag fix_id: 'F-41381r653810_fix '
   tag cci: ['CCI-000879']
   tag nist: ['MA-4 e']
+  tag 'host', 'container'
 
   describe sshd_config do
     its('ClientAliveCountMax') { should cmp 1 }

@@ -49,6 +49,7 @@ $ sudo systemctl restart rsyslog.service "
   tag fix_id: 'F-41493r832958_fix '
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
+  tag 'host', 'container'
 
   options = {
     assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/,

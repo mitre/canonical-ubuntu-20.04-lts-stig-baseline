@@ -46,6 +46,7 @@ $ sudo passwd -l root "
   tag fix_id: 'F-41498r654161_fix '
   tag cci: ['CCI-000770']
   tag nist: ['IA-2 (5)']
+  tag 'host', 'container'
 
   describe.one do
     describe shadow.where(user: 'root') do

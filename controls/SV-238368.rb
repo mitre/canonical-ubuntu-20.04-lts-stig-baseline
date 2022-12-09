@@ -39,6 +39,7 @@ Execution bit, set it to \"enable\". "
   tag fix_id: 'F-41537r654278_fix '
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

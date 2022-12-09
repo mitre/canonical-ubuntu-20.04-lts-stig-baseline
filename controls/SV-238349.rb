@@ -32,6 +32,7 @@ $ sudo find /lib /usr/lib /lib64 ! -user root -type f -exec chown root
   tag fix_id: 'F-41518r654221_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   library_files = if os.arch == 'x86_64'
                     command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-user root \-type f').stdout.strip.split("\n").entries

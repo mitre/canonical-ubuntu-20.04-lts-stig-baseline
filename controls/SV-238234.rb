@@ -36,6 +36,7 @@ obscure sha512 shadow remember=5 rounds=5000 "
   tag fix_id: 'F-41403r832944_fix '
   tag cci: %w(CCI-000196 CCI-000200)
   tag nist: ['IA-5 (1) (c)', 'IA-5 (1) (e)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

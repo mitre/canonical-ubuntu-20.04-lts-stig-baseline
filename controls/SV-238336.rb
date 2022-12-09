@@ -43,6 +43,7 @@ server. "
   tag fix_id: 'F-41505r858537_fix '
   tag cci: ['CCI-001233']
   tag nist: ['SI-2 (2)']
+  tag 'host', 'container'
 
   describe package('mfetp') do
     it { should be_installed }

@@ -53,6 +53,7 @@ APT::Get::AllowUnauthenticated
   tag fix_id: 'F-41528r654251_fix '
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+  tag 'host', 'container'
 
   describe directory('/etc/apt/apt.conf.d') do
     it { should exist }

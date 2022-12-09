@@ -49,6 +49,7 @@ sudo systemctl restart chrony.service "
   tag fix_id: 'F-41526r654245_fix '
   tag cci: ['CCI-002046']
   tag nist: ['AU-8 (1) (b)']
+  tag 'host', 'container'
 
   chrony_file_path = input('chrony_config_file')
   chrony_file = file(chrony_file_path)

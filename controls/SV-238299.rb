@@ -36,6 +36,7 @@ $ sudo update-grub "
   tag fix_id: 'F-41468r654071_fix '
   tag cci: ['CCI-001464']
   tag nist: ['AU-14 (1)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

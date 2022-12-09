@@ -28,6 +28,7 @@ files in the \"/etc/sudoers.d\" directory. "
   tag fix_id: 'F-41377r653798_fix '
   tag cci: ['CCI-002038']
   tag nist: ['IA-11']
+  tag 'host', 'container'
 
   describe command("egrep -r -i '(nopasswd|!authenticate)' /etc/sudoers.d/ /etc/sudoers") do
     its('stdout.strip') { should be_empty }

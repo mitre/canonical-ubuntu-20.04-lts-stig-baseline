@@ -49,6 +49,7 @@ $ sudo systemctl enable
   tag fix_id: 'F-41524r654239_fix '
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
+  tag 'host', 'container'
 
   describe service('ufw') do
     it { should be_installed }

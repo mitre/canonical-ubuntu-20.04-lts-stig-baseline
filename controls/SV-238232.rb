@@ -36,6 +36,7 @@ Modify all of the \"cert_policy\" lines in
   tag fix_id: 'F-41401r653870_fix '
   tag cci: ['CCI-001954']
   tag nist: ['IA-2 (12)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

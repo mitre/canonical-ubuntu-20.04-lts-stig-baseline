@@ -40,6 +40,7 @@ daemon-reload "
   tag fix_id: 'F-41549r832973_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   describe service('ctrl-alt-del.target') do
     it { should_not be_running }

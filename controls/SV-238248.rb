@@ -57,6 +57,7 @@ $ sudo chmod -R  g-w,o-rwx
   tag fix_id: 'F-41417r653918_fix '
   tag cci: ['CCI-000164']
   tag nist: ['AU-9 a']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

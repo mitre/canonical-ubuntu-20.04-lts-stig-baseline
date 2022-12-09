@@ -118,6 +118,7 @@ systemctl restart gdm3 "
   tag fix_id: 'F-41367r653768_fix '
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host', 'container'
 
   banner_text = input('banner_text')
   clean_banner = banner_text.gsub(/[\r\n\s]/, '')

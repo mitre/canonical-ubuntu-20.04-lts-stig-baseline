@@ -26,6 +26,7 @@ passwd -l [username] "
   tag fix_id: 'F-54892r808505_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   describe command("sudo awk -F: '!$2 {print $1}' /etc/shadow") do
     its('stdout') { should be_empty }

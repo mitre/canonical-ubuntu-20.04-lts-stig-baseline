@@ -53,6 +53,7 @@ Replace \"[audit_tool]\" with each audit tool not group-owned by root. "
   tag fix_id: 'F-41471r654080_fix '
   tag cci: %w(CCI-001493 CCI-001494)
   tag nist: ['AU-9 a', 'AU-9']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

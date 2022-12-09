@@ -61,6 +61,7 @@ $ sudo augenrules --load "
   tag fix_id: 'F-41478r654101_fix '
   tag cci: %w(CCI-000172 CCI-002884)
   tag nist: ['AU-12 c', 'MA-4 (1) (a)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

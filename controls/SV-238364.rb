@@ -50,6 +50,7 @@ update-ca-certificates "
   tag fix_id: 'F-41533r860823_fix '
   tag cci: ['CCI-002470']
   tag nist: ['SC-23 (5)']
+  tag 'host', 'container'
 
   allowed_ca_fingerprints_regex = input('allowed_ca_fingerprints_regex')
   find_command = ''"

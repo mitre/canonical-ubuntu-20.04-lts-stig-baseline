@@ -61,6 +61,7 @@ sudo systemctl reload sshd.service "
   tag fix_id: 'F-41385r653822_fix '
   tag cci: %w(CCI-001453 CCI-002421 CCI-002890)
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
+  tag 'host'
 
   if input('disable_fips')
     impact 0.0

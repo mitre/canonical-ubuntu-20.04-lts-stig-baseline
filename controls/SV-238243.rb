@@ -51,6 +51,7 @@ systemctl restart auditd.service "
   tag fix_id: 'F-41412r653903_fix '
   tag cci: ['CCI-000139']
   tag nist: ['AU-5 a']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -37,6 +37,7 @@ enable FIPS. "
   tag fix_id: 'F-41532r654263_fix '
   tag cci: ['CCI-002450']
   tag nist: ['SC-13 b']
+  tag 'host'
 
   if input('disable_fips')
     impact 0.0

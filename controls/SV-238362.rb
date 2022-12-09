@@ -35,6 +35,7 @@ directory instead of the \"/etc/sssd/sssd.conf\" file. "
   tag fix_id: 'F-41531r654260_fix '
   tag cci: ['CCI-002007']
   tag nist: ['IA-5 (13)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

@@ -41,6 +41,7 @@ ufw "
   tag fix_id: 'F-41523r654236_fix '
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
+  tag 'host', 'container'
 
   describe package('ufw') do
     it { should be_installed }

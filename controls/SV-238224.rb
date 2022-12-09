@@ -41,6 +41,7 @@ difok=8 "
   tag fix_id: 'F-41393r653846_fix '
   tag cci: ['CCI-000195']
   tag nist: ['IA-5 (1) (b)']
+  tag 'host', 'container'
 
   config_file = '/etc/security/pwquality.conf'
   config_file_exists = file(config_file).exist?

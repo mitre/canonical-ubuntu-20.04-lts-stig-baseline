@@ -51,6 +51,7 @@ $ sudo chown root /var/log/audit/* "
   tag fix_id: 'F-41415r653912_fix '
   tag cci: ['CCI-000162']
   tag nist: ['AU-9 a']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

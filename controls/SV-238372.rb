@@ -38,6 +38,7 @@ parameter in the \"/etc/default/aide\" file with a value of \"no\" if it does no
   tag fix_id: 'F-41541r654290_fix '
   tag cci: ['CCI-002702']
   tag nist: ['SI-6 d']
+  tag 'host', 'container'
 
   describe file('/etc/default/aide') do
     it { should exist }

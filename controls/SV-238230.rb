@@ -50,6 +50,7 @@ $ sudo apt install libpam-pkcs11 "
   tag fix_id: 'F-41399r653864_fix '
   tag cci: ['CCI-001948']
   tag nist: ['IA-2 (11)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

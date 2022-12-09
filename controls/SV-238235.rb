@@ -70,6 +70,7 @@ unlock_time = 0 "
   tag fix_id: 'F-41404r802382_fix '
   tag cci: %w(CCI-000044 CCI-002238)
   tag nist: ['AC-7 a', 'AC-7 b']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

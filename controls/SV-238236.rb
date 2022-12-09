@@ -71,6 +71,7 @@ $  sudo cp -f
   tag fix_id: 'F-41405r653882_fix '
   tag cci: ['CCI-002699']
   tag nist: ['SI-6 b']
+  tag 'host', 'container'
 
   describe('Verify that the Advanced Intrusion Detection Environment (AIDE) default script used to check file integrity each 30 days or less is unchanged.') do
     skip('manual test')

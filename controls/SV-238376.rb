@@ -43,6 +43,7 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm
   tag fix_id: 'F-41545r654302_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   system_commands = command('find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /022 -type f').stdout.strip.split("\n").entries
   valid_system_commands = Set[]

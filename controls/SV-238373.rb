@@ -38,6 +38,7 @@ required      pam_lastlog.so showfailed "
   tag fix_id: 'F-41542r654293_fix '
   tag cci: ['CCI-000052']
   tag nist: ['AC-9']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

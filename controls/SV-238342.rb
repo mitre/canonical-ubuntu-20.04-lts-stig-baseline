@@ -32,6 +32,7 @@ $ sudo chown syslog /var/log/syslog "
   tag fix_id: 'F-41511r654200_fix '
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host', 'container'
 
   describe file('/var/log/syslog') do
     its('owner') { should cmp 'syslog' }

@@ -74,6 +74,7 @@ Note: The value of \"retry\" should be between \"1\" and
   tag fix_id: 'F-41397r653858_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

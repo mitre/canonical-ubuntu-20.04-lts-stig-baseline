@@ -68,6 +68,7 @@ p+i+n+u+g+s+b+acl+xattrs+sha512 "
   tag fix_id: 'F-41472r654083_fix '
   tag cci: ['CCI-001496']
   tag nist: ['AU-9 (3)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

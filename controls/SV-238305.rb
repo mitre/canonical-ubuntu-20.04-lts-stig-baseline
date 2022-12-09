@@ -71,6 +71,7 @@ point. "
   tag fix_id: 'F-41474r654089_fix '
   tag cci: ['CCI-001849']
   tag nist: ['AU-4']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

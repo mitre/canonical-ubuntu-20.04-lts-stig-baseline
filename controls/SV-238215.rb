@@ -67,6 +67,7 @@ systemctl start sshd.service "
   tag fix_id: 'F-41384r653819_fix '
   tag cci: %w(CCI-002418 CCI-002420 CCI-002422)
   tag nist: ['SC-8', 'SC-8 (2)']
+  tag 'host', 'container'
 
   describe package('openssh-client') do
     it { should be_installed }

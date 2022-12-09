@@ -77,6 +77,7 @@ $ sudo ufw deny
   tag fix_id: 'F-41497r654158_fix '
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

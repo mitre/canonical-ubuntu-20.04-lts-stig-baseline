@@ -61,6 +61,7 @@ sudo chown root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/* "
   tag fix_id: 'F-41419r653924_fix '
   tag cci: ['CCI-000171']
   tag nist: ['AU-12 b']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

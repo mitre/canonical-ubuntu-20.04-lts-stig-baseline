@@ -32,6 +32,7 @@ $ sudo find /lib /usr/lib /lib64 ! -group root -type d -exec chgrp root
   tag fix_id: 'F-41521r654230_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   library_directories = if os.arch == 'x86_64'
                           command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-group root \-type d').stdout.strip.split("\n").entries

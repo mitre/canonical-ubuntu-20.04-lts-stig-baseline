@@ -43,6 +43,7 @@ $ sudo chown root [FILE] "
   tag fix_id: 'F-41546r832967_fix '
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host', 'container'
 
   system_commands = command('find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -user root -type f').stdout.strip.split("\n").entries
   valid_system_commands = Set[]

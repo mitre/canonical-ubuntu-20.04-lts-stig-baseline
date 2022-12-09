@@ -37,6 +37,7 @@ Unattended-Upgrade::Remove-Unused-Kernel-Packages \"true\"; "
   tag fix_id: 'F-41539r654284_fix '
   tag cci: ['CCI-002617']
   tag nist: ['SI-2 (6)']
+  tag 'host', 'container'
 
   describe directory('/etc/apt/apt.conf.d') do
     it { should exist }

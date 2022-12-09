@@ -33,6 +33,7 @@ ENCRYPT_METHOD SHA512 "
   tag fix_id: 'F-41494r654149_fix '
   tag cci: ['CCI-000803']
   tag nist: ['IA-7']
+  tag 'host'
 
   if input('disable_fips')
     impact 0.0

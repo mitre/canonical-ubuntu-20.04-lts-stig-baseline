@@ -30,6 +30,7 @@ pam_faildelay.so    delay=4000000 "
   tag fix_id: 'F-41406r653885_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

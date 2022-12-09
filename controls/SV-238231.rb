@@ -36,6 +36,7 @@ opensc-pkcs11 "
   tag fix_id: 'F-41400r653867_fix '
   tag cci: ['CCI-001953']
   tag nist: ['IA-2 (12)']
+  tag 'host', 'container'
 
   describe package('opensc-pkcs11') do
     it { should be_installed }

@@ -36,6 +36,7 @@ $ sudo find
   tag fix_id: 'F-41506r654185_fix '
   tag cci: ['CCI-001312']
   tag nist: ['SI-11 a']
+  tag 'host', 'container'
 
   log_files = command('find /var/log -perm /137 -type f -exec stat -c "%n %a" {} \;').stdout.strip.split("\n").entries
 

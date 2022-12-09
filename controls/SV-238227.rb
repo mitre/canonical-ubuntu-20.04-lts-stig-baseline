@@ -29,6 +29,7 @@ dictcheck=1 "
   tag fix_id: 'F-41396r653855_fix '
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host', 'container'
 
   config_file = '/etc/security/pwquality.conf'
   config_file_exists = file(config_file).exist?

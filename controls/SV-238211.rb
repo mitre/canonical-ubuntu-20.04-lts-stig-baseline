@@ -40,6 +40,7 @@ UsePAM yes "
   tag fix_id: 'F-41380r653807_fix '
   tag cci: ['CCI-000877']
   tag nist: ['MA-4 c']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

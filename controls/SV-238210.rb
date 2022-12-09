@@ -68,6 +68,7 @@ Set the sshd option
   tag fix_id: 'F-41379r653804_fix '
   tag cci: %w(CCI-000765 CCI-000766 CCI-000767 CCI-000768)
   tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

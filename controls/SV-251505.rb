@@ -49,6 +49,7 @@ blacklist usb-storage &gt;&gt; /etc/modprobe.d/DISASTIG.conf\" "
   tag fix_id: 'F-54894r808511_fix '
   tag cci: ['CCI-001958']
   tag nist: ['IA-3']
+  tag 'host'
 
   if virtualization.system.eql?('docker')
     impact 0.0

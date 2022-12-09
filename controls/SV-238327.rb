@@ -34,6 +34,7 @@ rsh-server "
   tag fix_id: 'F-41496r654155_fix '
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+  tag 'host', 'container'
 
   describe package('rsh-server') do
     it { should_not be_installed }

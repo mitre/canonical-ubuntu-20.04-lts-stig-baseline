@@ -38,6 +38,7 @@ UID with a unique UID. "
   tag fix_id: 'F-41374r653789_fix '
   tag cci: %w(CCI-000764 CCI-000804)
   tag nist: %w(IA-2 IA-8)
+  tag 'host', 'container'
 
   user_list = command("awk -F \":\" 'list[$3]++{print $1}' /etc/passwd").stdout.split("\n")
   findings = Set[]

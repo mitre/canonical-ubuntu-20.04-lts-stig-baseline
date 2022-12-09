@@ -33,6 +33,7 @@ $ sudo chmod 0750 /var/log "
   tag fix_id: 'F-41509r654194_fix '
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host', 'container'
 
   describe directory('/var/log') do
     it { should_not be_more_permissive_than('0750') }

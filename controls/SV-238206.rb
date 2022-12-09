@@ -46,6 +46,7 @@ $ sudo gpasswd -d &lt;username&gt; sudo "
   tag fix_id: 'F-41375r653792_fix '
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
+  tag 'host', 'container'
 
   sudo_accounts = input('sudo_accounts')
 

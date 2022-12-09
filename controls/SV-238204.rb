@@ -66,6 +66,7 @@ update-grub "
   tag fix_id: 'F-41373r832935_fix '
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
+  tag 'host', 'container'
 
   describe grub_conf('/boot/grub/grub.cfg') do
     its('password') { should match '^password_pbkdf2' }

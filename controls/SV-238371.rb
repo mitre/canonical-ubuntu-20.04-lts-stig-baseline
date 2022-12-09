@@ -39,6 +39,7 @@ $ sudo apt-get install aide "
   tag fix_id: 'F-41540r654287_fix '
   tag cci: ['CCI-002696']
   tag nist: ['SI-6 a']
+  tag 'host', 'container'
 
   describe package('aide') do
     it { should be_installed }

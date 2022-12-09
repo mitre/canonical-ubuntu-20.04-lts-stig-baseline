@@ -72,6 +72,7 @@ sudo ufw limit in on eth0 "
   tag fix_id: 'F-41536r654275_fix '
   tag cci: ['CCI-002385']
   tag nist: ['SC-5 a']
+  tag 'host', 'container'
 
   describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
     skip 'Status listings checks must be preformed manually'

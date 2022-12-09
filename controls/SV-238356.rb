@@ -69,6 +69,7 @@ systemctl restart chrony.service "
   tag fix_id: 'F-41525r808491_fix '
   tag cci: ['CCI-001891']
   tag nist: ['AU-8 (1) (a)']
+  tag 'host', 'container'
 
   is_system_networked = input('is_system_networked')
 

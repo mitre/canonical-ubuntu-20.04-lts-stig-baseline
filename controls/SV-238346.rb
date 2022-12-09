@@ -47,7 +47,8 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin
   tag fix_id: 'F-41515r654212_fix '
   tag cci: ['CCI-001495']
   tag nist: ['AU-9']
-  # CHECK
+  tag 'host', 'container'
+  
   system_commands = command('find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -group root -type d').stdout.strip.split("\n").entries
   valid_system_commands = Set[]
 
