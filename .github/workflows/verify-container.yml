@@ -70,6 +70,8 @@ jobs:
           command_string: generate:threshold -i hardened.json -c -o hardened-report.md
       - name: Amend Markdown Reports for readability
         run: |
+          pwd
+          ls -alh
           sed -i '' '1s/^/```yaml\'$'\n/' vanilla-report.md 
           echo '```' | tee -a vanilla-report.md
           sed -i '' '1s/^/```yaml\'$'\n/' hardened-report.md 

@@ -57,7 +57,7 @@ jobs:
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: "Validate the threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
       - name: Generate ${{ matrix.suite }} Markdown Report
         uses: mitre/saf_action@v1
         with:
