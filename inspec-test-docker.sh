@@ -28,5 +28,15 @@ saf view summary -i hardened.json
 echo "VALIDATE: validating vanilla results passed thresholds. . ."
 saf validate:threshold -i vanilla.json -F container.vanilla.threshold.yml
 
+echo "Generate scan report for vanilla"
+saf generate:threshold -i vanilla.json -c -o vanilla-report.md
+sed -i '' '1s/^/```yaml\'$'\n/' vanilla-report.md 
+echo '```' | tee -a vanilla-report.md 
+
 echo "VALIDATE: validating hardened results passed thresholds. . ."
 saf validate:threshold -i hardened.json -F container.hardened.threshold.yml
+
+echo "Generate scan report for hardened scan"
+saf generate:threshold -i hardened.json -c -o hardened-report.md
+sed -i '' '1s/^/```yaml\'$'\n/' hardened-report.md 
+echo '```' | tee -a hardened-report.md

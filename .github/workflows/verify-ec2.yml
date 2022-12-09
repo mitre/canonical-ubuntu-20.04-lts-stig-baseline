@@ -2,9 +2,9 @@ name: EC2 Testing Matrix
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   validate:
@@ -17,7 +17,7 @@ jobs:
       #AWS_REGION: 'us-east-1'
     strategy:
       matrix:
-        suite: ['hardened']
+        suite: ["hardened"]
       fail-fast: false
     steps:
       - name: add needed packages
@@ -39,7 +39,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: "2.7"
       - name: Disable ri and rdoc
         run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
       - run: bundle install
@@ -53,11 +53,23 @@ jobs:
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
-          command_string: 'view summary -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json'
+          command_string: "view summary -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json"
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: 'validate threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml'
+          command_string: "Validate the threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+      - name: Generate ${{ matrix.suite }} Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+      - name: Generate the ${{ matrix.suite }} Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+      - name: Amend the ${{ matrix.suite }} Markdown Report for readability
+        run: |
+          sed -i '' '1s/^/```yaml\'$'\n/' spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md 
+          echo '```' | tee -a spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2

@@ -60,6 +60,20 @@ jobs:
         uses: mitre/saf_action@v1
         with:
           command_string: "validate threshold -i hardened.json -F container.hardened.threshold.yml"
+      - name: Generate Vanilla Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i vanilla.json -c -o vanilla-report.md
+      - name: Generate Hardened Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i hardened.json -c -o hardened-report.md
+      - name: Amend Markdown Reports for readability
+        run: |
+          sed -i '' '1s/^/```yaml\'$'\n/' vanilla-report.md 
+          echo '```' | tee -a vanilla-report.md
+          sed -i '' '1s/^/```yaml\'$'\n/' hardened-report.md 
+          echo '```' | tee -a hardened-report.md
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
@@ -67,3 +81,4 @@ jobs:
           path: |
             vanilla.json
             hardened.json
+            *-report.md
