@@ -53,7 +53,7 @@ $ sudo chage -E $(date -d \"+3 days\"
 
   if input('temporary_accounts').empty?
     describe 'Temporary accounts' do
-      subject { temporary_accounts }
+      subject { input('temporary_accounts') }
       it { should be_empty }
     end
   else
