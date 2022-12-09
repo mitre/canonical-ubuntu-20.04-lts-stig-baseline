@@ -63,19 +63,17 @@ jobs:
       - name: Generate Vanilla Markdown Report
         uses: mitre/saf_action@v1
         with:
-          command_string: generate:threshold -i vanilla.json -c -o vanilla-report.md
+          command_string: generate:threshold -i vanilla.json -c -o vanilla.md
       - name: Generate Hardened Markdown Report
         uses: mitre/saf_action@v1
         with:
-          command_string: generate:threshold -i hardened.json -c -o hardened-report.md
+          command_string: generate:threshold -i hardened.json -c -o hardened.md
       - name: Amend Markdown Reports for readability
         run: |
-          pwd
-          ls -alh
-          sed -i '' '1s/^/```yaml\'$'\n/' vanilla-report.md 
-          echo '```' | tee -a vanilla-report.md
-          sed -i '' '1s/^/```yaml\'$'\n/' hardened-report.md 
-          echo '```' | tee -a hardened-report.md
+          (echo '```yaml' && cat vanilla.md && echo '```') > vanilla-report.md
+          rm vanilla.md
+          (echo '```yaml' && cat hardened.md && echo '```') > hardened-report.md
+          rm hardened.md
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3

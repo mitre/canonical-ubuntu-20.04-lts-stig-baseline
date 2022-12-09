@@ -65,11 +65,11 @@ jobs:
       - name: Generate the ${{ matrix.suite }} Markdown Report
         uses: mitre/saf_action@v1
         with:
-          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
-      - name: Amend the ${{ matrix.suite }} Markdown Report for readability
+          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md
+      - name: Amend Markdown Reports for readability
         run: |
-          sed -i '' '1s/^/```yaml\'$'\n/' spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md 
-          echo '```' | tee -a spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+          (echo '```yaml' && cat spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md && echo '```') > spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+          rm spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md
       - name: Save Test Result JSONs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
