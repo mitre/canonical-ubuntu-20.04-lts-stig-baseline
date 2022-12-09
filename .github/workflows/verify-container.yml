@@ -1,0 +1,84 @@
+name: Container Testing Matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate my Profile on Containers
+    runs-on: ubuntu-latest
+    env:
+      LC_ALL: "en_US.UTF-8"
+      VANILLA_IMAGE: "public.ecr.aws/lts/ubuntu:focal"
+      HARDENED_IMAGE: "canonical/ubuntu-pro-stig-20.04:latest"
+      CHEF_LICENSE: "accept-silent"
+    steps:
+      - name: add needed packages
+        run: sudo apt-get install -y jq
+      - name: Checkout InSpec profile repository
+        uses: actions/checkout@v2
+      - name: Clone full repository so we can push
+        run: git fetch --prune --unshallow
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+      - name: Disable ri and rdoc
+        run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
+      - name: Bundle install
+        run: bundle install
+      - name: Lint the Inspec profile
+        run: bundle exec inspec check .
+      - name: Build the Hardened Container
+        run: docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag $HARDENED_IMAGE
+      - name: Start the Vanilla Container
+        run: docker run -itd --rm --name vanilla-ubuntu $VANILLA_IMAGE
+      - name: Start the Hardened Container
+        run: docker run -itd --rm --name hardened-ubuntu $HARDENED_IMAGE
+      - name: Verify both our containers are running
+        run: docker ps -f name=-ubuntu
+      - name: Test Vanilla Container
+        run: inspec exec . --input-file=container.inputs.yml -t docker://vanilla-ubuntu --reporter cli json:vanilla.json || true
+      - name: Test Hardened Container
+        run: inspec exec . --input-file=container.inputs.yml -t docker://hardened-ubuntu --reporter cli json:hardened.json || true
+      - name: Display our Vanilla Summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "view summary -i vanilla.json"
+      - name: Display our Hardened Summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "view summary -i hardened.json"
+      - name: Ensure the scan meets our Vanilla results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "validate threshold -i vanilla.json -F container.vanilla.threshold.yml"
+      - name: Ensure the scan meets our Hardened results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "validate threshold -i hardened.json -F container.hardened.threshold.yml"
+      - name: Generate Vanilla Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i vanilla.json -c -o vanilla.md
+      - name: Generate Hardened Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i hardened.json -c -o hardened.md
+      - name: Amend Markdown Reports for readability
+        run: |
+          (echo '```yaml' && cat vanilla.md && echo '```') > vanilla-report.md
+          rm vanilla.md
+          (echo '```yaml' && cat hardened.md && echo '```') > hardened-report.md
+          rm hardened.md
+      - name: Save Test Result JSONs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            vanilla.json
+            hardened.json
+            *-report.md

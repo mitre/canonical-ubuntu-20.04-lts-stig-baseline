@@ -1,0 +1,33 @@
+driver:
+  name: docker
+
+transport:
+  name: docker
+
+provisioner:
+  name: dummy
+
+verifier:
+  input_files:
+    - container.inputs.yml
+  reporter:
+    - cli
+    - json:spec/results/container_ubuntu-2004_%{suite}.json
+
+suites:
+  - name: vanilla
+    platforms:
+      - name: ubuntu-20.04
+        driver_config:
+          image: public.ecr.aws/lts/ubuntu:focal
+          platform: ubuntu
+
+  - name: hardened
+    platforms:
+      - name: ubuntu-20.04
+        driver_config:
+          image: canonical/ubuntu-pro-stig-20.04
+          platform: ubuntu
+        lifecycle:
+          pre_create: |
+            docker build https://repo1.dso.mil/dsop/canonical/ubuntu/ubuntu-pro-cis-stig-20.04.git\#development --tag canonical/ubuntu-pro-stig-20.04:latest

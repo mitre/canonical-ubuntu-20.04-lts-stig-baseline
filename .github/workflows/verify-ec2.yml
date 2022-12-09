@@ -1,0 +1,77 @@
+name: EC2 Testing Matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate my profile
+    runs-on: ubuntu-latest
+    env:
+      CHEF_LICENSE: accept-silent
+      KITCHEN_LOCAL_YAML: kitchen.ec2.yml
+      LC_ALL: "en_US.UTF-8"
+      #AWS_REGION: 'us-east-1'
+    strategy:
+      matrix:
+        suite: ["hardened"]
+      fail-fast: false
+    steps:
+      - name: add needed packages
+        run: sudo apt-get install -y jq
+      - name: Configure AWS credentials
+        env:
+          AWS_SG_ID: ${{ secrets.SAF_AWS_SG_ID }}
+          AWS_SUBNET_ID: ${{ secrets.SAF_AWS_SUBNET_ID }}
+          #AWS_REGION: ${{ secrets.SAF_AWS_REGION }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.SAF_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SAF_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.SAF_AWS_REGION }}
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Clone full repository so we can push
+        run: git fetch --prune --unshallow
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+      - name: Disable ri and rdoc
+        run: 'echo "gem: --no-ri --no-rdoc" >> ~/.gemrc'
+      - run: bundle install
+      - name: Regenerate current `profile.json`
+        run: |
+          bundle exec inspec json . | jq . > profile.json
+      - name: Lint the Inspec profile
+        run: bundle exec inspec check .
+      - name: Run kitchen test
+        run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-ubuntu-2004 || true
+      - name: Display our ${{ matrix.suite }} results summary
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "view summary -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json"
+      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
+        uses: mitre/saf_action@v1
+        with:
+          command_string: "validate threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
+      - name: Generate ${{ matrix.suite }} Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+      - name: Generate the ${{ matrix.suite }} Markdown Report
+        uses: mitre/saf_action@v1
+        with:
+          command_string: generate:threshold -i spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.json -c -o spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md
+      - name: Amend Markdown Reports for readability
+        run: |
+          (echo '```yaml' && cat spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md && echo '```') > spec/results/ec2_ubuntu-2004_${{ matrix.suite }}-report.md
+          rm spec/results/ec2_ubuntu-2004_${{ matrix.suite }}.md
+      - name: Save Test Result JSONs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: spec/results/

@@ -1,29 +1,18 @@
 ---
-driver:
-  name: vagrant
-  # driver_config:
-  #   ssl_verify_mode: ":verify_none"
-  #   customize:
-  #     cpus: 4
-  #     memory: 8192
-  #     accelerate3d: "off"
-  #     accelerate2dvideo: "off"
-  #     audio: "none"
-  #     usbcardreader: "off"
-  #     vrde: "off"
-  #     usb: "off"
-  #     nictype1: "82540EM"
-  #     clipboard: "disabled"
-
-lifecycle:
-  pre_converge:
-    - remote: |
-        echo "NOTICE - Updating the vagrant user to keep sudo working"
-        sudo chage -d $(( $( date +%s ) / 86400 )) vagrant
-        echo "NOTICE - Updating root passwd"
-        echo 'password' | sudo passwd --stdin root
-        echo "NOTICE - updating vagrant sudo config"
-        sudo chmod 600 /etc/sudoers && sudo sed -i'' "/vagrant/d" /etc/sudoers && sudo chmod 400 /etc/sudoers
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  require_ansible_repo: true
+  ansible_verbose: true
+  ansible_verbosity: 2
+  ansible_version: latest
+  galaxy_ignore_certs: true
+  roles_path: spec/ansible/roles/
+  env_vars:
+    - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
+    - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp
 
 transport:
   name: ssh
@@ -34,30 +23,19 @@ verifier:
   sudo: true
   reporter:
     - cli
-    - json:spec/results/%{platform}_%{suite}.json
+    - json:spec/results/ubuntu-2004_%{suite}.json
   inspec_tests:
     - name: Ubuntu 20.04 LTS STIG V1R5
       path: .
   load_plugins: true
 
-provisioner:
-  name: ansible_playbook
-  hosts: all
-  require_chef_for_busser: false
-  require_ruby_for_busser: false
-  require_pip3: true
-  ansible_binary_path: /usr/local/bin
-  ansible_verbose: true
-  roles_path: spec/ansible/roles/
-  galaxy_ignore_certs: true
-  env_vars:
-    - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
-    - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp
-
 platforms:
   - name: ubuntu-20.04
 
-suites:      
+suites:
   - name: hardened
     provisioner:
       playbook: spec/ansible/roles/hardening.yml
+  # - name: vanilla
+  #   provisioner:
+  #     playbook: spec/ansible/roles/vanilla.yml

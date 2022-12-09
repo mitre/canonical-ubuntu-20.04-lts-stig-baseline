@@ -1,0 +1,27 @@
+---
+driver:
+  name: ec2
+  tags:
+    POC: "SAF Github Actions"
+  instance_type: t2.large
+  associate_public_ip: true
+
+verifier:
+  sudo: true
+  input_files:
+    - ec2.inputs.yml
+  reporter:
+    - cli
+    - json:spec/results/ec2_ubuntu-2004_%{suite}.json
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        sudo add-apt-repository universe
+        sudo apt -f install
+        sudo apt -y update
+        sudo apt -y full-upgrade
+transport:
+  name: ssh
+  connection_timeout: 10
+  connection_retries: 5
