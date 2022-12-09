@@ -50,6 +50,7 @@ $ sudo chage -E $(date -d \"+3 days\"
   tag fix_id: 'F-41365r653762_fix '
   tag cci: ['CCI-000016']
   tag nist: ['AC-2 (2)']
+  tag 'host', 'container'
 
   if input('temporary_accounts').empty?
     describe 'Temporary accounts' do
