@@ -67,23 +67,30 @@ systemctl start sshd.service "
   tag fix_id: 'F-41384r653819_fix '
   tag cci: %w(CCI-002418 CCI-002420 CCI-002422)
   tag nist: ['SC-8', 'SC-8 (2)']
-  tag 'host', 'container'
+  tag 'host'
 
-  describe package('openssh-client') do
-    it { should be_installed }
-  end
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'This control is Not Applicable inside a container' do
+      skip 'This control is Not Applicable inside a container'
+    end
+  else
+    describe package('openssh-client') do
+      it { should be_installed }
+    end
 
-  describe package('openssh-server') do
-    it { should be_installed }
-  end
+    describe package('openssh-server') do
+      it { should be_installed }
+    end
 
-  describe package('openssh-sftp-server') do
-    it { should be_installed }
-  end
+    describe package('openssh-sftp-server') do
+      it { should be_installed }
+    end
 
-  describe service('sshd') do
-    it { should be_enabled }
-    it { should be_installed }
-    it { should be_running }
+    describe service('sshd') do
+      it { should be_enabled }
+      it { should be_installed }
+      it { should be_running }
+    end
   end
 end

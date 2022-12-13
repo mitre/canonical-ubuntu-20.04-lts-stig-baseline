@@ -118,21 +118,28 @@ systemctl restart gdm3 "
   tag fix_id: 'F-41367r653768_fix '
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
-  tag 'host', 'container'
+  tag 'host'
 
-  banner_text = input('banner_text')
-  clean_banner = banner_text.gsub(/[\r\n\s]/, '')
-  gdm3_defaults_file = input('gdm3_config_file')
-
-  if package('gdm3').installed?
-    describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-      subject { file(gdm3_defaults_file).content.gsub(/[\r\n\s]/, '') }
-      it { should cmp clean_banner }
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'This control is Not Applicable inside a container' do
+      skip 'This control is Not Applicable inside a container'
     end
   else
-    impact 0.0
-    describe 'Package gdm3 not installed' do
-      skip 'Package gdm3 not installed, this control Not Applicable'
+    banner_text = input('banner_text')
+    clean_banner = banner_text.gsub(/[\r\n\s]/, '')
+    gdm3_defaults_file = input('gdm3_config_file')
+
+    if package('gdm3').installed?
+      describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+        subject { file(gdm3_defaults_file).content.gsub(/[\r\n\s]/, '') }
+        it { should cmp clean_banner }
+      end
+    else
+      impact 0.0
+      describe 'Package gdm3 not installed' do
+        skip 'Package gdm3 not installed, this control Not Applicable'
+      end
     end
   end
 end
