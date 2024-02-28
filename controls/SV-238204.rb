@@ -68,7 +68,13 @@ update-grub "
   tag nist: ['AC-3']
   tag 'host', 'container'
 
-  describe grub_conf('/boot/grub/grub.cfg') do
-    its('password') { should match '^password_pbkdf2' }
+  grubfile = file('/boot/grub/grub.cfg').content.lines
+
+  grubfile_passes = grubfile.any? { |line| line.match?(/^password_pbkdf2\s+root/) }
+
+  describe "Grub" do
+    it "should use an encrypted password for root" do
+      expect(grubfile_passes).to be_true, "No password set for root in grub config"
+    end
   end
 end
