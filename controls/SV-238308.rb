@@ -33,6 +33,6 @@ $ sudo timedatectl set-timezone [ZONE] "
   time_zone = command('timedatectl status | grep -i "time zone"').stdout.strip
 
   describe time_zone do
-    it { should match 'UTC' }
+    it { should match /UTC|GMT/ }
   end
 end
