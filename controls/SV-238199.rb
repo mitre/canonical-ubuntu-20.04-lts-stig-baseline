@@ -56,8 +56,8 @@ gsettings set org.gnome.desktop.screensaver lock-enabled true "
   xorg_status = command('which Xorg').exit_status
 
   if xorg_status == 0
-    describe command('gsettings get org.gnome.desktop.screensaver lock-enabled') do
-      its('stdout') { should cmp true }
+    describe command('gsettings get org.gnome.desktop.screensaver lock-enabled').stdout.strip do
+      it { should cmp true }
     end
   else
     describe command('which Xorg').exit_status do

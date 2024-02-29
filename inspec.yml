@@ -158,3 +158,8 @@ inputs:
     description: Is PKI authentication used for this system
     type: boolean
     value: false
+
+  - name: admin_groups
+    description: Array of groups that have administrative privileges
+    type: Array
+    value: ['root']

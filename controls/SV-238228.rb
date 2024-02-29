@@ -91,7 +91,7 @@ Note: The value of \"retry\" should be between \"1\" and
     end
 
     describe file('/etc/pam.d/common-password') do
-      its('content') { should match '^password\s+requisite\s+pam_pwquality.so\s+retry=3\s+enforce_for_root$' }
+      its('content') { should match '^password\s+requisite\s+pam_pwquality.so\s+retry=3$' }
     end
   end
 end

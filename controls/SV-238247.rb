@@ -64,11 +64,12 @@ $ sudo systemctl kill auditd -s SIGHUP "
     end
   else
     log_file = auditd_conf.log_file
+    admin_groups = input('admin_groups')
 
     log_file_exists = !log_file.nil?
     if log_file_exists
       describe file(log_file) do
-        its('group') { should cmp 'root' }
+        its('group') { should be_in admin_groups }
       end
     else
       describe('Audit log file ' + log_file + ' exists') do
