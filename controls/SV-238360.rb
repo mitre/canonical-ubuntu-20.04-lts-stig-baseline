@@ -26,7 +26,7 @@ Check that AppArmor is installed and active by running the following command,
 $ dpkg -l |
 grep apparmor
 
-If the \"apparmor\" package is not installed, this is a finding.
+If the \"apparmor\" package is not installed, this is a finding.
 
 $ systemctl
 is-active apparmor.service

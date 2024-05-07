@@ -35,8 +35,7 @@ capacity thresholds; or identifying an improperly configured operating system.
 
 $ dpkg -l | grep auditd
 
-If the \"auditd\" package is not installed, this is a finding.
-
+If the \"auditd\" package is not installed, this is a finding.
 
 Verify the audit service is enabled with the following command:
 

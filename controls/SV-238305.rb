@@ -23,7 +23,7 @@ Check the size of the partition that audit records
 are written to (with the example being \"/var/log/audit/\") with the following command:
 
 $
-sudo df –h /var/log/audit/
+sudo df -h /var/log/audit/
 /dev/sda2 24G 10.4G 13.6G 43% /var/log/audit
 
 If the audit
@@ -31,7 +31,7 @@ records are not written to a partition made specifically for audit records
 (\"/var/log/audit\" is a separate partition), determine the amount of space being used by
 other files in the partition with the following command:
 
-$ sudo du –sh [audit_partition]
+$ sudo du -sh [audit_partition]
 
 1.8G /var/log/audit
 
