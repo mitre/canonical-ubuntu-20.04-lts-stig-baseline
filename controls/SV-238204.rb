@@ -72,9 +72,9 @@ update-grub "
 
   grubfile_passes = grubfile.any? { |line| line.match?(/^password_pbkdf2\s+root/) }
 
-  describe "Grub" do
-    it "should use an encrypted password for root" do
-      expect(grubfile_passes).to be_true, "No password set for root in grub config"
+  describe 'Grub' do
+    it 'should use an encrypted password for root' do
+      expect(grubfile_passes).to be_true, 'No password set for root in grub config'
     end
   end
 end

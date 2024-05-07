@@ -14,7 +14,7 @@ such as keystroke monitoring if the ForwardX11Trusted option is also enabled.
 
 If X11
 services are not required for the system's intended function, they should be disabled or
-restricted as appropriate to the system’s needs. "
+restricted as appropriate to the system's needs. "
   desc 'check', "Verify that X11Forwarding is disabled with the following command:
 
 $ grep -ir
