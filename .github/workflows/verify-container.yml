@@ -76,7 +76,7 @@ jobs:
           rm hardened.md
       - name: Save Test Result JSONs
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: |
             vanilla.json
