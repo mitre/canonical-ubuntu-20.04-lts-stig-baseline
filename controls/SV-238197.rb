@@ -1,8 +1,8 @@
 control 'SV-238197' do
-  title "The Ubuntu operating system must enable the graphical user logon banner to display the
+  title 'The Ubuntu operating system must enable the graphical user logon banner to display the
 Standard Mandatory DoD Notice and Consent Banner before granting local access to the system
-via a graphical user logon. "
-  desc "Display of a standardized and approved use notification before granting access to the Ubuntu
+via a graphical user logon.'
+  desc %q(Display of a standardized and approved use notification before granting access to the Ubuntu
 operating system ensures privacy and security notification verbiage used is consistent
 with applicable federal laws, Executive Orders, directives, policies, regulations,
 standards, and guidance.
@@ -14,7 +14,7 @@ interfaces with human users and are not required when such human interfaces do n
 The banner must be formatted in accordance with applicable DoD policy. Use the following
 verbiage for operating systems that can accommodate banners of 1300 characters:
 
-\"You are
+"You are
 accessing a U.S. Government (USG) Information System (IS) that is provided for
 USG-authorized use only.
 
@@ -41,15 +41,15 @@ benefit or privacy.
 to PM, LE or CI investigative searching or monitoring of the content of privileged
 communications, or work product, related to personal representation or services by
 attorneys, psychotherapists, or clergy, and their assistants. Such communications and
-work product are private and confidential. See User Agreement for details.\"
+work product are private and confidential. See User Agreement for details."
 
 Use the
 following verbiage for operating systems that have severe limitations on the number of
 characters that can be displayed in the banner:
 
-\"I've read & consent to terms in IS user
-agreem't.\" "
-  desc 'check', "Verify the Ubuntu operating system is configured to display the Standard Mandatory DoD
+"I've read & consent to terms in IS user
+agreem't.")
+  desc 'check', 'Verify the Ubuntu operating system is configured to display the Standard Mandatory DoD
 Notice and Consent Banner before granting access to the operating system via a graphical user
 logon.
 
@@ -65,12 +65,12 @@ $ grep ^banner-message-enable
 banner-message-enable=true
 
 If the line is
-commented out or set to \"false\", this is a finding. "
-  desc 'fix', "Edit the \"/etc/gdm3/greeter.dconf-defaults\" file.
+commented out or set to "false", this is a finding.'
+  desc 'fix', 'Edit the "/etc/gdm3/greeter.dconf-defaults" file.
 
 Look for the
-\"banner-message-enable\" parameter under the \"[org/gnome/login-screen]\" section and
-uncomment it (remove the leading \"#\" characters):
+"banner-message-enable" parameter under the "[org/gnome/login-screen]" section and
+uncomment it (remove the leading "#" characters):
 
 Note: The lines are all near the bottom of
 the file but not adjacent to each other.
@@ -84,17 +84,18 @@ Update the GDM with the new configuration:
 
 $ sudo dconf
 update
-$ sudo systemctl restart gdm3 "
+$ sudo systemctl restart gdm3'
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000023-GPOS-00006 '
-  tag gid: 'V-238197 '
-  tag rid: 'SV-238197r653766_rule '
-  tag stig_id: 'UBTU-20-010002 '
-  tag fix_id: 'F-41366r653765_fix '
+  tag severity: 'medium'
+  tag gtitle: 'SRG-OS-000023-GPOS-00006'
+  tag gid: 'V-238197'
+  tag rid: 'SV-238197r958390_rule'
+  tag stig_id: 'UBTU-20-010002'
+  tag fix_id: 'F-41366r653765_fix'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   xorg_status = command('which Xorg').exit_status
 

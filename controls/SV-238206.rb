@@ -1,7 +1,7 @@
 control 'SV-238206' do
-  title "The Ubuntu operating system must ensure only users who need access to security functions are
-part of sudo group. "
-  desc "An isolation boundary provides access control and protects the integrity of the hardware,
+  title 'The Ubuntu operating system must ensure only users who need access to security functions are
+part of sudo group.'
+  desc 'An isolation boundary provides access control and protects the integrity of the hardware,
 software, and firmware that perform security functions.
 
 Security functions are the
@@ -21,8 +21,8 @@ Implementation may include isolation of memory space and libraries.
 
 The Ubuntu operating
 system restricts access to security functions through the use of access control mechanisms
-and by implementing least privilege capabilities. "
-  desc 'check', "Verify the sudo group has only members who should have access to security functions.
+and by implementing least privilege capabilities.'
+  desc 'check', 'Verify the sudo group has only members who should have access to security functions.
 
 $ grep
 sudo /etc/group
@@ -30,23 +30,23 @@ sudo /etc/group
 sudo:x:27:foo
 
 If the sudo group contains users not needing access to
-security functions, this is a finding. "
-  desc 'fix', "Configure the sudo group with only members requiring access to security functions.
-
-To
-remove a user from the sudo group, run:
-
-$ sudo gpasswd -d &lt;username&gt; sudo "
+security functions, this is a finding.'
+  desc 'fix', 'Configure the sudo group with only members requiring access to security functions. 
+ 
+To remove a user from the sudo group, run: 
+ 
+$ sudo gpasswd -d <username> sudo'
   impact 0.7
-  tag severity: 'high '
-  tag gtitle: 'SRG-OS-000134-GPOS-00068 '
-  tag gid: 'V-238206 '
-  tag rid: 'SV-238206r653793_rule '
-  tag stig_id: 'UBTU-20-010012 '
-  tag fix_id: 'F-41375r653792_fix '
+  tag severity: 'high'
+  tag gtitle: 'SRG-OS-000134-GPOS-00068'
+  tag gid: 'V-238206'
+  tag rid: 'SV-238206r958518_rule'
+  tag stig_id: 'UBTU-20-010012'
+  tag fix_id: 'F-41375r653792_fix'
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
-  tag 'host', 'container'
+  tag 'host'
+  tag 'container'
 
   sudo_accounts = input('sudo_accounts')
 
