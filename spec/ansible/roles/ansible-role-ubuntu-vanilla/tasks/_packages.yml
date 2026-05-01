@@ -1,0 +1,23 @@
+---
+- name: Upgrade all packages
+  apt:
+    name: "*"
+    state: latest
+- name: Install required packages
+  apt:
+    name:
+      - jq
+      - vim
+      - bc
+      - unzip
+      - wget
+      - curl
+      - python3-pip
+    state: latest
+- name: Install jmespath via apt
+  apt:
+    name:
+      - python3-jmespath
+    state: latest
+  tags:
+    - apt-jmespath
