@@ -163,3 +163,100 @@ inputs:
     description: Array of groups that have administrative privileges
     type: Array
     value: ['root']
+
+  - name: audit_rule_keynames
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      'execve'                        : 'execpriv',
+      '/etc/shadow'                   : 'usergroup_modification',
+      '/etc/security/opasswd'         : 'usergroup_modification',
+      '/etc/passwd'                   : 'usergroup_modification',
+      '/etc/gshadow'                  : 'usergroup_modification',
+      '/etc/group'                    : 'usergroup_modification',
+      '/etc/sudoers'                  : 'identity',
+      '/etc/sudoers.d'                : 'identity',
+      '/bin/su'                       : 'privileged-priv_change',
+      'setxattr'                      : 'perm_mod',
+      'fsetxattr'                     : 'perm_mod',
+      'lsetxattr'                     : 'perm_mod',
+      'removexattr'                   : 'perm_mod',
+      'fremovexattr'                  : 'perm_mod',
+      'lremovexattr'                  : 'perm_mod',
+      '/usr/bin/chage'                : 'privileged-chage',
+      '/usr/bin/chcon'                : 'perm_mod',
+      '/usr/bin/ssh-agent'            : 'privileged-ssh',
+      '/usr/bin/passwd'               : 'privileged-passwd',
+      '/usr/bin/mount'                : 'privileged-mount',
+      '/usr/bin/umount'               : 'privileged-umount',
+      '/sbin/unix_update'             : 'privileged-unix-update',
+      '/usr/lib/openssh/ssh-keysign'  : 'privileged-ssh',
+      '/usr/bin/setfacl'              : 'perm_mod',
+      '/usr/sbin/pam_timestamp_check' : 'privileged-pam_timestamp_check',
+      '/usr/bin/newgrp'               : 'priv_cmd',
+      'init_module'                   : 'module_chng',
+      'finit_module'                  : 'module_chng',
+      'rename'                        : 'delete',
+      'unlink'                        : 'delete',
+      'rmdir'                         : 'delete',
+      'renameat'                      : 'delete',
+      'unlinkat'                      : 'delete',
+      '/usr/bin/gpasswd'              : 'privileged-gpasswd',
+      'delete_module'                 : 'module_chng',
+      '/usr/bin/crontab'              : 'privileged-crontab',
+      '/usr/bin/chsh'                 : 'priv_cmd',
+      'truncate'                      : 'perm_access',
+      'ftruncate'                     : 'perm_access',
+      'creat'                         : 'perm_access',
+      'open'                          : 'perm_access',
+      'openat'                        : 'perm_access',
+      'open_by_handle_at'             : 'perm_access',
+      'chown'                         : 'perm_mod',
+      'chmod'                         : 'perm_chng',
+      'fchmod'                        : 'perm_chng',
+      'fchmodat'                      : 'perm_chng',
+      '/usr/bin/sudo'                 : 'priv_cmd',
+      '/usr/sbin/usermod'             : 'privileged-usermod',
+      '/usr/bin/chacl'                : 'perm_mod',
+      '/bin/kmod'                     : 'modules',
+      '/sbin/modprobe'                : 'modules',
+      '/sbin/apparmor_parser'         : 'perm_chng',
+      '/usr/bin/chfn'                 : 'privileged-chfn',
+      '/var/log/lastlog'              : 'logins',
+      '/var/log/btmp'                 : 'logins',
+      '/var/log/wtmp'                 : 'logins',
+      '/var/run/utmp'                 : 'logins',
+      '/var/log/sudo.log'             : 'maintenance',
+      '/etc/cron.d'                   : 'cronjobs',
+      '/var/spool/cron'               : 'cronjobs',
+      '/usr/bin/sudoedit'             : 'priv_cmd',
+      '/var/log/faillog'              : 'logins',
+      '/usr/sbin/fdisk'               : 'fdisk'
+    }
+
+  # Default values for expected keynames for all audit rules
+  # NOTE: DO NOT override this hash
+  # If you need to override these values, do so via adding the desired key/value to
+  # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
+  # directly will lose the values for any key you do not explictly define.
+  - name: audit_rule_keynames_overrides
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      '/etc/sudoers.d'                : 'privilege_modification',
+      '/etc/sudoers'                  : 'privilege_modification',
+      '/var/log/journal'              : 'systemd_journal',
+      'chown'                         : 'perm_chng',
+      '/usr/bin/chacl'                : 'perm_chng',
+      '/usr/bin/chcon'                : 'perm_chng',
+      '/usr/bin/setfacl'              : 'perm_chng',
+    }
+
+  - name: expected_kex
+    description: List of approved FIPS SSH key exchange algorithms for the KexAlgorithms directive
+    type: Array
+    value:
+      - ecdh-sha2-nistp256
+      - ecdh-sha2-nistp384
+      - ecdh-sha2-nistp521
+      - diffie-hellman-group-exchange-sha256

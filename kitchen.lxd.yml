@@ -1,0 +1,75 @@
+---
+platforms:
+  - name: ubuntu-20
+
+driver:
+  name: proxy
+  host: <%= ENV.fetch("KITCHEN_HOST") %>
+  username: ubuntu
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /home/ubuntu/ansible/bin
+  # require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  requirements_collection_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-ubuntu-vanilla.yml
+    driver:
+      tags:
+        Name: Vanilla-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-ubuntu-hardened.yml
+    driver:
+      tags:
+        Name: Hardened-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        # echo "+++ Refreshing APT package cache +++"
+        # sudo rm -rf /var/lib/apt/lists/*
+        # sudo apt-get clean
+        sudo apt-get -y update
+        echo ""
+        echo "+++ Updating APT Packages +++"
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
+        echo ""
+        echo "+++ Installing needed packages for workflow and utility +++\n\n"
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -y install bc dnsutils lsb-release vim git wget curl build-essential libssl-dev libffi-dev libbz2-dev
+        echo ""
+        echo "+++ Installing Python and Ansible +++\n\n"
+        export PATH=/usr/local/bin:$PATH
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -y install python3-pip
+        python3 -m pip install --user --upgrade pip
+        python3 -m pip install --user ansible jmespath
+        echo ""
+        echo "+++ Updating the ubuntu user to keep sudo working after hardening phase +++\n\n"
+        sudo chage -d $(( $( date +%s ) / 86400 )) ubuntu
+        echo ""
+        echo "+++ updating ubuntu sudo config for hardening phase +++\n\n"
+        sudo chmod 600 /etc/sudoers && sudo sed -i "/^ubuntu\b/d" /etc/sudoers && sudo chmod 440 /etc/sudoers
+        echo "+++ add cinc-auditor for local shell +++\n\n"
+        curl -L https://omnitruck.cinc.sh/install.sh | sudo bash -s -- -P cinc-auditor
+
+transport:
+  name: ssh
+  username: ubuntu
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+  #https://github.com/neillturner/kitchen-ansible/issues/295
+  max_ssh_sessions: 2

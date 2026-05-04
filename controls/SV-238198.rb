@@ -76,12 +76,12 @@ systemctl restart gdm3)
 
   expected_banner_text = input('banner_text')
   clean_banner = expected_banner_text.gsub(/[\r\n\s]/, '')
-  input('gdm3_config_file')
-
-  actual_banner_text = parse_config_file('/etc/gdm3/greeter.dconf-defaults').params['org/gnome/login-screen']['banner-message-text']
-  clean_actual_banner = actual_banner_text.gsub(/[\r\n\s]/, '').gsub('\\n', '').gsub('\'', '')
+  gdm3_config_file = input('gdm3_config_file')
 
   if package('gdm3').installed?
+    actual_banner_text = parse_config_file(gdm3_config_file).params['org/gnome/login-screen']['banner-message-text']
+    clean_actual_banner = actual_banner_text.gsub(/[\r\n\s]/, '').gsub('\\n', '').gsub('\'', '')
+
     describe 'The SSHD Banner is set to the standard banner and has the correct text' do
       subject { clean_actual_banner }
       it { should cmp clean_banner }
