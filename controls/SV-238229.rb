@@ -22,14 +22,14 @@ to make an informed trust decision when presented with any certificate not alrea
 explicitly trusted. Status information for certification paths includes certificate
 revocation lists or online certificate status protocol responses. Validation of the
 certificate status information is out of scope for this requirement.'
-  desc 'check', %q(Verify the Ubuntu operating system, for PKI-based authentication, has valid certificates by constructing a certification path to an accepted trust anchor. 
- 
-Determine which pkcs11 module is being used via the "use_pkcs11_module" in "/etc/pam_pkcs11/pam_pkcs11.conf", and then ensure "ca" is enabled in "cert_policy" with the following command: 
-  
-$ sudo grep use_pkcs11_module /etc/pam_pkcs11/pam_pkcs11.conf | sudo awk '/pkcs11_module opensc {/,/}/' /etc/pam_pkcs11/pam_pkcs11.conf | grep cert_policy | grep ca  
- 
-cert_policy = ca,signature,ocsp_on; 
- 
+  desc 'check', %q(Verify the Ubuntu operating system, for PKI-based authentication, has valid certificates by constructing a certification path to an accepted trust anchor.
+
+Determine which pkcs11 module is being used via the "use_pkcs11_module" in "/etc/pam_pkcs11/pam_pkcs11.conf", and then ensure "ca" is enabled in "cert_policy" with the following command:
+
+$ sudo grep use_pkcs11_module /etc/pam_pkcs11/pam_pkcs11.conf | sudo awk '/pkcs11_module opensc {/,/}/' /etc/pam_pkcs11/pam_pkcs11.conf | grep cert_policy | grep ca
+
+cert_policy = ca,signature,ocsp_on;
+
 If "cert_policy" is not set to "ca" or the line is commented out, this is a finding.)
   desc 'fix', 'Configure the Ubuntu operating system, for PKI-based authentication, to validate
 certificates by constructing a certification path to an accepted trust anchor.

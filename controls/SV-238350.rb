@@ -41,7 +41,7 @@ root -type d -exec chown root '{}' \\;"
                    command('find /lib /usr/lib /usr/lib32 /lib32 ! \-user root \-type d').stdout.strip.split("\n").entries
                  end
 
-  if library_dirs.count > 0
+  if library_dirs.any?
     library_dirs.each do |lib_file|
       describe file(lib_file) do
         its('owner') { should cmp 'root' }

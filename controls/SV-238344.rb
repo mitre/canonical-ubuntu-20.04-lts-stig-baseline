@@ -53,15 +53,13 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin
   system_commands = command('find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /022 -type d').stdout.strip.split("\n").entries
   valid_system_commands = Set[]
 
-  if system_commands.count > 0
+  if system_commands.any?
     system_commands.each do |sys_cmd|
-      if file(sys_cmd).exist?
-        valid_system_commands = valid_system_commands << sys_cmd
-      end
+      valid_system_commands <<= sys_cmd if file(sys_cmd).exist?
     end
   end
 
-  if valid_system_commands.count > 0
+  if valid_system_commands.any?
     valid_system_commands.each do |val_sys_cmd|
       describe file(val_sys_cmd) do
         it { should_not be_more_permissive_than('0755') }

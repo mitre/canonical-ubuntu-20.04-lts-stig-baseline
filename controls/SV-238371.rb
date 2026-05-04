@@ -15,10 +15,10 @@ and/or systems and environments that require this functionality.'
   desc 'check', %q(Verify that Advanced Intrusion Detection Environment (AIDE) is installed and verifies the correct operation of all security functions.
 
 Check that the AIDE package is installed with the following command:
-     $ sudo dpkg -l | grep aide 
+     $ sudo dpkg -l | grep aide
      ii   aide   0.16.1-1build2   amd64   Advanced Intrusion Detection Environment - static binary
 
-If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system. 
+If AIDE is not installed, ask the System Administrator how file integrity checks are performed on the system.
 
 If there is no application installed to perform integrity checks, this is a finding.
 
@@ -74,7 +74,7 @@ Example output:
      Start timestamp: 2022-11-20 11:59:16 -0700 (AIDE 0.16)
      AIDE found differences between database and filesystem!!
      ...
-	 
+
 Done.'
   impact 0.5
   tag severity: 'medium'

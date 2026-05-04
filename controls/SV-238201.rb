@@ -50,7 +50,7 @@ accordingly at
         its('use_mappers') { should cmp 'pwent' }
       end
     else
-      describe(config_file + ' exists') do
+      describe("#{config_file} exists") do
         subject { config_file_exists }
         it { should be true }
       end

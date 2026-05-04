@@ -1,18 +1,18 @@
 control 'SV-238324' do
   title 'The Ubuntu operating system must monitor remote access methods.'
-  desc 'Remote access services, such as those providing remote access to network devices and information systems, which lack automated monitoring capabilities, increase risk and make remote user access management difficult at best. 
- 
-Remote access is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless. 
- 
+  desc 'Remote access services, such as those providing remote access to network devices and information systems, which lack automated monitoring capabilities, increase risk and make remote user access management difficult at best.
+
+Remote access is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless.
+
 Automated monitoring of remote access sessions allows organizations to detect cyber attacks and also ensure ongoing compliance with remote access policies by auditing connection activities of remote access capabilities, such as Remote Desktop Protocol (RDP), on a variety of information system components (e.g., servers, workstations, notebook computers, smartphones, and tablets).'
-  desc 'check', %q(Verify the Ubuntu operating system monitors all remote access methods. 
- 
-Check that remote access methods are being logged by running the following command: 
- 
-$  grep -E -r '^(auth,authpriv\.\*|daemon\.\*)' /etc/rsyslog.* 
-/etc/rsyslog.d/50-default.conf:auth,authpriv.*                        /var/log/auth.log 
-/etc/rsyslog.d/50-default.conf:daemon.*                        /var/log/messages 
- 
+  desc 'check', %q(Verify the Ubuntu operating system monitors all remote access methods.
+
+Check that remote access methods are being logged by running the following command:
+
+$  grep -E -r '^(auth,authpriv\.\*|daemon\.\*)' /etc/rsyslog.*
+/etc/rsyslog.d/50-default.conf:auth,authpriv.*                        /var/log/auth.log
+/etc/rsyslog.d/50-default.conf:daemon.*                        /var/log/messages
+
 If "auth.*", "authpriv.*", or "daemon.*" are not configured to be logged in at least one of the config files, this is a finding.)
   desc 'fix', 'Configure the Ubuntu operating system to monitor all remote access methods by adding the following lines to the "/etc/rsyslog.d/50-default.conf" file:
 
@@ -35,7 +35,7 @@ $ sudo systemctl restart rsyslog.service'
   tag 'container'
 
   options = {
-    assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/,
+    assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/
   }
   config_file = input('rsyslog_config_file')
   auth_setting = parse_config_file(config_file, options).params['auth,authpriv.*']

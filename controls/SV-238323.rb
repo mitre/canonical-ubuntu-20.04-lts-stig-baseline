@@ -10,17 +10,17 @@ addresses concurrent sessions for information system accounts and does not addre
 concurrent sessions by single users via multiple system accounts. The maximum number of
 concurrent sessions should be defined based upon mission needs and the operational
 environment for each system.'
-  desc 'check', %q(Verify the Ubuntu operating system limits the number of concurrent sessions to 10 for all accounts and/or account types by running the following command: 
- 
+  desc 'check', %q(Verify the Ubuntu operating system limits the number of concurrent sessions to 10 for all accounts and/or account types by running the following command:
+
 $ grep maxlogins /etc/security/limits.conf /etc/security/limits.d/*.conf | grep -v '^#'
 
-* hard maxlogins 10 
+* hard maxlogins 10
 
 If the "maxlogins" item is missing, or the value is not set to 10 or less, or is commented out, this is a finding.)
-  desc 'fix', 'Configure the Ubuntu operating system to limit the number of concurrent sessions to 10 for all accounts and/or account types. 
- 
-Add the following line to the top of the "/etc/security/limits.conf" file or to a file in "/etc/security/limits.d/": 
- 
+  desc 'fix', 'Configure the Ubuntu operating system to limit the number of concurrent sessions to 10 for all accounts and/or account types.
+
+Add the following line to the top of the "/etc/security/limits.conf" file or to a file in "/etc/security/limits.d/":
+
 * hard maxlogins 10'
   impact 0.3
   tag severity: 'low'

@@ -40,7 +40,7 @@ dictcheck=1'
       its('dictcheck') { should cmp '1' }
     end
   else
-    describe(config_file + ' exists') do
+    describe("#{config_file} exists") do
       subject { config_file_exists }
       it { should be true }
     end

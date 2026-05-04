@@ -6,10 +6,10 @@ have authorization.
 
 When operating systems provide the capability to escalate a
 functional capability, it is critical the user reauthenticate.'
-  desc 'check', %q(Verify the "/etc/sudoers" file has no occurrences of "!authenticate" by running the following command: 
- 
+  desc 'check', %q(Verify the "/etc/sudoers" file has no occurrences of "!authenticate" by running the following command:
+
 $ sudo egrep -iR '!authenticate' /etc/sudoers /etc/sudoers.d/
- 
+
 If any occurrences of "!authenticate" return from the command, this is a finding.)
   desc 'fix', 'Remove any occurrence of "!authenticate" found in "/etc/sudoers" file or files in the "/etc/sudoers.d" directory.'
   impact 0.5

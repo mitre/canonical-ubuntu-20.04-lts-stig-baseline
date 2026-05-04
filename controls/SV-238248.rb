@@ -73,7 +73,7 @@ $ sudo chmod -R  g-w,o-rwx
         it { should_not be_more_permissive_than('0750') }
       end
     else
-      describe('Audit directory for file ' + log_file + ' exists') do
+      describe("Audit directory for file #{log_file} exists") do
         subject { log_dir_exists }
         it { should be true }
       end

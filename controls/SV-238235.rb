@@ -5,7 +5,7 @@ released by an administrator when three unsuccessful logon attempts have been ma
 user password guessing, otherwise known as brute-forcing, is reduced. Limits are imposed by
 locking the account.'
   desc 'check', %q(Verify the Ubuntu operating system utilizes the "pam_faillock" module with the following command:
-$ grep faillock /etc/pam.d/common-auth 
+$ grep faillock /etc/pam.d/common-auth
 
 auth     [default=die]  pam_faillock.so authfail
 auth     sufficient     pam_faillock.so authsucc

@@ -1,18 +1,18 @@
 control 'SV-238210' do
   title 'The Ubuntu operating system must implement smart card logins for multifactor authentication for local and network access to privileged and nonprivileged accounts.'
   desc 'Without the use of multifactor authentication, the ease of access to privileged functions is greatly increased.
- 
+
 Multifactor authentication requires using two or more factors to achieve authentication.
- 
-Factors include:  
-1) something a user knows (e.g., password/PIN); 
-2) something a user has (e.g., cryptographic identification device, token); and 
-3) something a user is (e.g., biometric). 
- 
+
+Factors include:
+1) something a user knows (e.g., password/PIN);
+2) something a user has (e.g., cryptographic identification device, token); and
+3) something a user is (e.g., biometric).
+
 A privileged account is defined as an information system account with authorizations of a privileged user.
- 
+
 Network access is defined as access to an information system by a user (or a process acting on behalf of a user) communicating through a network (e.g., local area network, wide area network, or the internet).
- 
+
 The DOD CAC with DOD-approved PKI is an example of multifactor authentication.'
   desc 'check', %q(Verify the Ubuntu operating system has the packages required for multifactor authentication installed with the following commands:
 
@@ -23,7 +23,7 @@ ii  libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKC
 If the "libpam-pkcs11" package is not installed, this is a finding.
 
 Verify the sshd daemon allows public key authentication with the following command:
- 
+
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*pubkeyauthentication'
 
 PubkeyAuthentication yes
@@ -31,12 +31,12 @@ PubkeyAuthentication yes
 If this option is set to "no" or is missing, this is a finding.
 
 If conflicting results are returned, this is a finding.)
-  desc 'fix', 'Configure the Ubuntu operating system to use multifactor authentication for network access to accounts. 
- 
+  desc 'fix', 'Configure the Ubuntu operating system to use multifactor authentication for network access to accounts.
+
 Add or update the following line in "/etc/pam.d/common-auth", placing it above any lines containing "pam_unix.so":
- 
-auth    [success=2 default=ignore] pam_pkcs11.so 
- 
+
+auth    [success=2 default=ignore] pam_pkcs11.so
+
 Set the sshd option "PubkeyAuthentication yes" in the "/etc/ssh/sshd_config" file.'
   impact 0.5
   tag severity: 'medium'

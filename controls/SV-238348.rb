@@ -41,7 +41,7 @@ $ sudo find /lib /lib64 /usr/lib -perm /022 -type d -exec chmod 755 '{}'
                    command('find /lib /usr/lib /usr/lib32 /lib32 -perm /022 -type d').stdout.strip.split("\n").entries
                  end
 
-  if library_dirs.count > 0
+  if library_dirs.any?
     library_dirs.each do |lib_file|
       describe file(lib_file) do
         it { should_not be_more_permissive_than('0755') }

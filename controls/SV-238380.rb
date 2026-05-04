@@ -17,7 +17,7 @@ $ sudo systemctl disable ctrl-alt-del.target
 
 $ sudo systemctl mask ctrl-alt-del.target
 
-Reload the daemon to take effect: 
+Reload the daemon to take effect:
 
 $ sudo systemctl daemon-reload'
   impact 0.7

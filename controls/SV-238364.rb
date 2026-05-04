@@ -12,16 +12,16 @@ the use of SSL/TLS certificates.'
   desc 'check', 'Verify the directory containing the root certificates for the Ubuntu operating system contains certificate files for DoD PKI-established certificate authorities by iterating over all files in the "/etc/ssl/certs" directory and checking if, at least one, has the subject matching "DOD ROOT CA".
 
 If none is found, this is a finding.'
-  desc 'fix', %q(Configure the Ubuntu operating system to use of DoD PKI-established certificate authorities for verification of the establishment of protected sessions. 
- 
-Edit the "/etc/ca-certificates.conf" file, adding the character "!" to the beginning of all uncommented lines that do not start with the "!" character with the following command: 
- 
-     $ sudo sed -i -E 's/^([^!#]+)/!\1/' /etc/ca-certificates.conf 
- 
-Add at least one DoD certificate authority to the "/usr/local/share/ca-certificates" directory in the PEM format. 
- 
-Update the "/etc/ssl/certs" directory with the following command: 
- 
+  desc 'fix', %q(Configure the Ubuntu operating system to use of DoD PKI-established certificate authorities for verification of the establishment of protected sessions.
+
+Edit the "/etc/ca-certificates.conf" file, adding the character "!" to the beginning of all uncommented lines that do not start with the "!" character with the following command:
+
+     $ sudo sed -i -E 's/^([^!#]+)/!\1/' /etc/ca-certificates.conf
+
+Add at least one DoD certificate authority to the "/usr/local/share/ca-certificates" directory in the PEM format.
+
+Update the "/etc/ssl/certs" directory with the following command:
+
      $ sudo update-ca-certificates)
   impact 0.5
   tag severity: 'medium'
@@ -36,11 +36,11 @@ Update the "/etc/ssl/certs" directory with the following command:
   tag 'container'
 
   allowed_ca_fingerprints_regex = input('allowed_ca_fingerprints_regex')
-  find_command = ''"
+  find_command = "
   for f in $(find -L /etc/ssl/certs -type f); do
     openssl x509 -sha256 -in $f -noout -fingerprint | cut -d= -f2 | tr -d ':' | egrep -vw '#{allowed_ca_fingerprints_regex}'
   done
-  "''
+  "
   describe command(find_command) do
     its('stdout') { should cmp '' }
   end

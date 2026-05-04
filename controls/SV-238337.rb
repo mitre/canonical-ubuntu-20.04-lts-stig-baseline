@@ -2,8 +2,8 @@ control 'SV-238337' do
   title 'The Ubuntu operating system must generate error messages that provide information
 necessary for corrective actions without revealing information that could be exploited by
 adversaries.'
-  desc 'Any operating system providing too much information in error messages risks compromising the data and security of the structure, and organizations must carefully consider the content and structure of error messages. 
- 
+  desc 'Any operating system providing too much information in error messages risks compromising the data and security of the structure, and organizations must carefully consider the content and structure of error messages.
+
 The extent to which information systems are able to identify and handle error conditions is guided by organizational policy and operational requirements. Information that could be exploited by adversaries includes, for example, erroneous logon attempts with passwords entered by mistake as the username, mission/business information that can be derived from (if not stated explicitly by) information recorded, and personal information, such as account numbers, Social Security numbers, and credit card numbers.
 
 The /var/log/btmp, /var/log/wtmp, and /var/log/lastlog files have group write and global read permissions to allow for the lastlog function to perform. Limiting the permissions beyond this configuration will result in the failure of functions that rely on the lastlog database.'

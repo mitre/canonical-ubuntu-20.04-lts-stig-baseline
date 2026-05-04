@@ -8,7 +8,7 @@ Peripherals include, but are not limited to,
 such devices as flash drives, external storage, and printers.'
   desc 'check', 'Verify that Ubuntu operating system disables ability to load the USB storage kernel module.
 
-# grep usb-storage /etc/modprobe.d/* | grep "/bin/false" 
+# grep usb-storage /etc/modprobe.d/* | grep "/bin/false"
 
 install usb-storage /bin/false
 
@@ -21,7 +21,7 @@ Verify the operating system disables the ability to use USB mass storage device.
 blacklist usb-storage
 
 If the command does not return any output, or the line is commented out, this is a finding.'
-  desc 'fix', 'Configure the Ubuntu operating system to disable using the USB storage kernel module. 
+  desc 'fix', 'Configure the Ubuntu operating system to disable using the USB storage kernel module.
 
 Create a file under "/etc/modprobe.d" to contain the following:
 

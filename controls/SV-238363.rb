@@ -11,10 +11,10 @@ $ grep -i 1
 1
 
 If a value of "1" is not returned, this is a finding.'
-  desc 'fix', 'Configure the system to run in FIPS mode. Add "fips=1" to the kernel parameter during the Ubuntu operating systems install. 
- 
-Enabling a FIPS mode on a pre-existing system involves a number of modifications to the Ubuntu operating system. Refer to the Ubuntu Server 20.04 FIPS 140-2 security policy document for instructions.  
- 
+  desc 'fix', 'Configure the system to run in FIPS mode. Add "fips=1" to the kernel parameter during the Ubuntu operating systems install.
+
+Enabling a FIPS mode on a pre-existing system involves a number of modifications to the Ubuntu operating system. Refer to the Ubuntu Server 20.04 FIPS 140-2 security policy document for instructions.
+
 A subscription to the "Ubuntu Pro" plan is required to obtain the FIPS Kernel cryptographic modules and enable FIPS.'
   impact 0.7
   tag severity: 'high'

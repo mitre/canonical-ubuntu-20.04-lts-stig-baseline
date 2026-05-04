@@ -3,7 +3,7 @@ control 'SV-251504' do
   desc 'If an account has an empty password, anyone could log on and run commands with the privileges of
 that account. Accounts with empty passwords should never be used in operational
 environments.'
-  desc 'check', 'Verify null passwords cannot be used. Run the following command: 
+  desc 'check', 'Verify null passwords cannot be used. Run the following command:
 
 $ grep nullok /etc/pam.d/common-auth /etc/pam.d/common-password
 

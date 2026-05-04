@@ -38,24 +38,24 @@ remote_server = 192.168.122.126
 If
 the "remote_server" parameter is not set, is set with a local address, or is set with an invalid
 address, this is a finding.'
-  desc 'fix', %q(Configure the audit event multiplexor to offload audit records to a different system or storage media from the system being audited. 
- 
-Install the audisp-remote plugin: 
- 
-$ sudo apt-get install audispd-plugins -y 
- 
-Set the audisp-remote plugin as active by editing the "/etc/audisp/plugins.d/au-remote.conf" file: 
- 
-$ sudo sed -i -E 's/active\s*=\s*no/active = yes/' /etc/audisp/plugins.d/au-remote.conf 
- 
-Set the address of the remote machine by editing the "/etc/audisp/audisp-remote.conf" file: 
- 
-$ sudo sed -i -E 's/(remote_server\s*=).*/\1 <remote addr>/' /etc/audisp/audisp-remote.conf 
- 
-where <remote addr> must be substituted by the address of the remote server receiving the audit log. 
- 
-Make the audit service reload its configuration files: 
- 
+  desc 'fix', %q(Configure the audit event multiplexor to offload audit records to a different system or storage media from the system being audited.
+
+Install the audisp-remote plugin:
+
+$ sudo apt-get install audispd-plugins -y
+
+Set the audisp-remote plugin as active by editing the "/etc/audisp/plugins.d/au-remote.conf" file:
+
+$ sudo sed -i -E 's/active\s*=\s*no/active = yes/' /etc/audisp/plugins.d/au-remote.conf
+
+Set the address of the remote machine by editing the "/etc/audisp/audisp-remote.conf" file:
+
+$ sudo sed -i -E 's/(remote_server\s*=).*/\1 <remote addr>/' /etc/audisp/audisp-remote.conf
+
+where <remote addr> must be substituted by the address of the remote server receiving the audit log.
+
+Make the audit service reload its configuration files:
+
 $ sudo systemctl restart auditd.service)
   impact 0.3
   tag severity: 'low'
@@ -89,7 +89,7 @@ $ sudo systemctl restart auditd.service)
         its('remote_server') { should cmp audit_sp_remote_server }
       end
     else
-      describe(config_file + ' exists') do
+      describe("#{config_file} exists") do
         subject { config_file_exists }
         it { should be true }
       end

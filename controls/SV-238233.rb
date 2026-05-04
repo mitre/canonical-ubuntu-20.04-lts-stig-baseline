@@ -17,12 +17,12 @@ cert_policy = ca,signature,ocsp_on,crl_auto;
 
 If
 "cert_policy" is not set to include "crl_auto" or "crl_offline", this is a finding.)
-  desc 'fix', 'Configure the Ubuntu operating system, for PKI-based authentication, to use local revocation data when unable to access the network to obtain it remotely. 
- 
-Add or update the "cert_policy" option in "/etc/pam_pkcs11/pam_pkcs11.conf" to include "crl_auto" or "crl_offline". 
- 
-cert_policy = ca,signature,ocsp_on, crl_auto; 
- 
+  desc 'fix', 'Configure the Ubuntu operating system, for PKI-based authentication, to use local revocation data when unable to access the network to obtain it remotely.
+
+Add or update the "cert_policy" option in "/etc/pam_pkcs11/pam_pkcs11.conf" to include "crl_auto" or "crl_offline".
+
+cert_policy = ca,signature,ocsp_on, crl_auto;
+
 If the system is missing an "/etc/pam_pkcs11/" directory and an "/etc/pam_pkcs11/pam_pkcs11.conf", find an example to copy into place and modify accordingly at "/usr/share/doc/libpam-pkcs11/examples/pam_pkcs11.conf.example.gz".'
   impact 0.5
   tag severity: 'medium'

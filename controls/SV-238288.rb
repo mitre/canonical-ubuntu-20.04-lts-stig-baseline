@@ -9,26 +9,26 @@ Audit records can be
 generated from various components within the information system (e.g., module or policy
 filter).'
   desc 'check', 'Verify that an audit event is generated for any successful/unsuccessful use of the "passwd" command.
- 
+
 Check the currently configured audit rules with the following command:
- 
+
 $ sudo auditctl -l | grep -w passwd
- 
+
 -a always,exit -S all -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-passwd
-  
+
 If the command does not return a line that matches the example or the line is commented out, this is a finding.
-  
+
 Note: The "key" allows for specifying an arbitrary identifier, and the string after it does not need to match the example output above.'
   desc 'fix', 'Configure the audit system to generate an audit event for any successful/unsuccessful uses of the "passwd" command.
- 
+
 Add or update the following rule in the "/etc/audit/rules.d/stig.rules" file:
- 
+
 -a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=unset -k privileged-passwd
-    
+
 To reload the rules file, issue the following command:
-  
+
 $ sudo augenrules --load
- 
+
 Note: The "-k <keyname>" at the end of the line gives the rule a unique meaning to help during an audit investigation. The <keyname> does not need to match the example above.'
   impact 0.5
   tag severity: 'medium'
@@ -65,7 +65,7 @@ Note: The "-k <keyname>" at the end of the line gives the rule a unique meaning 
         end
       end
     else
-      describe('Audit line(s) for ' + @audit_file + ' exist') do
+      describe("Audit line(s) for #{@audit_file} exist") do
         subject { audit_lines_exist }
         it { should be true }
       end

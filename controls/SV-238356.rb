@@ -90,7 +90,7 @@ systemctl restart chrony.service'
         end
       end
     else
-      describe chrony_conf + ' exists' do
+      describe "#{chrony_conf} exists" do
         subject { chrony_conf_exists }
         it { should be true }
       end

@@ -48,7 +48,7 @@ be located in the "/etc/cron.weekly" directory.'
       its('content') { should_not be_empty }
     end
   else
-    describe cron_file + ' exists' do
+    describe "#{cron_file} exists" do
       subject { cron_file_exists }
       it { should be true }
     end

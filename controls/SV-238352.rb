@@ -41,7 +41,7 @@ $ sudo find /lib /usr/lib /lib64 ! -group root -type d -exec chgrp root
                           command('find /lib /usr/lib /usr/lib32 /lib32 ! \-group root \-type d').stdout.strip.split("\n").entries
                         end
 
-  if library_directories.count > 0
+  if library_directories.any?
     library_directories.each do |lib_file|
       describe file(lib_file) do
         its('group') { should cmp 'root' }

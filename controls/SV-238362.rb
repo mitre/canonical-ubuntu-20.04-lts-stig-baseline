@@ -56,7 +56,7 @@ directory instead of the "/etc/sssd/sssd.conf" file.'
         its('offline_credentials_expiration') { should cmp '1' }
       end
     else
-      describe(config_file + ' exists') do
+      describe("#{config_file} exists") do
         subject { config_file_exists }
         it { should be true }
       end

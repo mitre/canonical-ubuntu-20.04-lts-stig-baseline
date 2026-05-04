@@ -23,7 +23,7 @@ Set the system to the required kernel parameter by adding or modifying the follo
 
      kernel.dmesg_restrict = 1
 
-Remove any configurations that conflict with the above from the following locations: 
+Remove any configurations that conflict with the above from the following locations:
      /run/sysctl.d/
      /etc/sysctl.d/
      /usr/local/lib/sysctl.d/

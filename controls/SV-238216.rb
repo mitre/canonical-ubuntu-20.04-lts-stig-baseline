@@ -4,16 +4,16 @@ Codes (MACs) employing FIPS 140-2 approved cryptographic hashes to prevent the
 unauthorized disclosure of information and/or detect changes to information during
 transmission.'
   desc 'Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
- 
+
 Remote access (e.g., RDP) is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless. Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network (e.g., the internet) or an internal network.
- 
+
 Local maintenance and diagnostic activities are those activities carried out by individuals physically present at the information system or information system component and not communicating across a network connection.
- 
+
 Encrypting information for transmission protects information from unauthorized disclosure and modification. Cryptographic mechanisms implemented to protect information integrity include, for example, cryptographic hash functions which have common application in digital signatures, checksums, and message authentication codes.'
   desc 'check', %q(Verify the SSH daemon is configured to only use MACs that employ FIPS 140-2 approved ciphers with the following command:
 
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*macs'
- 
+
 MACs hmac-sha2-512,hmac-sha2-256
 
 If any ciphers other than "hmac-sha2-512" or "hmac-sha2-256" are listed, the order differs from the example above, or the returned line is commented out, this is a finding.
@@ -60,7 +60,7 @@ sudo systemctl reload sshd.service'
     @macs_array = @macs_array.first.split(',') unless @macs_array.nil?
 
     describe @macs_array do
-      it { should be_in %w(hmac-sha2-256 hmac-sha2-512) }
+      it { should be_in %w[hmac-sha2-256 hmac-sha2-512] }
     end
   end
 end

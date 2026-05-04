@@ -100,7 +100,7 @@ least 25% of the repository maximum audit record storage capacity.'
         it { should eq email_to_notify }
       end
     else
-      describe('Audit file/directory for file ' + log_file + ' exists') do
+      describe("Audit file/directory for file #{log_file} exists") do
         subject { log_dir_exists }
         it { should be true }
       end

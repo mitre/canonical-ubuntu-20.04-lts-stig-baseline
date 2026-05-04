@@ -11,7 +11,7 @@ Extended Security Maintenance (available with an UbuntuPro subscription) will ex
 Legacy add-on coverage will further extend security updates through May 2032.'
   desc 'check', 'Verify the version of Ubuntu 20.04 LTS is vendor supported with the following command:
 
-$ grep DISTRIB_DESCRIPTION /etc/lsb-release 
+$ grep DISTRIB_DESCRIPTION /etc/lsb-release
 DISTRIB_DESCRIPTION="Ubuntu 20.04.6 LTS"
 
 If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding.'

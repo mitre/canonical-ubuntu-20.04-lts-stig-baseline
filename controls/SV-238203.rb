@@ -5,11 +5,11 @@ Passwords for new users must have a 60-day maximum password lifetime restriction
 be changed periodically. If the operating system does not limit the lifetime of passwords and
 force users to change their passwords, there is the risk that the operating system passwords
 could be compromised.'
-  desc 'check', 'Verify the Ubuntu operating system enforces a 60-day maximum password lifetime for new user accounts by running the following command: 
- 
-$ grep -i ^pass_max_days /etc/login.defs 
-PASS_MAX_DAYS    60 
- 
+  desc 'check', 'Verify the Ubuntu operating system enforces a 60-day maximum password lifetime for new user accounts by running the following command:
+
+$ grep -i ^pass_max_days /etc/login.defs
+PASS_MAX_DAYS    60
+
 If the "PASS_MAX_DAYS" parameter value is greater than 60, or commented out, this is a finding.'
   desc 'fix', 'Configure the Ubuntu operating system to enforce a 60-day maximum password lifetime.
 

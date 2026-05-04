@@ -21,7 +21,7 @@ information system use.
 This capability is typically reserved for specific Ubuntu
 operating system functionality where the system owner, data owner, or organization
 requires additional assurance."
-  desc 'check', %q(Verify all network connections associated with SSH traffic automatically terminate after a period of inactivity. 
+  desc 'check', %q(Verify all network connections associated with SSH traffic automatically terminate after a period of inactivity.
 
 Verify the "ClientAliveCountMax" variable is set in the "/etc/ssh/sshd_config" file by performing the following command:
 

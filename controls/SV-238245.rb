@@ -66,7 +66,7 @@ $ sudo chmod 0600 /var/log/audit/*'
         it { should_not be_more_permissive_than('0600') }
       end
     else
-      describe('Audit log file ' + log_file + ' exists') do
+      describe("Audit log file #{log_file} exists") do
         subject { log_file_exists }
         it { should be true }
       end

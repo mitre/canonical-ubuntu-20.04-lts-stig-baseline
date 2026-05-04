@@ -31,10 +31,10 @@ sudo:x:27:foo
 
 If the sudo group contains users not needing access to
 security functions, this is a finding.'
-  desc 'fix', 'Configure the sudo group with only members requiring access to security functions. 
- 
-To remove a user from the sudo group, run: 
- 
+  desc 'fix', 'Configure the sudo group with only members requiring access to security functions.
+
+To remove a user from the sudo group, run:
+
 $ sudo gpasswd -d <username> sudo'
   impact 0.7
   tag severity: 'high'
@@ -50,7 +50,7 @@ $ sudo gpasswd -d <username> sudo'
 
   sudo_accounts = input('sudo_accounts')
 
-  if sudo_accounts.count > 0
+  if sudo_accounts.any?
     sudo_accounts.each do |account|
       describe group('sudo') do
         its('members') { should include account }

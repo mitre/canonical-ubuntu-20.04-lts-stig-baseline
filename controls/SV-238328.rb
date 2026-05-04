@@ -55,14 +55,14 @@ ports, protocols, or services that are not included in the PPSM CLSA, this is a 
 If
 there are any ports, protocols, or services that are prohibited by the PPSM CAL, this is a
 finding.'
-  desc 'fix', 'Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command: 
- 
-$ sudo ufw allow <direction> <port/protocol/service> 
- 
-where the direction is "in" or "out" and the port is the one corresponding to the protocol  or service allowed. 
- 
-To deny access to ports, protocols, or services, use: 
- 
+  desc 'fix', 'Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command:
+
+$ sudo ufw allow <direction> <port/protocol/service>
+
+where the direction is "in" or "out" and the port is the one corresponding to the protocol  or service allowed.
+
+To deny access to ports, protocols, or services, use:
+
 $ sudo ufw deny <direction> <port/protocol/service>'
   impact 0.5
   tag severity: 'medium'

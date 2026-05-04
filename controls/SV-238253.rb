@@ -9,26 +9,26 @@ Audit records can be
 generated from various components within the information system (e.g., module or policy
 filter).'
   desc 'check', %q(Verify the Ubuntu operating system generates audit records upon successful/unsuccessful attempts to use the "chfn" command.
- 
-Check the configured audit rules with the following commands: 
- 
-$ sudo auditctl -l | grep '/usr/bin/chfn' 
- 
+
+Check the configured audit rules with the following commands:
+
+$ sudo auditctl -l | grep '/usr/bin/chfn'
+
 -a always,exit -S all -F path=/usr/bin/chfn -F perm=x -F auid>=1000 -F auid!=-1 -F key=privileged-chfn
-  
+
 If the command does not return lines that match the example or the lines are commented out, this is a finding.
-  
+
 Note: The "key=" value is arbitrary and can be different from the example output above.)
   desc 'fix', 'Configure the audit system to generate an audit event for any successful/unsuccessful uses of the "chfn" command.
- 
+
 Add or update the following rules in the "/etc/audit/rules.d/stig.rules" file:
- 
+
 -a always,exit -F path=/usr/bin/chfn -F perm=x -F auid>=1000 -F auid!=unset -k privileged-chfn
-  
+
 To reload the rules file, issue the following command:
-  
+
 $ sudo augenrules --load
- 
+
 Note: The "-k <keyname>" at the end of the line gives the rule a unique meaning to help during an audit investigation. The <keyname> does not need to match the example above.'
   impact 0.5
   tag severity: 'medium'
@@ -66,7 +66,7 @@ Note: The "-k <keyname>" at the end of the line gives the rule a unique meaning 
         end
       end
     else
-      describe('Audit line(s) for ' + @audit_file + ' exist') do
+      describe("Audit line(s) for #{@audit_file} exist") do
         subject { audit_lines_exist }
         it { should be true }
       end

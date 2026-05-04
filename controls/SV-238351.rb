@@ -36,7 +36,7 @@ $ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' ! -group root 
                     command('find /lib /usr/lib /usr/lib32 /lib32 ! \-group root \-type f').stdout.strip.split("\n").entries
                   end
 
-  if library_files.count > 0
+  if library_files.any?
     library_files.each do |lib_file|
       describe file(lib_file) do
         its('group') { should cmp 'root' }

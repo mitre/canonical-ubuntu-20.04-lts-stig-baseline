@@ -21,14 +21,14 @@ information system use.
 This capability is typically reserved for specific operating
 system functionality where the system owner, data owner, or organization requires
 additional assurance."
-  desc 'check', 'Verify the operating system automatically terminates a user session after inactivity timeouts have expired. 
- 
-Check that the "TMOUT" environment variable is set in the "/etc/bash.bashrc" file or in any file inside the "/etc/profile.d/" directory by performing the following command: 
- 
-$ sudo grep -E "\\bTMOUT=[0-9]+" /etc/bash.bashrc /etc/profile.d/* 
- 
-TMOUT=600 
- 
+  desc 'check', 'Verify the operating system automatically terminates a user session after inactivity timeouts have expired.
+
+Check that the "TMOUT" environment variable is set in the "/etc/bash.bashrc" file or in any file inside the "/etc/profile.d/" directory by performing the following command:
+
+$ sudo grep -E "\\bTMOUT=[0-9]+" /etc/bash.bashrc /etc/profile.d/*
+
+TMOUT=600
+
 If "TMOUT" is not set, or if the value is "0" or is commented out, this is a finding.'
   desc 'fix', 'Configure the operating system to automatically terminate a user session after inactivity
 timeouts have expired or at shutdown.

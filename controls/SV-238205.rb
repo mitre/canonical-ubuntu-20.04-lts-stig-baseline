@@ -43,7 +43,7 @@ UID with a unique UID.'
   findings = Set[]
 
   user_list.each do |user_name|
-    findings = findings << user_name
+    findings <<= user_name
   end
   describe 'Duplicate User IDs (UIDs) must not exist for interactive users' do
     subject { findings.to_a }

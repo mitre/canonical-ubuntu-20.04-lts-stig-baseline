@@ -3,22 +3,22 @@ control 'SV-238217' do
 to prevent the unauthorized disclosure of information and/or detect changes to information
 during transmission.'
   desc 'Without cryptographic integrity protections, information can be altered by unauthorized users without detection.
- 
+
 Remote access (e.g., RDP) is access to DOD nonpublic information systems by an authorized user (or an information system) communicating through an external, nonorganization-controlled network. Remote access methods include, for example, dial-up, broadband, and wireless.
- 
+
 Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network (e.g., the internet) or an internal network.
- 
+
 Local maintenance and diagnostic activities are those activities carried out by individuals physically present at the information system or information system component and not communicating across a network connection.
- 
+
 Encrypting information for transmission protects information from unauthorized disclosure and modification. Cryptographic mechanisms implemented to protect information integrity include, for example, cryptographic hash functions which have common application in digital signatures, checksums, and message authentication codes.
- 
+
 By specifying a cipher list with the order of ciphers being in a "strongest to weakest" orientation, the system will automatically attempt to use the strongest cipher for securing SSH connections.'
   desc 'check', %q(Verify the SSH daemon is configured to only implement FIPS-approved algorithms by running the following command:
 
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*ciphers'
- 
-Ciphers aes256-ctr,aes192-ctr,aes128-ctr 
- 
+
+Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+
 If any ciphers other than "aes256-ctr", "aes192-ctr", or "aes128-ctr" are listed, the order differs from the example above, the "Ciphers" keyword is missing, or the returned line is commented out, this is a finding.
 
 If conflicting results are returned, this is a finding.)
@@ -63,7 +63,7 @@ $ sudo systemctl restart sshd.service'
     @ciphers_array = @ciphers_array.first.split(',') unless @ciphers_array.nil?
 
     describe @ciphers_array do
-      it { should be_in %w(aes256-ctr aes192-ctr aes128-ctr) }
+      it { should be_in %w[aes256-ctr aes192-ctr aes128-ctr] }
     end
   end
 end

@@ -85,7 +85,7 @@ $ sudo augenrules --load'
         end
       end
     else
-      describe('Audit line(s) for ' + @audit_file + ' exist') do
+      describe("Audit line(s) for #{@audit_file} exist") do
         subject { audit_lines_exist }
         it { should be true }
       end

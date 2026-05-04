@@ -60,7 +60,7 @@ gsettings set org.gnome.desktop.screensaver lock-enabled true'
     end
   else
     describe command('which Xorg').exit_status do
-      skip("GUI not installed.\nwhich Xorg exit_status: " + command('which Xorg').exit_status.to_s)
+      skip("GUI not installed.\nwhich Xorg exit_status: #{command('which Xorg').exit_status}")
     end
   end
 end

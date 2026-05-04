@@ -1,18 +1,18 @@
 control 'SV-238368' do
   title 'The Ubuntu operating system must implement nonexecutable data to protect its memory from unauthorized code execution.'
-  desc 'Some adversaries launch attacks with the intent of executing code in nonexecutable regions of memory or in memory locations that are prohibited. Security safeguards employed to protect memory include, for example, data execution prevention and address space layout randomization. Data execution prevention safeguards can either be hardware-enforced or software-enforced with hardware providing the greater strength of mechanism. 
- 
+  desc 'Some adversaries launch attacks with the intent of executing code in nonexecutable regions of memory or in memory locations that are prohibited. Security safeguards employed to protect memory include, for example, data execution prevention and address space layout randomization. Data execution prevention safeguards can either be hardware-enforced or software-enforced with hardware providing the greater strength of mechanism.
+
 Examples of attacks are buffer overflow attacks.'
-  desc 'check', 'Verify the NX (no-execution) bit flag is set on the system with the following commands: 
- 
-     $ sudo dmesg | grep -i "execute disable" 
-     [    0.000000] NX (Execute Disable) protection: active 
- 
-If "dmesg" does not show "NX (Execute Disable) protection: active", check the cpuinfo settings with the following command:  
- 
-     $ grep flags /proc/cpuinfo | grep -w nx | sort -u 
-     flags       : fpu vme de pse tsc ms nx rdtscp lm constant_tsc 
- 
+  desc 'check', 'Verify the NX (no-execution) bit flag is set on the system with the following commands:
+
+     $ sudo dmesg | grep -i "execute disable"
+     [    0.000000] NX (Execute Disable) protection: active
+
+If "dmesg" does not show "NX (Execute Disable) protection: active", check the cpuinfo settings with the following command:
+
+     $ grep flags /proc/cpuinfo | grep -w nx | sort -u
+     flags       : fpu vme de pse tsc ms nx rdtscp lm constant_tsc
+
 If "flags" does not contain the "nx" flag, this is a finding.'
   desc 'fix', %q(Configure the Ubuntu operating system to enable NX.
 
@@ -37,13 +37,13 @@ Execution bit, set it to "enable".)
     end
   else
     options = {
-      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/,
+      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
     }
     describe.one do
       describe command('dmesg | grep NX').stdout.strip do
         it { should match(/.+(NX \(Execute Disable\) protection: active)/) }
       end
-      describe parse_config_file('/proc/cpuinfo', options).flags.split(' ') do
+      describe parse_config_file('/proc/cpuinfo', options).flags.split do
         it { should include 'nx' }
       end
     end
