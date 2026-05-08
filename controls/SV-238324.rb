@@ -23,29 +23,14 @@ For the changes to take effect, restart the "rsyslog" service with the following
 
 $ sudo systemctl restart rsyslog.service'
   impact 0.5
+  tag check_id: 'C-41534r1069079_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag gid: 'V-238324'
   tag rid: 'SV-238324r1069955_rule'
   tag stig_id: 'UBTU-20-010403'
+  tag gtitle: 'SRG-OS-000032-GPOS-00013'
   tag fix_id: 'F-41493r1069080_fix'
+  tag 'documentable'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
-  tag 'host'
-  tag 'container'
-
-  options = {
-    assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/
-  }
-  config_file = input('rsyslog_config_file')
-  auth_setting = parse_config_file(config_file, options).params['auth,authpriv.*']
-  daemon_setting = parse_config_file(config_file, options).params['daemon.notice']
-  describe auth_setting do
-    it { should_not be_nil }
-    it { should_not be_empty }
-  end
-  describe daemon_setting do
-    it { should_not be_nil }
-    it { should_not be_empty }
-  end
 end

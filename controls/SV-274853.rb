@@ -56,4 +56,18 @@ $ sudo apt install libnss-sss'
   tag 'documentable'
   tag cci: ['CCI-004046', 'CCI-004047', 'CCI-000765', 'CCI-000766']
   tag nist: ['IA-2 (6) (a)', 'IA-2 (6) (b)', 'IA-2 (1)', 'IA-2 (2)']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  required_packages = %w[sssd libpam-sss libnss-sss]
+  missing = required_packages.reject { |pkg| package(pkg).installed? }
+
+  describe 'Required SSSD and SSSD integration packages' do
+    it 'are installed' do
+      expect(missing).to be_empty, "Missing packages:\n\t- #{missing.join("\n\t- ")}"
+    end
+  end
 end

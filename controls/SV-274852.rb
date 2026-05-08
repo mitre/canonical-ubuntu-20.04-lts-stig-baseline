@@ -30,4 +30,22 @@ $ sudo augenrules --load'
   tag 'documentable'
   tag cci: ['CCI-000172']
   tag nist: ['AU-12 c']
+  tag 'host'
+
+  audited_paths = %w[/etc/cron.d /var/spool/cron]
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  audited_paths.each do |audit_path|
+    describe "Audit rules for #{audit_path}" do
+      it "#{audit_path} is audited properly" do
+        audit_rule = auditd.file(audit_path)
+        expect(audit_rule).to exist
+        expect(audit_rule.permissions.flatten).to include('w', 'a')
+        expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_path])
+      end
+    end
+  end
 end

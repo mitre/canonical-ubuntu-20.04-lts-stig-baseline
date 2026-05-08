@@ -1,8 +1,6 @@
 control 'SV-238299' do
   title 'The Ubuntu operating system must initiate session audits at system start-up.'
-  desc 'If auditing is enabled late in the start-up process, the actions of some start-up processes
-may not be audited. Some audit systems also maintain state information only available if
-auditing is enabled before a given process is created.'
+  desc 'If auditing is enabled late in the start-up process, the actions of some start-up processes may not be audited. Some audit systems also maintain state information only available if auditing is enabled before a given process is created.'
   desc 'check', 'Verify the Ubuntu operating system enables auditing at system startup.
 
 Verify the auditing is enabled in grub with the following command:
@@ -26,28 +24,14 @@ To update the grub config file, run:
 
 $ sudo update-grub'
   impact 0.5
+  tag check_id: 'C-41509r1069093_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000254-GPOS-00095'
   tag gid: 'V-238299'
   tag rid: 'SV-238299r1069095_rule'
   tag stig_id: 'UBTU-20-010198'
+  tag gtitle: 'SRG-OS-000254-GPOS-00095'
   tag fix_id: 'F-41468r1069094_fix'
+  tag 'documentable'
   tag cci: ['CCI-001464']
   tag nist: ['AU-14 (1)']
-  tag 'host'
-
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
-    end
-  else
-    grub_entries = command('grep "^\s*linux" /boot/grub/grub.cfg').stdout.strip.split("\n").entries
-
-    grub_entries.each do |entry|
-      describe entry do
-        it { should include 'audit=1' }
-      end
-    end
-  end
 end

@@ -1,60 +1,33 @@
 control 'SV-238328' do
-  title 'The Ubuntu operating system must be configured to prohibit or restrict the use of functions,
-ports, protocols, and/or services, as defined in the PPSM CAL and vulnerability
-assessments.'
-  desc 'In order to prevent unauthorized connection of devices, unauthorized transfer of
-information, or unauthorized tunneling (i.e., embedding of data types within data types),
-organizations must disable or restrict unused or unnecessary physical and logical
-ports/protocols on information systems.
+  title 'The Ubuntu operating system must be configured to prohibit or restrict the use of functions, ports, protocols, and/or services, as defined in the PPSM CAL and vulnerability assessments.'
+  desc 'In order to prevent unauthorized connection of devices, unauthorized transfer of information, or unauthorized tunneling (i.e., embedding of data types within data types), organizations must disable or restrict unused or unnecessary physical and logical ports/protocols on information systems.
 
-Operating systems are capable of providing a
-wide variety of functions and services. Some of the functions and services provided by
-default may not be necessary to support essential organizational operations.
-Additionally, it is sometimes convenient to provide multiple services from a single
-component (e.g., VPN and IPS); however, doing so increases risk over limiting the services
-provided by any one component.
+Operating systems are capable of providing a wide variety of functions and services. Some of the functions and services provided by default may not be necessary to support essential organizational operations. Additionally, it is sometimes convenient to provide multiple services from a single component (e.g., VPN and IPS); however, doing so increases risk over limiting the services provided by any one component.
 
-To support the requirements and principles of least
-functionality, the operating system must support the organizational requirements,
-providing only essential capabilities and limiting the use of ports, protocols, and/or
-services to only those required, authorized, and approved to conduct official business or to
-address authorized quality of life issues.'
-  desc 'check', 'Verify the Ubuntu operating system is configured to prohibit or restrict the use of
-functions, ports, protocols, and/or services as defined in the Ports, Protocols, and
-Services Management (PPSM) Category Assignments List (CAL) and vulnerability
-assessments.
+To support the requirements and principles of least functionality, the operating system must support the organizational requirements, providing only essential capabilities and limiting the use of ports, protocols, and/or services to only those required, authorized, and approved to conduct official business or to address authorized quality of life issues.'
+  desc 'check', 'Verify the Ubuntu operating system is configured to prohibit or restrict the use of functions, ports, protocols, and/or services as defined in the Ports, Protocols, and Services Management (PPSM) Category Assignments List (CAL) and vulnerability assessments.
 
-Check the firewall configuration for any unnecessary or prohibited
-functions, ports, protocols, and/or services by running the following command:
+Check the firewall configuration for any unnecessary or prohibited functions, ports, protocols, and/or services by running the following command:
 
-$ sudo ufw
-show raw
+$ sudo ufw show raw
 
 Chain OUTPUT (policy ACCEPT)
 target  prot opt sources    destination
-Chain INPUT
-(policy ACCEPT 1 packets, 40 bytes)
+Chain INPUT (policy ACCEPT 1 packets, 40 bytes)
     pkts      bytes target     prot opt in     out     source               destination
 
-
 Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
-    pkts      bytes target     prot opt in     out     source
-destination
+    pkts      bytes target     prot opt in     out     source               destination
 
 Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
-    pkts      bytes target     prot opt in
-out     source               destination
+    pkts      bytes target     prot opt in     out     source               destination
 
 Ask the System Administrator
- for the site or program PPSM CLSA.
-Verify the services allowed by the firewall match the PPSM CLSA.
+ for the site or program PPSM CLSA. Verify the services allowed by the firewall match the PPSM CLSA.
 
-If there are any additional
-ports, protocols, or services that are not included in the PPSM CLSA, this is a finding.
+If there are any additional ports, protocols, or services that are not included in the PPSM CLSA, this is a finding.
 
-If
-there are any ports, protocols, or services that are prohibited by the PPSM CAL, this is a
-finding.'
+If there are any ports, protocols, or services that are prohibited by the PPSM CAL, this is a finding.'
   desc 'fix', 'Add all ports, protocols, or services allowed by the PPSM CLSA by using the following command:
 
 $ sudo ufw allow <direction> <port/protocol/service>
@@ -74,22 +47,20 @@ $ sudo ufw deny <direction> <port/protocol/service>'
   tag cci: ['CCI-000382']
   tag nist: ['CM-7 b']
   tag 'host'
+  tag 'container-conditional'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
-    end
-  else
-    ufw_status = command('ufw status').stdout.strip.lines.first
-    value = ufw_status.split(':')[1].strip
+  only_if('Control not applicable - containerized environment or external firewall in use per site policy', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
 
-    describe 'UFW status' do
-      subject { value }
-      it { should cmp 'active' }
-    end
-    describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
-      skip 'Status listings checks must be preformed manually'
-    end
+  ufw_status = command('ufw status').stdout.strip.lines.first
+  value = ufw_status.split(':')[1].strip
+
+  describe 'UFW status' do
+    subject { value }
+    it { should cmp 'active' }
+  end
+  describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
+    skip 'Status listings checks must be preformed manually'
   end
 end

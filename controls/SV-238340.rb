@@ -16,18 +16,20 @@ If a value of "755" or less permissive is not returned, this is a finding.'
 
 $ sudo chmod 0755 /var/log'
   impact 0.5
+  tag check_id: 'C-41550r880877_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag gid: 'V-238340'
   tag rid: 'SV-238340r958566_rule'
   tag stig_id: 'UBTU-20-010419'
+  tag gtitle: 'SRG-OS-000206-GPOS-00084'
   tag fix_id: 'F-41509r880878_fix'
+  tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
   tag 'host'
   tag 'container'
 
   describe directory('/var/log') do
-    it { should_not be_more_permissive_than('0750') }
+    it { should_not be_more_permissive_than('755') }
   end
 end

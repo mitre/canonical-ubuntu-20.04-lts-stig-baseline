@@ -1,13 +1,8 @@
 control 'SV-238292' do
-  title 'The Ubuntu operating system must generate audit records for successful/unsuccessful uses
-of the usermod command.'
-  desc 'Without generating audit records that are specific to the security and mission needs of the
-organization, it would be difficult to establish, correlate, and investigate the events
-relating to an incident or identify those responsible for one.
+  title 'The Ubuntu operating system must generate audit records for successful/unsuccessful uses of the usermod command.'
+  desc 'Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one.
 
-Audit records can be
-generated from various components within the information system (e.g., module or policy
-filter).'
+Audit records can be generated from various components within the information system (e.g., module or policy filter).'
   desc 'check', 'Verify that an audit event is generated for any successful/unsuccessful use of the "usermod" command.
 
 Check the currently configured audit rules with the following command:
@@ -33,41 +28,29 @@ Note: The "-k <keyname>" at the end of the line gives the rule a unique meaning 
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000064-GPOS-00033'
+  tag satisfies: ['SRG-OS-000062-GPOS-00031', 'SRG-OS-000037-GPOS-00015', 'SRG-OS-000042-GPOS-00020', 'SRG-OS-000392-GPOS-00172', 'SRG-OS-000462-GPOS-00206', 'SRG-OS-000471-GPOS-00215', 'SRG-OS-000466-GPOS-00210']
   tag gid: 'V-238292'
   tag rid: 'SV-238292r958446_rule'
   tag stig_id: 'UBTU-20-010176'
   tag fix_id: 'F-41461r951539_fix'
-  tag cci: ['CCI-000172']
-  tag nist: ['AU-12 c']
+  tag cci: ['CCI-000169', 'CCI-000130', 'CCI-000135', 'CCI-000172', 'CCI-002884']
+  tag nist: ['AU-12 a', 'AU-3 a', 'AU-3 (1)', 'AU-12 c', 'MA-4 (1) (a)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
-    end
-  else
-    @audit_file = '/usr/sbin/usermod'
+  audit_command = '/usr/sbin/usermod'
 
-    audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
-    if audit_lines_exist
-      describe auditd.file(@audit_file) do
-        its('permissions') { should_not cmp [] }
-        its('action') { should_not include 'never' }
-      end
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
 
-      @perms = auditd.file(@audit_file).permissions
-
-      @perms.each do |perm|
-        describe perm do
-          it { should include 'x' }
-        end
-      end
-    else
-      describe("Audit line(s) for #{@audit_file} exist") do
-        subject { audit_lines_exist }
-        it { should be true }
-      end
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.action.uniq).to cmp 'always'
+      expect(audit_rule.list.uniq).to cmp 'exit'
+      expect(audit_rule.fields.flatten).to include('perm=x', 'auid>=1000', 'auid!=-1')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end

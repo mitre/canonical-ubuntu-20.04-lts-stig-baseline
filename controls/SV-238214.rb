@@ -22,7 +22,9 @@ By using this IS (which includes any device attached to this IS), you consent to
 
 Use the following verbiage for operating systems that have severe limitations on the number of characters that can be displayed in the banner:
 
-"I've read & consent to terms in IS user agreem't.")
+"I've read & consent to terms in IS user agreem't."
+
+)
   desc 'check', %q(Verify the Ubuntu operating system displays the Standard Mandatory DOD Notice and Consent Banner before granting access to the Ubuntu operating system via an SSH logon with the following command:
 
 $ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*banner'
@@ -77,57 +79,15 @@ Restart the SSH daemon for the changes to take effect and then signal the SSH se
 
 $ sudo systemctl -s SIGHUP kill sshd)
   impact 0.5
+  tag check_id: 'C-41424r951469_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000228-GPOS-00088'
-  tag satisfies: ['SRG-OS-000228-GPOS-00088', 'SRG-OS-000023-GPOS-00006']
   tag gid: 'V-238214'
   tag rid: 'SV-238214r958586_rule'
   tag stig_id: 'UBTU-20-010038'
+  tag gtitle: 'SRG-OS-000228-GPOS-00088'
   tag fix_id: 'F-41383r951470_fix'
+  tag satisfies: ['SRG-OS-000228-GPOS-00088', 'SRG-OS-000023-GPOS-00006']
+  tag 'documentable'
   tag cci: ['CCI-000048', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
-  tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 3']
-  tag 'host'
-  tag 'container'
-
-  if !service('sshd').enabled? || !package('sshd-server').installed? || virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'This control is Not Applicable' do
-      if virtualization.system.eql?('docker')
-        skip 'This control is Not Applicable in a container and/or the SSHD server is not enabled'
-      else
-        skip 'This control is Not Applicable since the SSHD server is not enabled and/or installed'
-      end
-    end
-  else
-    banner_text = input('banner_text')
-    banner_files = [sshd_config.banner].flatten
-
-    banner_files.each do |banner_file|
-      if banner_file.nil?
-        describe 'The SSHD Banner is not set' do
-          subject { banner_file.nil? }
-          it { should be false }
-        end
-      end
-      if !banner_file.nil? && !banner_file.match(/none/i).nil?
-        describe 'The SSHD Banner is disabled' do
-          subject { banner_file.match(/none/i).nil? }
-          it { should be true }
-        end
-      end
-      if !banner_file.nil? && banner_file.match(/none/i).nil? && !file(banner_file).exist?
-        describe 'The SSHD Banner is set, but, the file does not exist' do
-          subject { file(banner_file).exist? }
-          it { should be true }
-        end
-      end
-      next unless !banner_file.nil? && banner_file.match(/none/i).nil? && file(banner_file).exist?
-
-      describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-        clean_banner = banner_text.gsub(/[\r\n\s]/, '')
-        subject { file(banner_file).content.gsub(/[\r\n\s]/, '') }
-        it { should cmp clean_banner }
-      end
-    end
-  end
+  tag nist: ['AC-8 a', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 2', 'AC-8 c 3']
 end

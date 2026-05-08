@@ -1,9 +1,6 @@
 control 'SV-238235' do
-  title 'The Ubuntu operating system must automatically lock an account until the locked account is
-released by an administrator when three unsuccessful logon attempts have been made.'
-  desc 'By limiting the number of failed logon attempts, the risk of unauthorized system access via
-user password guessing, otherwise known as brute-forcing, is reduced. Limits are imposed by
-locking the account.'
+  title 'The Ubuntu operating system must automatically lock an account until the locked account is released by an administrator when three unsuccessful logon attempts have been made.'
+  desc 'By limiting the number of failed logon attempts, the risk of unauthorized system access via user password guessing, otherwise known as brute-forcing, is reduced. Limits are imposed by locking the account.'
   desc 'check', %q(Verify the Ubuntu operating system utilizes the "pam_faillock" module with the following command:
 $ grep faillock /etc/pam.d/common-auth
 
@@ -28,51 +25,44 @@ If the "fail_interval" keyword is missing, commented out, or set to a value grea
 If the "unlock_time" keyword is missing, commented out, or not set to "0", this is a finding.)
   desc 'fix', 'Configure the Ubuntu operating system to utilize the "pam_faillock" module.
 
-Edit the
-/etc/pam.d/common-auth file.
+Edit the /etc/pam.d/common-auth file.
 
-Add the following lines below the "auth" definition for
-pam_unix.so:
+Add the following lines below the "auth" definition for pam_unix.so:
 auth     [default=die]  pam_faillock.so authfail
-auth     sufficient
-pam_faillock.so authsucc
+auth     sufficient     pam_faillock.so authsucc
 
-Configure the "pam_faillock" module to use the following
-options:
+Configure the "pam_faillock" module to use the following options:
 
-Edit the /etc/security/faillock.conf file and add/update the following
-keywords and values:
+Edit the /etc/security/faillock.conf file and add/update the following keywords and values:
 audit
 silent
 deny = 3
 fail_interval = 900
 unlock_time = 0'
   impact 0.3
+  tag check_id: 'C-41445r1069091_chk'
   tag severity: 'low'
-  tag gtitle: 'SRG-OS-000329-GPOS-00128'
-  tag satisfies: ['SRG-OS-000329-GPOS-00128', 'SRG-OS-000021-GPOS-00005']
   tag gid: 'V-238235'
   tag rid: 'SV-238235r1069092_rule'
   tag stig_id: 'UBTU-20-010072'
+  tag gtitle: 'SRG-OS-000329-GPOS-00128'
   tag fix_id: 'F-41404r802382_fix'
+  tag satisfies: ['SRG-OS-000329-GPOS-00128', 'SRG-OS-000021-GPOS-00005']
+  tag 'documentable'
   tag cci: ['CCI-000044', 'CCI-002238']
   tag nist: ['AC-7 a', 'AC-7 b']
   tag 'host'
+  tag 'container'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
-    end
-  else
-    describe file('/etc/pam.d/common-auth') do
-      it { should exist }
-    end
+  unsuccessful_attempts = input('unsuccessful_attempts')
+  fail_interval = input('fail_interval')
+  lockout_time = input('lockout_time')
 
-    describe command('grep pam_tally /etc/pam.d/common-auth') do
-      its('exit_status') { should eq 0 }
-      its('stdout.strip') { should match(/^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3($|\s+.*$)/) }
-      its('stdout.strip') { should_not match(/^\s*auth\s+required\s+pam_tally2.so\s+.*onerr=fail\s+deny=3\s+.*unlock_time.*$/) }
-    end
+  describe parse_config_file('/etc/security/faillock.conf') do
+    its('audit') { should eq '' }
+    its('silent') { should eq '' }
+    its('deny') { should cmp <= unsuccessful_attempts }
+    its('fail_interval') { should cmp <= fail_interval }
+    its('unlock_time') { should cmp lockout_time }
   end
 end

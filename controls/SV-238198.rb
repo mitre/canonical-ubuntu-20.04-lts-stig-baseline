@@ -36,60 +36,23 @@ banner-message-text='You are accessing a U.S. Government (USG) Information Syste
 If the banner-message-text is missing, commented out, or does not match the Standard Mandatory DOD Notice and Consent Banner exactly, this is a finding."
   desc 'fix', %q(Edit the "/etc/gdm3/greeter.dconf-defaults" file.
 
-Set the "banner-message-text" line
-to contain the appropriate banner message text as shown below:
+Set the "banner-message-text" line to contain the appropriate banner message text as shown below:
 
-banner-message-text='You
-are accessing a U.S. Government (USG) Information System (IS) that is provided for
-USG-authorized use only.\n\nBy using this IS (which includes any device attached to this
-IS), you consent to the following conditions:\n\n-The USG routinely intercepts and
-monitors communications on this IS for purposes including, but not limited to, penetration
-testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM),
-law enforcement (LE), and counterintelligence (CI) investigations.\n\n-At any time, the
-USG may inspect and seize data stored on this IS.\n\n-Communications using, or data stored
-on, this IS are not private, are subject to routine monitoring, interception, and search, and
-may be disclosed or used for any USG-authorized purpose.\n\n-This IS includes security
-measures (e.g., authentication and access controls) to protect USG interests--not for your
-personal benefit or privacy.\n\n-Notwithstanding the above, using this IS does not
-constitute consent to PM, LE or CI investigative searching or monitoring of the content of
-privileged communications, or work product, related to personal representation or
-services by attorneys, psychotherapists, or clergy, and their assistants. Such
-communications and work product are private and confidential. See User Agreement for
-details.'
+banner-message-text='You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.\n\nBy using this IS (which includes any device attached to this IS), you consent to the following conditions:\n\n-The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.\n\n-At any time, the USG may inspect and seize data stored on this IS.\n\n-Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.\n\n-This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.\n\n-Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.'
 
 Update the GDM with the new configuration:
 
 $ sudo dconf update
-$ sudo
-systemctl restart gdm3)
+$ sudo systemctl restart gdm3)
   impact 0.5
+  tag check_id: 'C-41408r951458_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag gid: 'V-238198'
   tag rid: 'SV-238198r958390_rule'
   tag stig_id: 'UBTU-20-010003'
+  tag gtitle: 'SRG-OS-000023-GPOS-00006'
   tag fix_id: 'F-41367r653768_fix'
+  tag 'documentable'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
-  tag 'host'
-  tag 'container'
-
-  expected_banner_text = input('banner_text')
-  clean_banner = expected_banner_text.gsub(/[\r\n\s]/, '')
-  gdm3_config_file = input('gdm3_config_file')
-
-  if package('gdm3').installed?
-    actual_banner_text = parse_config_file(gdm3_config_file).params['org/gnome/login-screen']['banner-message-text']
-    clean_actual_banner = actual_banner_text.gsub(/[\r\n\s]/, '').gsub('\\n', '').gsub('\'', '')
-
-    describe 'The SSHD Banner is set to the standard banner and has the correct text' do
-      subject { clean_actual_banner }
-      it { should cmp clean_banner }
-    end
-  else
-    impact 0.0
-    describe 'Package gdm3 not installed' do
-      skip 'Package gdm3 not installed, this control Not Applicable'
-    end
-  end
 end

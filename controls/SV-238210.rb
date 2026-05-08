@@ -39,18 +39,20 @@ auth    [success=2 default=ignore] pam_pkcs11.so
 
 Set the sshd option "PubkeyAuthentication yes" in the "/etc/ssh/sshd_config" file.'
   impact 0.5
+  tag check_id: 'C-41420r951460_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000105-GPOS-00052'
-  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']
   tag gid: 'V-238210'
   tag rid: 'SV-238210r1015143_rule'
   tag stig_id: 'UBTU-20-010033'
+  tag gtitle: 'SRG-OS-000105-GPOS-00052'
   tag fix_id: 'F-41379r951461_fix'
-  tag cci: ['CCI-000765', 'CCI-000766', 'CCI-000767', 'CCI-000768']
-  tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
+  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']
+  tag 'documentable'
+  tag cci: ['CCI-000765', 'CCI-000766', 'CCI-000767', 'CCI-000768', 'CCI-004047']
+  tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)', 'IA-2 (6) (b)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'
@@ -65,8 +67,8 @@ Set the sshd option "PubkeyAuthentication yes" in the "/etc/ssh/sshd_config" fil
       it { should be_installed }
     end
 
-    describe sshd_config do
-      its('PubkeyAuthentication') { should cmp 'yes' }
+    describe pam('/etc/pam.d/common-auth') do
+      its('lines') { should match_pam_rule('auth [success=2 default=ignore] pam_pkcs11.so') }
     end
   end
 end

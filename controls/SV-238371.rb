@@ -1,17 +1,8 @@
 control 'SV-238371' do
-  title 'The Ubuntu operating system must use a file integrity tool to verify correct operation of all
-security functions.'
-  desc 'Without verification of the security functions, security functions may not operate
-correctly and the failure may go unnoticed. Security function is defined as the hardware,
-software, and/or firmware of the information system responsible for enforcing the system
-security policy and supporting the isolation of code and data on which the protection is
-based. Security functionality includes, but is not limited to, establishing system
-accounts, configuring access authorizations (i.e., permissions, privileges), setting
-events to be audited, and setting intrusion detection parameters.
+  title 'The Ubuntu operating system must use a file integrity tool to verify correct operation of all security functions.'
+  desc 'Without verification of the security functions, security functions may not operate correctly and the failure may go unnoticed. Security function is defined as the hardware, software, and/or firmware of the information system responsible for enforcing the system security policy and supporting the isolation of code and data on which the protection is based. Security functionality includes, but is not limited to, establishing system accounts, configuring access authorizations (i.e., permissions, privileges), setting events to be audited, and setting intrusion detection parameters.
 
-This requirement
-applies to the Ubuntu operating system performing security function verification/testing
-and/or systems and environments that require this functionality.'
+This requirement applies to the Ubuntu operating system performing security function verification/testing and/or systems and environments that require this functionality.'
   desc 'check', %q(Verify that Advanced Intrusion Detection Environment (AIDE) is installed and verifies the correct operation of all security functions.
 
 Check that the AIDE package is installed with the following command:
@@ -77,18 +68,31 @@ Example output:
 
 Done.'
   impact 0.5
+  tag check_id: 'C-41581r880911_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag gid: 'V-238371'
   tag rid: 'SV-238371r958944_rule'
   tag stig_id: 'UBTU-20-010450'
+  tag gtitle: 'SRG-OS-000445-GPOS-00199'
   tag fix_id: 'F-41540r880912_fix'
-  tag cci: ['CCI-002696']
-  tag nist: ['SI-6 a']
+  tag 'documentable'
+  tag cci: ['CCI-002696', 'CCI-001744']
+  tag nist: ['SI-6 a', 'CM-3 (5)']
   tag 'host'
-  tag 'container'
 
-  describe package('aide') do
+  file_integrity_tool = input('file_integrity_tool')
+
+  only_if('Control not applicable within a container', impact: 0.0) do
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  end
+
+  if file_integrity_tool == 'aide'
+    describe command('/usr/sbin/aide --check') do
+      its('stdout') { should_not include "Couldn't open file" }
+    end
+  end
+
+  describe package(file_integrity_tool) do
     it { should be_installed }
   end
 end

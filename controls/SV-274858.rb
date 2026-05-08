@@ -6,7 +6,6 @@ control 'SV-274858' do
 $ sudo grep -iwR 'ALL' /etc/sudoers /etc/sudoers.d/ | grep -v '#'
 
 If either of the following entries are returned, this is a finding:
-
 ALL     ALL=(ALL) ALL
 ALL     ALL=(ALL:ALL) ALL"
   desc 'fix', 'Configure the operating system to restrict privilege elevation to authorized personnel.
@@ -26,4 +25,14 @@ ALL     ALL=(ALL:ALL) ALL'
   tag 'documentable'
   tag cci: ['CCI-002038', 'CCI-004895']
   tag nist: ['IA-11', 'SC-11 b']
+  tag 'host'
+  tag 'container'
+
+  only_if('This controls is not Applicable as sudo is not installed', impact: 0.0) do
+    package('sudo').installed?
+  end
+
+  describe sudoers(['/etc/sudoers', '/etc/sudoers.d/*']).rules.where { users == 'ALL' && hosts == 'ALL' && !run_as.nil? && ['ALL', 'ALL:ALL'].include?(run_as) && tags.nil? && commands == 'ALL' } do
+    its('count') { should eq 0 }
+  end
 end

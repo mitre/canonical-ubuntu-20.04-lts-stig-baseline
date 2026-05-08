@@ -16,9 +16,7 @@ If "dmesg" does not show "NX (Execute Disable) protection: active", check the cp
 If "flags" does not contain the "nx" flag, this is a finding.'
   desc 'fix', %q(Configure the Ubuntu operating system to enable NX.
 
-If "nx" is not showing up in
-"/proc/cpuinfo", and the system's BIOS setup configuration permits toggling the No
-Execution bit, set it to "enable".)
+If "nx" is not showing up in "/proc/cpuinfo", and the system's BIOS setup configuration permits toggling the No Execution bit, set it to "enable".)
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-OS-000433-GPOS-00192'
@@ -30,21 +28,19 @@ Execution bit, set it to "enable".)
   tag nist: ['SI-16']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout
+
+  describe 'The no-execution bit flag' do
+    it 'should be set in kernel messages' do
+      expect(dmesg_nx_conf).to_not eq(''), 'dmesg does not set ExecShield'
     end
-  else
-    options = {
-      assignment_regex: /^\s*([^:]*?)\s*:\s*(.*?)\s*$/
-    }
-    describe.one do
-      describe command('dmesg | grep NX').stdout.strip do
-        it { should match(/.+(NX \(Execute Disable\) protection: active)/) }
-      end
-      describe parse_config_file('/proc/cpuinfo', options).flags.split do
-        it { should include 'nx' }
+    unless dmesg_nx_conf.empty?
+      it 'should be active' do
+        expect(dmesg_nx_conf.match(/:\s+(\S+)$/).captures.first).to eq('active'), "dmesg does not show ExecShield set to 'active'"
       end
     end
   end

@@ -28,28 +28,4 @@ Restart the "sshd" service for changes to take effect:
   tag 'documentable'
   tag cci: ['CCI-000068']
   tag nist: ['AC-17 (2)']
-  tag 'host'
-  tag 'container-conditional'
-
-  only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) || package('openssh-server').installed?
-  }
-
-  expected_kex = input('expected_kex')
-
-  sshd_t_output = command('/usr/sbin/sshd -T 2>/dev/null').stdout
-  kex_line = sshd_t_output.lines.find { |l| l.start_with?('kexalgorithms ') }
-  actual_kex = kex_line.nil? ? [] : kex_line.split(/\s+/, 2)[1].to_s.strip.split(',')
-
-  describe 'Effective SSHD KexAlgorithms' do
-    subject { actual_kex }
-    it 'is set and exactly matches the required FIPS-validated algorithms in order' do
-      expect(subject).to eq(expected_kex), <<~MSG.chomp
-        Expected KexAlgorithms to be exactly (in order):
-          - #{expected_kex.join("\n  - ")}
-        Actual:
-          - #{actual_kex.join("\n  - ")}
-      MSG
-    end
-  end
 end

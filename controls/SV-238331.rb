@@ -17,19 +17,14 @@ If any temporary accounts have no expiration date set or do not expire within 72
 
      $ sudo chage -E $(date -d +3days +%Y-%m-%d) <temporary_account_name>'
   impact 0.3
+  tag check_id: 'C-41541r902860_chk'
   tag severity: 'low'
-  tag gtitle: 'SRG-OS-000123-GPOS-00064'
   tag gid: 'V-238331'
   tag rid: 'SV-238331r958508_rule'
   tag stig_id: 'UBTU-20-010410'
+  tag gtitle: 'SRG-OS-000123-GPOS-00064'
   tag fix_id: 'F-41500r902861_fix'
+  tag 'documentable'
   tag cci: ['CCI-001682']
   tag nist: ['AC-2 (2)']
-  tag 'host'
-  tag 'container'
-
-  describe 'Manual verification required' do
-    skip 'Manually verify if emergency account must be created
-      the system must terminate the account after a 72 hour time period.'
-  end
 end

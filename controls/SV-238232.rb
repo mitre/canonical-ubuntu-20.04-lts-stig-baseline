@@ -1,6 +1,5 @@
 control 'SV-238232' do
-  title 'The Ubuntu operating system must electronically verify Personal Identity Verification
-(PIV) credentials.'
+  title 'The Ubuntu operating system must electronically verify Personal Identity Verification (PIV) credentials.'
   desc 'The use of PIV credentials facilitates standardization and reduces the risk of unauthorized access.
 
 DOD has mandated the use of the CAC to support identity management and personal authentication for systems covered under Homeland Security Presidential Directive (HSPD) 12, as well as making the CAC a primary component of layered protection for national security systems.'
@@ -13,23 +12,23 @@ $ sudo grep use_pkcs11_module /etc/pam_pkcs11/pam_pkcs11.conf | sudo awk '/pkcs1
 cert_policy = ca,signature,ocsp_on;
 
 If "cert_policy" is not set to "ocsp_on", or the line is commented out, this is a finding.)
-  desc 'fix', 'Configure the Ubuntu operating system to do certificate status checking for multifactor
-authentication.
+  desc 'fix', 'Configure the Ubuntu operating system to do certificate status checking for multifactor authentication.
 
-Modify all of the "cert_policy" lines in
-"/etc/pam_pkcs11/pam_pkcs11.conf" to include "ocsp_on".'
+Modify all of the "cert_policy" lines in "/etc/pam_pkcs11/pam_pkcs11.conf" to include "ocsp_on".'
   impact 0.5
+  tag check_id: 'C-41442r1069089_chk'
   tag severity: 'medium'
-  tag gtitle: 'SRG-OS-000377-GPOS-00162'
   tag gid: 'V-238232'
   tag rid: 'SV-238232r1069954_rule'
   tag stig_id: 'UBTU-20-010065'
+  tag gtitle: 'SRG-OS-000377-GPOS-00162'
   tag fix_id: 'F-41401r653870_fix'
+  tag 'documentable'
   tag cci: ['CCI-001954']
   tag nist: ['IA-2 (12)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'

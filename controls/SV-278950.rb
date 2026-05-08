@@ -27,4 +27,58 @@ If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  lsb = parse_config_file('/etc/lsb-release')
+
+  describe 'Ubuntu release description' do
+    subject { lsb['DISTRIB_DESCRIPTION'] || '' }
+    it { should match(/Ubuntu\s+24\.04(?:\.\d+)?\s+LTS/i) }
+  end
+
+  # Lifecycle windows derived from STIG narrative
+  standard_support_eol = Time.new(2029, 4, 30, 23, 59, 59, '+00:00')
+  esm_support_eol = Time.new(2036, 4, 30, 23, 59, 59, '+00:00')
+  now = Time.now.utc
+
+  if now <= standard_support_eol
+    # Within standard support window; vendor support available without subscription
+    describe 'Vendor support status within standard support window' do
+      subject { now <= standard_support_eol }
+      it { should be true }
+    end
+  elsif now <= esm_support_eol
+    # Within ESM window; verify Ubuntu Pro subscription status
+    pro_status = command('pro status')
+
+    if pro_status.exit_status != 0 || pro_status.stdout.strip.empty?
+      describe 'Ubuntu Pro tooling unavailable' do
+        skip 'Ubuntu Pro tooling not available; manual verification of ESM subscription status is required.'
+      end
+    else
+      describe.one do
+        describe 'Ubuntu Pro attached' do
+          subject { pro_status.stdout }
+          it { should match(/attached/i) }
+          it { should_not match(/not\s+attached/i) }
+        end
+
+        describe 'ESM services enabled' do
+          subject { pro_status.stdout }
+          it { should match(/(?mi)\besm-(apps|infra)\b.*\benabled\b/) }
+        end
+      end
+    end
+  else
+    # Beyond ESM end-of-life; release is no longer vendor supported
+    describe 'Ubuntu 24.04 LTS ESM end-of-life status' do
+      it 'is within vendor support lifecycle' do
+        expect(now <= esm_support_eol).to be true, "Vendor support for Ubuntu 24.04 LTS ended on #{esm_support_eol.utc.strftime('%Y-%m-%d')}; current date: #{now.utc.strftime('%Y-%m-%d')}"
+      end
+    end
+  end
 end

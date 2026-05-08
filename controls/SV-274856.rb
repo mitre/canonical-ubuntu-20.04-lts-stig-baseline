@@ -15,14 +15,38 @@ offline_credentials_expiration = 1
 
 Note: It is valid for this configuration to be in a file with a name that ends with ".conf" and does not begin with a "." in the "/etc/sssd/conf.d/" directory instead of the "/etc/sssd/sssd.conf" file.'
   impact 0.3
-  tag check_id: 'C-78957r1101687_chk'
   tag severity: 'low'
+  tag gtitle: 'SRG-OS-000383-GPOS-00166'
   tag gid: 'V-274856'
   tag rid: 'SV-274856r1106132_rule'
   tag stig_id: 'UBTU-20-010021'
-  tag gtitle: 'SRG-OS-000383-GPOS-00166'
   tag fix_id: 'F-78862r1101688_fix'
-  tag 'documentable'
   tag cci: ['CCI-002007']
   tag nist: ['IA-5 (13)']
+  tag 'host'
+
+  sssd_config = parse_config_file('/etc/sssd/sssd.conf')
+
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  if input('smart_card_enabled')
+    impact 0.0
+    describe 'The system is not utilizing smart card authentication' do
+      skip 'The system is not utilizing smart card authentication, this control
+      is Not Applicable.'
+    end
+  else
+    describe.one do
+      describe 'Cache credentials enabled' do
+        subject { sssd_config.content }
+        it { should_not match(/cache_credentials\s*=\s*true/) }
+      end
+      describe 'Offline credentials expiration' do
+        subject { sssd_config }
+        its('pam.offline_credentials_expiration') { should cmp '1' }
+      end
+    end
+  end
 end
