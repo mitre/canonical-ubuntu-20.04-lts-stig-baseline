@@ -55,4 +55,25 @@ $ sudo systemctl restart gdm3)
   tag 'documentable'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host'
+  tag 'container'
+
+  expected_banner_text = input('banner_text')
+  clean_banner = expected_banner_text.gsub(/[\r\n\s]/, '')
+  gdm3_config_file = input('gdm3_config_file')
+
+  if package('gdm3').installed?
+    actual_banner_text = parse_config_file(gdm3_config_file).params['org/gnome/login-screen']['banner-message-text']
+    clean_actual_banner = actual_banner_text.gsub(/[\r\n\s]/, '').gsub('\\n', '').gsub('\'', '')
+
+    describe 'The SSHD Banner is set to the standard banner and has the correct text' do
+      subject { clean_actual_banner }
+      it { should cmp clean_banner }
+    end
+  else
+    impact 0.0
+    describe 'Package gdm3 not installed' do
+      skip 'Package gdm3 not installed, this control Not Applicable'
+    end
+  end
 end

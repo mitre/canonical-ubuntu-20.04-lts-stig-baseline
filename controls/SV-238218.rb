@@ -32,4 +32,11 @@ $ sudo systemctl restart sshd.service'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
+
+  describe sshd_config do
+    its('PermitEmptyPasswords') { should cmp 'no' }
+    its('PermitUserEnvironment') { should cmp 'no' }
+  end
 end

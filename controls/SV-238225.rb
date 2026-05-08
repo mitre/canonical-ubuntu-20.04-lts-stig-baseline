@@ -25,4 +25,20 @@ minlen=15'
   tag 'documentable'
   tag cci: ['CCI-000205', 'CCI-004066']
   tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
+  tag 'host'
+  tag 'container'
+
+  config_file = '/etc/security/pwquality.conf'
+  config_file_exists = file(config_file).exist?
+
+  if config_file_exists
+    describe parse_config_file(config_file) do
+      its('minlen') { should cmp >= '15' }
+    end
+  else
+    describe("#{config_file} exists") do
+      subject { config_file_exists }
+      it { should be true }
+    end
+  end
 end

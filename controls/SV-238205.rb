@@ -27,4 +27,17 @@ If output is produced and the accounts listed are interactive user accounts, thi
   tag 'documentable'
   tag cci: ['CCI-000764', 'CCI-000804']
   tag nist: ['IA-2', 'IA-8']
+  tag 'host'
+  tag 'container'
+
+  user_list = command("awk -F \":\" 'list[$3]++{print $1}' /etc/passwd").stdout.split("\n")
+  findings = Set[]
+
+  user_list.each do |user_name|
+    findings <<= user_name
+  end
+  describe 'Duplicate User IDs (UIDs) must not exist for interactive users' do
+    subject { findings.to_a }
+    it { should be_empty }
+  end
 end

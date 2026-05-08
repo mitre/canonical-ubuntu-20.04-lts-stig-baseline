@@ -37,4 +37,18 @@ $ sudo gsettings set org.gnome.desktop.screensaver lock-enabled true'
   tag 'documentable'
   tag cci: ['CCI-000056', 'CCI-000057']
   tag nist: ['AC-11 b', 'AC-11 a']
+  tag 'host'
+  tag 'container'
+
+  xorg_status = command('which Xorg').exit_status
+
+  if xorg_status == 0
+    describe command('gsettings get org.gnome.desktop.screensaver lock-enabled').stdout.strip do
+      it { should cmp true }
+    end
+  else
+    describe xorg_status do
+      skip("GUI not installed.\nwhich Xorg exit_status: #{xorg_status}")
+    end
+  end
 end
