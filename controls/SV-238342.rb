@@ -23,4 +23,8 @@ $ sudo chown syslog /var/log/syslog'
   tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+
+  describe file('/var/log/syslog') do
+    its('owner') { should cmp 'syslog' }
+  end
 end

@@ -48,4 +48,10 @@ $ sudo systemctl enable --now rsyslog'
   tag 'documentable'
   tag cci: ['CCI-001665']
   tag nist: ['SC-24']
+
+  describe service('rsyslog') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
 end

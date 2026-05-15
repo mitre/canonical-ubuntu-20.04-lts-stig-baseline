@@ -44,4 +44,8 @@ $ sudo modprobe -r <module name>'
   tag 'documentable'
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
+
+  describe command('ls -L -d /sys/class/net/*/wireless | xargs dirname | xargs basename') do
+    its('stdout.lines') { should be_in input('approved_wireless_interfaces') }
+  end
 end

@@ -28,4 +28,10 @@ $ sudo apt-get install opensc-pkcs11'
   tag 'documentable'
   tag cci: ['CCI-001953']
   tag nist: ['IA-2 (12)']
+  tag 'host'
+  tag 'container'
+
+  describe package('opensc-pkcs11') do
+    it { should be_installed }
+  end
 end

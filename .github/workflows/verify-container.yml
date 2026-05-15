@@ -15,7 +15,7 @@ jobs:
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.container.yml
       LC_ALL: "en_US.UTF-8"
-      PLATFORM: "ubuntu-20"
+      PLATFORM: "ubuntu-20.04"
       HARDENED_CONTAINER_IMAGE: "registry1.dso.mil/ironbank/canonical/ubuntu-pro-stig:20.04-fips_stable"
       VANILLA_CONTAINER_IMAGE: "ubuntu:20.04"
     strategy:

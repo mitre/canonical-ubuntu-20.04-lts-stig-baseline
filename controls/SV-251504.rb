@@ -22,4 +22,15 @@ Remove any instances of the "nullok" option in "/etc/pam.d/common-auth" and "/et
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
+    end
+  else
+    describe command('grep nullok /etc/pam.d/common-password') do
+      its('stdout') { should be_empty }
+    end
+  end
 end

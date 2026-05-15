@@ -44,4 +44,33 @@ $ sudo systemctl restart chrony.service'
   tag 'documentable'
   tag cci: ['CCI-001891', 'CCI-004923']
   tag nist: ['AU-8 (1) (a)', 'SC-45 (1) (a)']
+
+  is_system_networked = input('is_system_networked')
+
+  if is_system_networked
+
+    chrony_conf = input('chrony_config_file')
+    chrony_conf_exists = file(chrony_conf).exist?
+
+    if chrony_conf_exists
+      describe 'time sources' do
+        server_entries = command('grep "^server" /etc/chrony/chrony.conf').stdout.strip.split("\n").entries
+
+        server_entries.each do |entry|
+          describe entry do
+            it { should match "^server\s+.*\s+iburst\s+maxpoll\s+=\s+17$" }
+          end
+        end
+      end
+    else
+      describe "#{chrony_conf} exists" do
+        subject { chrony_conf_exists }
+        it { should be true }
+      end
+    end
+  else
+    describe 'System is not networked' do
+      skip 'This control is Not Applicable as the system is not networked'
+    end
+  end
 end

@@ -40,4 +40,27 @@ $ sudo systemctl kill auditd -s SIGHUP)
   tag 'documentable'
   tag cci: ['CCI-000162']
   tag nist: ['AU-9 a']
+  tag 'host'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
+    end
+  else
+    log_file = auditd_conf.log_file
+    admin_groups = input('admin_groups')
+
+    log_file_exists = !log_file.nil?
+    if log_file_exists
+      describe file(log_file) do
+        its('group') { should be_in admin_groups }
+      end
+    else
+      describe("Audit log file #{log_file} exists") do
+        subject { log_file_exists }
+        it { should be true }
+      end
+    end
+  end
 end

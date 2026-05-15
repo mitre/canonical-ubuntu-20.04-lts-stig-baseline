@@ -34,4 +34,10 @@ $ sudo systemctl enable --now ufw.service'
   tag 'documentable'
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
+
+  describe service('ufw') do
+    it { should be_installed }
+    it { should be_enabled }
+    it { should be_running }
+  end
 end

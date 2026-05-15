@@ -23,4 +23,8 @@ $ sudo chgrp syslog /var/log'
   tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+
+  describe directory('/var/log') do
+    its('group') { should cmp 'syslog' }
+  end
 end

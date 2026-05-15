@@ -34,4 +34,20 @@ $ sudo update-grub'
   tag 'documentable'
   tag cci: ['CCI-001464']
   tag nist: ['AU-14 (1)']
+  tag 'host'
+
+  if virtualization.system.eql?('docker')
+    impact 0.0
+    describe 'Control not applicable to a container' do
+      skip 'Control not applicable to a container'
+    end
+  else
+    grub_entries = command('grep "^\s*linux" /boot/grub/grub.cfg').stdout.strip.split("\n").entries
+
+    grub_entries.each do |entry|
+      describe entry do
+        it { should include 'audit=1' }
+      end
+    end
+  end
 end

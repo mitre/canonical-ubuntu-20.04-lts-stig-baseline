@@ -22,4 +22,23 @@ $ sudo find /lib /lib64 /usr/lib /usr/lib64 -type f -name '*.so*' ! -group root 
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+
+  library_files = if os.arch == 'x86_64'
+                    command('find /lib /usr/lib /usr/lib32 /lib32 /lib64 ! \-group root \-type f').stdout.strip.split("\n").entries
+                  else
+                    command('find /lib /usr/lib /usr/lib32 /lib32 ! \-group root \-type f').stdout.strip.split("\n").entries
+                  end
+
+  if library_files.any?
+    library_files.each do |lib_file|
+      describe file(lib_file) do
+        its('group') { should cmp 'root' }
+      end
+    end
+  else
+    describe 'Number of system-wide shared library files found that are NOT group-owned by root' do
+      subject { library_files }
+      its('count') { should eq 0 }
+    end
+  end
 end
