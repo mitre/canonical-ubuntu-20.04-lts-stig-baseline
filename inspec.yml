@@ -33,7 +33,7 @@ inputs:
     type: Array
     value: [ "ubuntu" ]
 
-  - name: tmout
+  - name: system_activity_timeout
     description:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
     type: numeric
     value: 600
@@ -260,3 +260,201 @@ inputs:
       - ecdh-sha2-nistp384
       - ecdh-sha2-nistp521
       - diffie-hellman-group-exchange-sha256
+
+  # SV-238202
+  - name: pass_min_days
+    description: Minimum password lifetime (days) for new users
+    type: Numeric
+    value: 1
+
+  # SV-238203
+  - name: pass_max_days
+    description: Maximum password lifetime (days) for new users
+    type: Numeric
+    value: 60
+
+  # SV-238209
+  - name: permissions_for_shells
+    description: Default filesystem permission parameters
+    type: Hash
+    value:
+      default_umask: '077'
+
+  # SV-238212
+  - name: sshd_client_alive_count_max
+    description: SSH ClientAliveCountMax value
+    type: Numeric
+    value: 1
+
+  # SV-238213
+  - name: sshd_config_values
+    description: Expected sshd_config key/value settings
+    type: Hash
+    value:
+      ClientAliveInterval: 600
+
+  # SV-238213
+  - name: allow_container_openssh_server
+    description: Whether OpenSSH server is allowed to be installed in containers
+    type: Boolean
+    value: false
+
+  # SV-238216
+  - name: approved_openssh_server_conf
+    description: Approved OpenSSH server configuration values
+    type: Hash
+    value:
+      macs: 'hmac-sha2-512,hmac-sha2-256'
+
+  # SV-238217
+  - name: approved_ciphers
+    description: List of approved FIPS SSH ciphers for the Ciphers directive
+    type: Array
+    value:
+      - aes256-ctr
+      - aes192-ctr
+      - aes128-ctr
+
+  # SV-238235
+  - name: unsuccessful_attempts
+    description: Maximum number of unsuccessful logon attempts before account lockout
+    type: Numeric
+    value: 3
+
+  # SV-238235
+  - name: fail_interval
+    description: Time window in seconds for counting failed logon attempts
+    type: Numeric
+    value: 900
+
+  # SV-238235
+  - name: lockout_time
+    description: Account lockout time in seconds (0 means until released by administrator)
+    type: Numeric
+    value: 0
+
+  # SV-238237
+  - name: login_prompt_delay
+    description: Delay in seconds between logon prompts following a failed attempt
+    type: Numeric
+    value: 4
+
+  # SV-238248
+  - name: expected_modes
+    description: Mapping of expected filesystem modes
+    type: Hash
+    value:
+      '/var/log/audit': '0750'
+
+  # SV-238249
+  - name: audit_conf_mode
+    description: Mode for audit configuration files
+    type: String
+    value: '0640'
+
+  # SV-238354
+  - name: expected_firewall_package
+    description: Expected application firewall package name
+    type: String
+    value: 'ufw'
+
+  # SV-238371
+  - name: file_integrity_tool
+    description: File integrity tool package to verify security functions
+    type: String
+    value: 'aide'
+
+  - name: difok
+    description: "The minimum number of required changed characters when passwords are updated."
+    type: Numeric
+    value: 8
+
+  - name: audit_rule_keynames
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      'execve'                        : 'execpriv',
+      '/etc/shadow'                   : 'usergroup_modification',
+      '/etc/security/opasswd'         : 'usergroup_modification',
+      '/etc/passwd'                   : 'usergroup_modification',
+      '/etc/gshadow'                  : 'usergroup_modification',
+      '/etc/group'                    : 'usergroup_modification',
+      '/etc/sudoers'                  : 'identity',
+      '/etc/sudoers.d'                : 'identity',
+      '/bin/su'                       : 'privileged-priv_change',
+      'setxattr'                      : 'perm_mod',
+      'fsetxattr'                     : 'perm_mod',
+      'lsetxattr'                     : 'perm_mod',
+      'removexattr'                   : 'perm_mod',
+      'fremovexattr'                  : 'perm_mod',
+      'lremovexattr'                  : 'perm_mod',
+      '/usr/bin/chage'                : 'privileged-chage',
+      '/usr/bin/chcon'                : 'perm_mod',
+      '/usr/bin/ssh-agent'            : 'privileged-ssh',
+      '/usr/bin/passwd'               : 'privileged-passwd',
+      '/usr/bin/mount'                : 'privileged-mount',
+      '/usr/bin/umount'               : 'privileged-umount',
+      '/sbin/unix_update'             : 'privileged-unix-update',
+      '/usr/lib/openssh/ssh-keysign'  : 'privileged-ssh',
+      '/usr/bin/setfacl'              : 'perm_mod',
+      '/usr/sbin/pam_timestamp_check' : 'privileged-pam_timestamp_check',
+      '/usr/bin/newgrp'               : 'priv_cmd',
+      'init_module'                   : 'module_chng',
+      'finit_module'                  : 'module_chng',
+      'rename'                        : 'delete',
+      'unlink'                        : 'delete',
+      'rmdir'                         : 'delete',
+      'renameat'                      : 'delete',
+      'unlinkat'                      : 'delete',
+      '/usr/bin/gpasswd'              : 'privileged-gpasswd',
+      'delete_module'                 : 'module_chng',
+      '/usr/bin/crontab'              : 'privileged-crontab',
+      '/usr/bin/chsh'                 : 'priv_cmd',
+      'truncate'                      : 'perm_access',
+      'ftruncate'                     : 'perm_access',
+      'creat'                         : 'perm_access',
+      'open'                          : 'perm_access',
+      'openat'                        : 'perm_access',
+      'open_by_handle_at'             : 'perm_access',
+      'chown'                         : 'perm_mod',
+      'chmod'                         : 'perm_chng',
+      'fchmod'                        : 'perm_chng',
+      'fchmodat'                      : 'perm_chng',
+      '/usr/bin/sudo'                 : 'priv_cmd',
+      '/usr/sbin/usermod'             : 'privileged-usermod',
+      '/usr/bin/chacl'                : 'perm_mod',
+      '/bin/kmod'                     : 'modules',
+      '/sbin/modprobe'                : 'modules',
+      '/sbin/apparmor_parser'         : 'perm_chng',
+      '/usr/bin/chfn'                 : 'privileged-chfn',
+      '/var/log/lastlog'              : 'logins',
+      '/var/log/btmp'                 : 'logins',
+      '/var/log/wtmp'                 : 'logins',
+      '/var/run/utmp'                 : 'logins',
+      '/var/log/sudo.log'             : 'maintenance',
+      '/etc/cron.d'                   : 'cronjobs',
+      '/var/spool/cron'               : 'cronjobs',
+      '/usr/bin/sudoedit'             : 'priv_cmd',
+      '/var/log/faillog'              : 'logins',
+      '/usr/sbin/fdisk'               : 'fdisk'
+    }
+
+  
+  # Default values for expected keynames for all audit rules
+  # NOTE: DO NOT override this hash
+  # If you need to override these values, do so via adding the desired key/value to
+  # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
+  # directly will lose the values for any key you do not explictly define.
+  # SV-270684, SV-270685, SV-270686, SV-270687, SV-270688, SV-270689, SV-270715, SV-270740, SV-270778, SV-270779, SV-270780, SV-270781, SV-270782, SV-270783, SV-270784, SV-270785, SV-270786, SV-270787, SV-270788, SV-270789, SV-270790, SV-270791, SV-270792, SV-270793, SV-270794, SV-270795, SV-270796, SV-270797, SV-270798, SV-270799, SV-270800, SV-270801, SV-270802, SV-270803, SV-270804, SV-270805, SV-270806, SV-270807, SV-270808, SV-270809, SV-270810, SV-270811, SV-270812, SV-270813, SV-270814, SV-270815, SV-274870
+  - name: audit_rule_keynames_overrides
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      '/etc/sudoers.d'                : 'privilege_modification',
+      '/etc/sudoers'                  : 'privilege_modification',
+      '/var/log/journal'              : 'systemd_journal',
+      'chown'                         : 'perm_chng',
+      '/usr/bin/chacl'                : 'perm_chng',
+      '/usr/bin/chcon'                : 'perm_chng',
+      '/usr/bin/setfacl'              : 'perm_chng',
+    }

@@ -39,7 +39,7 @@ If the system is missing an "/etc/pam_pkcs11/" directory and an "/etc/pam_pkcs11
 
     if config_file_exists
       describe parse_config_file(config_file) do
-        its('use_mappers') { should cmp 'pwent' }
+        its('use_mappers') { should cmp(/^pwent;?$/) }
       end
     else
       describe("#{config_file} exists") do
