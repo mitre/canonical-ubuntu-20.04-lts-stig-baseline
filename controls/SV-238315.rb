@@ -36,34 +36,18 @@ $ sudo augenrules --load'
   tag nist: ['AU-12 c']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
-    impact 0.0
-    describe 'Control not applicable to a container' do
-      skip 'Control not applicable to a container'
-    end
-  else
-    @audit_file = '/var/log/wtmp'
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
 
-    audit_lines_exist = !auditd.lines.index { |line| line.include?(@audit_file) }.nil?
-    if audit_lines_exist
-      describe auditd.file(@audit_file) do
-        its('permissions') { should_not cmp [] }
-        its('action') { should_not include 'never' }
-      end
+  audit_command = '/var/log/wtmp'
 
-      @perms = auditd.file(@audit_file).permissions
-
-      @perms.each do |perm|
-        describe perm do
-          it { should include 'w' }
-          it { should include 'a' }
-        end
-      end
-    else
-      describe("Audit line(s) for #{@audit_file} exist") do
-        subject { audit_lines_exist }
-        it { should be true }
-      end
+  describe 'Command' do
+    it "#{audit_command} is audited properly" do
+      audit_rule = auditd.file(audit_command)
+      expect(audit_rule).to exist
+      expect(audit_rule.permissions.flatten).to include('w', 'a')
+      expect(audit_rule.key.uniq).to include(input('audit_rule_keynames').merge(input('audit_rule_keynames_overrides'))[audit_command])
     end
   end
 end
