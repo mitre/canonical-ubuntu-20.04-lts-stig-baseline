@@ -47,25 +47,14 @@ If the system is missing an "/etc/pam_pkcs11/" directory and an "/etc/pam_pkcs11
       skip 'This system is not using PKI for authentication so the controls is Not Applicable.'
     end
   else
-    config_file = '/etc/sssd/sssd.conf'
-    config_file_exists = file(config_file).exist?
-
+    config_file_exists = file('/etc/pam_pkcs11/pam_pkcs11.conf').exist?
     if config_file_exists
-      describe ini(config_file) do
-        its(['sssd', 'services']) { should match(/pam/) }
-        its(['pam', 'pam_cert_auth']) { should cmp 'True' }
-      end
-      describe 'certificate_verification includes ca_cert in a domain section' do
-        subject do
-          ini(config_file).params.any? do |section, values|
-            section.start_with?('domain/') &&
-              values['certificate_verification'].to_s.include?('ca_cert')
-          end
-        end
-        it { should be true }
+      describe parse_config_file('/etc/pam_pkcs11/pam_pkcs11.conf') do
+        its('use_pkcs11_module') { should_not be_nil }
+        its('cert_policy') { should include 'ca' }
       end
     else
-      describe '/etc/sssd/sssd.conf exists' do
+      describe '/etc/pam_pkcs11/pam_pkcs11.conf exists' do
         subject { config_file_exists }
         it { should be true }
       end

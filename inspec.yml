@@ -129,6 +129,12 @@ inputs:
     type: String
     value: '/etc/default/useradd'
 
+  # SV-238330
+  - name: days_of_inactivity
+    description: Maximum days of inactivity before disabling account (DoD recommendation is 35 days; 0 disables immediately after password expiry)
+    type: Numeric
+    value: 35
+
   - name: rsyslog_config_file
     description: Location of rsyslog config file
     type: String
@@ -368,6 +374,11 @@ inputs:
     description: "The minimum number of required changed characters when passwords are updated."
     type: Numeric
     value: 8
+  
+  - name: concurrent_sessions_permitted
+    description: Number of permitted concurrent sessions on this system
+    type: Numeric
+    value: 10
 
   - name: audit_rule_keynames
     description: The audit rules to be applied to the system
