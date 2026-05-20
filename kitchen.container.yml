@@ -16,7 +16,7 @@ verifier:
     - container.inputs.yml
   reporter:
     - cli
-    - json:spec/results/%{platform}_%{suite}.json
+    - json:spec/results/ubuntu-20_%{suite}.json
 
 suites:
   - name: vanilla
