@@ -14,7 +14,7 @@ jobs:
       CHEF_LICENSE: accept-silent
       CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_LOCAL_YAML: kitchen.lxd.yml
-      PLATFORM: "ubuntu-20"
+      PLATFORM: "ubuntu-20.04"
       LC_ALL: "en_US.UTF-8"
       LXD_IMAGE: "ubuntu:20.04"
       LXD_VM_USERNAME: "ubuntu"

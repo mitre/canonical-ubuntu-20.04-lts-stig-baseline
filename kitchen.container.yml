@@ -1,6 +1,6 @@
 ---
 platforms:
-  - name: ubuntu-20
+  - name: ubuntu-20.04
 
 driver:
   name: docker
