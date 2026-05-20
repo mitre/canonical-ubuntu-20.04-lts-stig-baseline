@@ -1,6 +1,6 @@
 ---
 platforms:
-  - name: ubuntu-20.04
+  - name: ubuntu-20
 
 driver:
   name: docker
@@ -16,7 +16,7 @@ verifier:
     - container.inputs.yml
   reporter:
     - cli
-    - json:spec/results/container_ubuntu-2004_%{suite}.json
+    - json:spec/results/%{platform}_%{suite}.json
 
 suites:
   - name: vanilla
