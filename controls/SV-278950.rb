@@ -37,12 +37,12 @@ If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding
 
   describe 'Ubuntu release description' do
     subject { lsb['DISTRIB_DESCRIPTION'] || '' }
-    it { should match(/Ubuntu\s+24\.04(?:\.\d+)?\s+LTS/i) }
+    it { should match(/Ubuntu\s+20\.04(?:\.\d+)?\s+LTS/i) }
   end
 
   # Lifecycle windows derived from STIG narrative
-  standard_support_eol = Time.new(2029, 4, 30, 23, 59, 59, '+00:00')
-  esm_support_eol = Time.new(2036, 4, 30, 23, 59, 59, '+00:00')
+  standard_support_eol = Time.new(2025, 5, 31, 23, 59, 59, '+00:00')
+  esm_support_eol = Time.new(2030, 5, 31, 23, 59, 59, '+00:00')
   now = Time.now.utc
 
   if now <= standard_support_eol
@@ -75,9 +75,9 @@ If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding
     end
   else
     # Beyond ESM end-of-life; release is no longer vendor supported
-    describe 'Ubuntu 24.04 LTS ESM end-of-life status' do
+    describe 'Ubuntu 20.04 LTS ESM end-of-life status' do
       it 'is within vendor support lifecycle' do
-        expect(now <= esm_support_eol).to be true, "Vendor support for Ubuntu 24.04 LTS ended on #{esm_support_eol.utc.strftime('%Y-%m-%d')}; current date: #{now.utc.strftime('%Y-%m-%d')}"
+        expect(now <= esm_support_eol).to be true, "Vendor support for Ubuntu 20.04 LTS ended on #{esm_support_eol.utc.strftime('%Y-%m-%d')}; current date: #{now.utc.strftime('%Y-%m-%d')}"
       end
     end
   end

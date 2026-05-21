@@ -41,7 +41,7 @@ Replace "[audit_tool]" with each audit tool not owned by root.'
   tag nist: ['AU-9 a', 'AU-9']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'

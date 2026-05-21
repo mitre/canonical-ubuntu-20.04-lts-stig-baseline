@@ -29,7 +29,7 @@ password [success=1 default=ignore] pam_unix.so obscure sha512 shadow remember=5
   tag nist: ['IA-5 (1) (c)', 'IA-5 (1) (d)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'

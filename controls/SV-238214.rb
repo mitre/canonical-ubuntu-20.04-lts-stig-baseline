@@ -93,10 +93,10 @@ $ sudo systemctl -s SIGHUP kill sshd)
   tag 'host'
   tag 'container'
 
-  if !service('sshd').enabled? || !package('sshd-server').installed? || virtualization.system.eql?('docker')
+  if !service('sshd').enabled? || !package('sshd-server').installed? || %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'This control is Not Applicable' do
-      if virtualization.system.eql?('docker')
+      if %w[docker podman kubepods lxc].include?(virtualization.system)
         skip 'This control is Not Applicable in a container and/or the SSHD server is not enabled'
       else
         skip 'This control is Not Applicable since the SSHD server is not enabled and/or installed'
