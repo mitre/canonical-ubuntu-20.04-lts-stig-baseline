@@ -107,7 +107,7 @@ jobs:
           ssh_pwauth: false
           EOF
 
-          sudo lxc launch ${LXD_IMAGE} "$NAME" --vm -c user.user-data="$(cat user-data.yaml)" limits.memory=4GiB
+          sudo lxc launch ${LXD_IMAGE} "$NAME" --vm -c user.user-data="$(cat user-data.yaml)" -c limits.memory=4GiB
 
       - name: Wait for VM
         run: |
