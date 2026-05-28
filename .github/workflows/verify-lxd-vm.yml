@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       - name: Install and configure LXD
-        run: sudo ./.github/scripts/setup-lxd.sh
+        run: sudo bash ./.github/scripts/setup-lxd.sh
 
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
