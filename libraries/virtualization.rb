@@ -300,7 +300,6 @@ module Inspec::Resources
     # Detect containers via systemd-detect-virt --container
     def detect_systemd_container
       cmd = inspec.command("systemd-detect-virt --container")
-      return false unless cmd.exist?
       return false unless cmd.exit_status == 0
 
       detected = cmd.stdout.to_s.strip
