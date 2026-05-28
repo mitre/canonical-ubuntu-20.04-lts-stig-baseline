@@ -26,59 +26,13 @@ jobs:
       - name: Install host packages
         run: sudo apt-get update && sudo apt-get -y install jq
 
-      - name: Install LXD
-        run: |
-          sudo snap install lxd
-          # Wait for LXD daemon to start
-          echo "Waiting for LXD daemon to start..."
-          sleep 15
-          # Initialize LXD with default settings
-          sudo lxd init --auto
-          # Add runner to lxd group
-          sudo usermod -a -G lxd runner
-          # Fix socket permissions for CI environment
-          sudo chmod 666 /var/snap/lxd/common/lxd/unix.socket
-
-          echo "Configuring LXD networking (lxdbr0 with IPv4 NAT, IPv6 disabled)"
-          # Ensure managed bridge exists and is configured for IPv4 NAT and DNS
-          sudo lxc network show lxdbr0 || true
-          sudo lxc network set lxdbr0 ipv4.address auto
-          sudo lxc network set lxdbr0 ipv4.nat true
-          sudo lxc network set lxdbr0 ipv6.address none || true
-          sudo lxc network set lxdbr0 ipv6.nat false || true
-          sudo lxc network set lxdbr0 dns.mode managed || true
-          sudo lxc network set lxdbr0 dns.domain lxd || true
-          sudo lxc network set lxdbr0 dns.nameservers 1.1.1.1,8.8.8.8 || true
-          # Make sure default profile attaches NIC to lxdbr0
-          sudo lxc profile device add default eth0 nic name=eth0 network=lxdbr0 || true
-
-          # Helpful sysctl in some CI hosts (usually already enabled by LXD rules)
-          sudo sysctl -w net.ipv4.ip_forward=1 || true
-          sudo sysctl -w net.ipv4.conf.all.forwarding=1 net.ipv4.conf.default.forwarding=1 || true
-
-          # Ensure NAT and forwarding rules for lxdbr0 on CI hosts with restrictive FORWARD policies
-          EXTIF=$(ip -4 route show default | awk '{print $5}' | head -n1)
-          SUBNET=$(ip -4 addr show dev lxdbr0 | awk '/inet /{print $2}')
-          echo "Ensuring iptables NAT and FORWARD rules for $SUBNET -> $EXTIF"
-          sudo iptables -t nat -C POSTROUTING -s "$SUBNET" -o "$EXTIF" -j MASQUERADE 2>/dev/null || sudo iptables -t nat -A POSTROUTING -s "$SUBNET" -o "$EXTIF" -j MASQUERADE
-          sudo iptables -C FORWARD -i lxdbr0 -o "$EXTIF" -j ACCEPT 2>/dev/null || sudo iptables -I FORWARD 1 -i lxdbr0 -o "$EXTIF" -j ACCEPT
-          sudo iptables -C FORWARD -i "$EXTIF" -o lxdbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || sudo iptables -I FORWARD 1 -i "$EXTIF" -o lxdbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-
-          # Some hosts default to DROP on FORWARD; set ACCEPT and enable bridge nf hooks
-          sudo modprobe br_netfilter || true
-          sudo sysctl -w net.bridge.bridge-nf-call-iptables=1 net.bridge.bridge-nf-call-ip6tables=1 || true
-          sudo iptables -P FORWARD ACCEPT || true
-
-          # Relax reverse path filtering that can drop forwarded replies in some clouds
-          sudo sysctl -w net.ipv4.conf.all.rp_filter=0 net.ipv4.conf.default.rp_filter=0 || true
-          sudo sysctl -w net.ipv4.conf.lxdbr0.rp_filter=0 || true
-          sudo sysctl -w net.ipv4.conf.$EXTIF.rp_filter=0 || true
-
-          # Test basic LXD functionality
-          sudo lxc list
-
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install and configure LXD
+        run: sudo ./.github/scripts/setup-lxd.sh
 
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
@@ -146,136 +100,58 @@ jobs:
           ssh_pwauth: false
           EOF
 
-          sudo lxc launch ${LXD_IMAGE} "$NAME" --vm -c user.user-data="$(cat user-data.yaml)"
+          sudo lxc launch ${LXD_IMAGE} "$NAME" --vm -c user.user-data="$(cat user-data.yaml)" limits.memory=4GiB
 
-      - name: Wait for VM to be ready
-        run: |
-          echo "Waiting for VM to be fully initialized..."
-
-          # Debug: Check VM status
-          echo "=== VM Status ==="
-          NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
-          sudo lxc list
-          sudo lxc info $NAME
-
-          # We check for basic readiness instead of waiting for cloud-init completion
-          timeout=300
-          elapsed=0
-          while [ $elapsed -lt $timeout ]; do
-            # Debug: Show what we're checking
-            echo "=== Checking VM readiness (attempt $((elapsed/10 + 1))) ==="
-            
-            # Check if VM is running and we can execute commands
-            if sudo lxc list --format=csv | grep -q "$NAME.*RUNNING"; then
-              echo "VM is in RUNNING state"
-              
-              # Try to execute a simple command to verify VM is responsive
-              if sudo lxc exec $NAME -- echo "VM is responsive" 2>/dev/null; then
-                echo "VM is responsive to commands"
-                
-                # Check if basic system is ready (systemd, if available)
-                if sudo lxc exec $NAME -- systemctl is-system-running --wait 2>/dev/null || true; then
-                  echo "VM system is ready!"
-                  break
-                else
-                  echo "VM system not fully ready yet, but responsive"
-                  # For basic VMs, being responsive might be enough
-                  if [ $elapsed -ge 60 ]; then  # After 60 seconds, if responsive, consider ready
-                    echo "VM has been responsive for sufficient time, considering ready"
-                    break
-                  fi
-                fi
-              else
-                echo "VM not responsive to commands yet"
-              fi
-            else
-              echo "VM not in RUNNING state yet"
-            fi
-            
-            echo "Waiting for VM to be ready... ($elapsed/$timeout seconds)"
-            sleep 10
-            elapsed=$((elapsed + 10))
-          done
-
-          if [ $elapsed -ge $timeout ]; then
-            echo "=== TIMEOUT DEBUGGING ==="
-            echo "Final VM status:"
-            sudo lxc list
-            sudo lxc info $NAME
-            echo "Timeout waiting for VM to be ready"
-            exit 1
-          fi
-
-          echo "VM is ready for use!"
-
-      - name: Export VM IP for Kitchen (KITCHEN_HOST)
+      - name: Wait for VM
         run: |
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
-
-          # Wait up to 120s for an IP address to appear and scan all interfaces, not just eth0
-          timeout=120
-          interval=5
-          ipv4=""
-          ipv6=""
-          elapsed=0
-          while [ $elapsed -lt $timeout ]; do
-            ipv4=$(sudo lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address' | head -n1 || true)
-            ipv6=$(sudo lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet6" and .scope=="global") | .address' | head -n1 || true)
-            if [ -n "$ipv4" ] || [ -n "$ipv6" ]; then
-              break
-            fi
-            echo "Waiting for VM IP... ($elapsed/$timeout seconds)"
-            sleep $interval
-            elapsed=$((elapsed + interval))
+          for i in $(seq 1 30); do
+            lxc list --format=csv | grep -q "$NAME.*RUNNING" && break
+            sleep 10
           done
+          lxc list --format=csv | grep -q "$NAME.*RUNNING" || { echo "VM never reached RUNNING"; lxc info "$NAME"; exit 1; }
 
-          # Fallback: query IPs from inside the VM if LXD hasn't reported them yet
-          if [ -z "$ipv4" ] && [ -z "$ipv6" ]; then
-            echo "Falling back to querying IPs from inside the VM..."
-            set +e
-            ipv4=$(sudo lxc exec "$NAME" -- bash -lc "ip -o -4 addr show scope global | awk '{print \\4}' | cut -d/ -f1 | head -n1" 2>/dev/null)
-            ipv6=$(sudo lxc exec "$NAME" -- bash -lc "ip -o -6 addr show scope global | awk '{print \\4}' | cut -d/ -f1 | head -n1" 2>/dev/null)
-            set -e
-          fi
-
-          if [ -n "$ipv4" ]; then
-            echo "Using IPv4 $ipv4 for KITCHEN_HOST"
-            echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
-          elif [ -n "$ipv6" ]; then
-            echo "Using IPv6 $ipv6 for KITCHEN_HOST"
-            echo "KITCHEN_HOST=$ipv6" >> "$GITHUB_ENV"
-          else
-            echo "Failed to discover a VM IP address"
-            sudo lxc list "$NAME"
-            sudo lxc info "$NAME" || true
-            exit 1
-          fi
+      - name: Export VM IPv4 for Kitchen
+        run: |
+          set -euo pipefail
+          NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
+          for i in $(seq 1 24); do
+            ipv4=$(lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address' | head -n1)
+            [ -n "$ipv4" ] && break
+            sleep 5
+          done
+          [ -n "$ipv4" ] || { echo "No VM IPv4 found"; lxc info "$NAME"; exit 1; }
+          echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
 
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
 
-      - name: Save our ${{ matrix.suite }} results summary
+      - name: Save results summary JSON
         continue-on-error: true
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
-          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
+          command_string: "view summary -f json -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
-      - name: Save Test Result JSON
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: actions/upload-artifact@v4
+      - name: Upload Test Result JSON
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
         with:
           name: ${{ env.PLATFORM }}_${{ matrix.suite }}.json
           path: spec/results/
 
-      - name: Upload ${{ matrix.suite }} to Heimdall
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
+      - name: Upload to Heimdall
         continue-on-error: true
+        env:
+          SAF_HEIMDALL_UPLOAD_KEY: ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" \
+            -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" \
+            -H "Authorization: Api-Key $SAF_HEIMDALL_UPLOAD_KEY" \
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
       - name: Display our ${{ matrix.suite }} results summary
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
@@ -290,13 +166,11 @@ jobs:
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
-      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Validate scan threshold
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"
 
       - name: Cleanup ephemeral SSH key
         if: always()
-        run: |
-          rm -f "$RUNNER_TEMP/kitchen_ed25519" "$RUNNER_TEMP/kitchen_ed25519.pub"
+        run: rm -f "$RUNNER_TEMP/kitchen_ed25519" "$RUNNER_TEMP/kitchen_ed25519.pub"
