@@ -380,7 +380,7 @@ inputs:
     type: String
     value: '0640'
 
-  # SV-238354
+  # SV-238354, SV-238355
   - name: expected_firewall_package
     description: Expected application firewall package name
     type: String
