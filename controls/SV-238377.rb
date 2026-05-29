@@ -31,6 +31,8 @@ $ sudo chown root [FILE]'
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
 
   system_commands = command('find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -user root -type f').stdout.strip.split("\n").entries
   valid_system_commands = Set[]

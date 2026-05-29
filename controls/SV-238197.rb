@@ -59,6 +59,8 @@ $ sudo systemctl restart gdm3'
   tag 'documentable'
   tag cci: ['CCI-000048']
   tag nist: ['AC-8 a']
+  tag 'host'
+  tag 'container'
 
   xorg_status = command('which Xorg').exit_status
 

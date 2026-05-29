@@ -41,6 +41,7 @@ $ sudo systemctl restart sshd.service'
   tag 'documentable'
   tag cci: ['CCI-000068', 'CCI-002421', 'CCI-003123']
   tag nist: ['AC-17 (2)', 'SC-8 (1)', 'MA-4 (6)']
+  tag 'host'
 
   if input('disable_fips')
     impact 0.0

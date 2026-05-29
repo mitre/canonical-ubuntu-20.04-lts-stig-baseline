@@ -38,6 +38,7 @@ Configure the operating system to disable the ability to use USB mass storage de
   tag 'documentable'
   tag cci: ['CCI-001958', 'CCI-003959']
   tag nist: ['IA-3', 'CM-7 (9) (b)']
+  tag 'host'
 
   if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0

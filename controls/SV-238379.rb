@@ -30,6 +30,7 @@ Update the dconf settings:
   tag cci: ['CCI-000366', 'CCI-002235']
   tag nist: ['CM-6 b', 'AC-6 (10)']
   tag 'host'
+  tag 'container'
 
   xorg_status = command('which Xorg').exit_status
   if xorg_status == 0

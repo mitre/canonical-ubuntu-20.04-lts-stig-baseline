@@ -32,7 +32,7 @@ ALL     ALL=(ALL:ALL) ALL'
     package('sudo').installed?
   end
 
-  describe sudoers(['/etc/sudoers', '/etc/sudoers.d/*']).rules.where { users == 'ALL' && hosts == 'ALL' && !run_as.nil? && ['ALL', 'ALL:ALL'].include?(run_as) && tags.nil? && commands == 'ALL' } do
+  describe sudoers(input('sudoers_config_files')).rules.where { users == 'ALL' && hosts == 'ALL' && !run_as.nil? && ['ALL', 'ALL:ALL'].include?(run_as) && tags.nil? && commands == 'ALL' } do
     its('count') { should eq 0 }
   end
 end

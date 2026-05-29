@@ -22,6 +22,7 @@ Remove any instances of the "nullok" option in "/etc/pam.d/common-auth" and "/et
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
 
   if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0

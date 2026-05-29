@@ -28,6 +28,7 @@ UsePAM yes'
   tag 'documentable'
   tag cci: ['CCI-000877']
   tag nist: ['MA-4 c']
+  tag 'host'
 
   if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0

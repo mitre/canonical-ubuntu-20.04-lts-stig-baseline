@@ -30,6 +30,8 @@ $ sudo passwd -l root'
   tag 'documentable'
   tag cci: ['CCI-000770', 'CCI-004045']
   tag nist: ['IA-2 (5)', 'IA-2 (5)']
+  tag 'host'
+  tag 'container'
 
   describe.one do
     describe shadow.where(user: 'root') do

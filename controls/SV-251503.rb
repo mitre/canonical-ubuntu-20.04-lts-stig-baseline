@@ -23,6 +23,8 @@ $ sudo passwd -l [username]'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
 
   describe command("sudo awk -F: '!$2 {print $1}' /etc/shadow") do
     its('stdout') { should be_empty }

@@ -24,6 +24,8 @@ $ sudo chmod 0640 /var/log/syslog'
   tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+  tag 'container'
 
   describe file('/var/log/syslog') do
     it { should_not be_more_permissive_than('0640') }

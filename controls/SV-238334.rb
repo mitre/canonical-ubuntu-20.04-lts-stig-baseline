@@ -27,6 +27,8 @@ If kernel core dumps are required, document the need with the ISSO.'
   tag 'documentable'
   tag cci: ['CCI-001190']
   tag nist: ['SC-24']
+  tag 'host'
+  tag 'container'
 
   is_kdump_required = input('is_kdump_required')
   if is_kdump_required

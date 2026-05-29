@@ -35,6 +35,8 @@ net.ipv4.tcp_syncookies = 1)
   tag 'documentable'
   tag cci: ['CCI-001095']
   tag nist: ['SC-5 (2)']
+  tag 'host'
+  tag 'container'
 
   describe kernel_parameter('net.ipv4.tcp_syncookies') do
     its('value') { should cmp 1 }

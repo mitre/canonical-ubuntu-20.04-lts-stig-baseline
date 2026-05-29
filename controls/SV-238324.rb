@@ -33,6 +33,8 @@ $ sudo systemctl restart rsyslog.service'
   tag 'documentable'
   tag cci: ['CCI-000067']
   tag nist: ['AC-17 (1)']
+  tag 'host'
+  tag 'container'
 
   options = {
     assignment_regex: /^\s*([^:]*?)\s*\t\s*(.*?)\s*$/

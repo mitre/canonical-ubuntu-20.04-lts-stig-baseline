@@ -22,6 +22,8 @@ $ sudo find /lib /lib64 /usr/lib -perm /022 -type d -exec chmod 755 '{}' \\;"
   tag 'documentable'
   tag cci: ['CCI-001499']
   tag nist: ['CM-5 (6)']
+  tag 'host'
+  tag 'container'
 
   library_dirs = if os.arch == 'x86_64'
                    command('find /lib /lib32 lib64 /usr/lib /usr/lib32 -perm /022 -type d').stdout.strip.split("\n").entries

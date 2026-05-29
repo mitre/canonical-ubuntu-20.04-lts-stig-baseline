@@ -34,8 +34,15 @@ $ sudo systemctl enable --now ufw.service'
   tag 'documentable'
   tag cci: ['CCI-002314']
   tag nist: ['AC-17 (1)']
+  tag 'host'
 
-  describe service('ufw') do
+  only_if('This control is Not Applicable to containers', impact: 0.0) {
+    !%w[docker podman kubepods lxc].include?(virtualization.system)
+  }
+
+  expected_firewall_package = input('expected_firewall_package')
+
+  describe service(expected_firewall_package) do
     it { should be_installed }
     it { should be_enabled }
     it { should be_running }

@@ -28,6 +28,8 @@ $ sudo systemctl start ufw.service'
   tag 'documentable'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+  tag 'host'
+  tag 'container'
 
   describe service('ufw') do
     it { should be_installed }

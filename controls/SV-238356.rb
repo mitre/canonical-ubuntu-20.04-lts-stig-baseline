@@ -44,6 +44,8 @@ $ sudo systemctl restart chrony.service'
   tag 'documentable'
   tag cci: ['CCI-001891', 'CCI-004923']
   tag nist: ['AU-8 (1) (a)', 'SC-45 (1) (a)']
+  tag 'host'
+  tag 'container'
 
   is_system_networked = input('is_system_networked')
 

@@ -23,6 +23,8 @@ $ sudo chown root /var/log'
   tag 'documentable'
   tag cci: ['CCI-001314']
   tag nist: ['SI-11 b']
+  tag 'host'
+  tag 'container'
 
   describe directory('/var/log') do
     its('owner') { should cmp 'root' }

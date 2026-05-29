@@ -27,6 +27,8 @@ If any temporary accounts have no expiration date set or do not expire within 72
   tag 'documentable'
   tag cci: ['CCI-001682']
   tag nist: ['AC-2 (2)']
+  tag 'host'
+  tag 'container'
 
   describe 'Manual verification required' do
     skip 'Manually verify if emergency account must be created
