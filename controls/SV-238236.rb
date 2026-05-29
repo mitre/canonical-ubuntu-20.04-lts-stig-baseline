@@ -55,6 +55,7 @@ $  sudo cp -f /usr/share/aide/config/cron.daily/aide /etc/cron.daily/aide'
 
   file_integrity_tool = input('file_integrity_tool')
   expected_aide_sha1sum = input('expected_aide_sha1sum')
+  aide_conf_path = input('aide_conf_path')
 
   if file_integrity_tool == 'aide'
     cron_script_path = '/etc/cron.daily/dailyaidecheck'
@@ -73,7 +74,7 @@ $  sudo cp -f /usr/share/aide/config/cron.daily/aide /etc/cron.daily/aide'
       end
     end
     # Verify aide.conf matches expected vendor default SHA-1 (provided via input)
-    describe command("sha1sum /etc/aide/aide.conf | awk '{print $1}' | tr -d '\n'") do
+    describe command("sha1sum #{aide_conf_path} | awk '{print $1}' | tr -d '\n'") do
       its('exit_status') { should eq 0 }
       its('stdout') { should cmp expected_aide_sha1sum }
     end

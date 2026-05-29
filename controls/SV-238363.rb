@@ -30,7 +30,9 @@ A subscription to the "Ubuntu Pro" plan is required to obtain the FIPS Kernel cr
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  describe command('grep -i 1 /proc/sys/crypto/fips_enabled') do
+  fips_config_file = input('fips_config_file')
+
+  describe command("grep -i 1 #{fips_config_file}") do
     its('stdout') { should match('1') }
   end
 end

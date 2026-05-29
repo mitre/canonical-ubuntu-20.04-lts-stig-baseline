@@ -71,7 +71,7 @@ ca_cert = /etc/ssl/certs/ca-certificates.crt'
       skip 'This system is not using PKI for authentication so the controls is Not Applicable.'
     end
   else
-    config_file = '/etc/sssd/sssd.conf'
+    config_file = input('sssd_conf_path')
     config_file_exists = file(config_file).exist?
 
     if config_file_exists
@@ -89,7 +89,7 @@ ca_cert = /etc/ssl/certs/ca-certificates.crt'
         it { should be true }
       end
     else
-      describe '/etc/sssd/sssd.conf exists' do
+      describe "#{config_file} exists" do
         subject { config_file_exists }
         it { should be true }
       end

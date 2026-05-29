@@ -23,7 +23,7 @@ ldap_user_certificate=userCertificate;binary'
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  sssd_conf = '/etc/sssd/sssd.conf'
+  sssd_conf = input('sssd_conf_path')
 
   describe file(sssd_conf) do
     it { should exist }

@@ -32,9 +32,10 @@ Note: DoD recommendation is 35 days, but a lower value is acceptable. The value 
   tag 'container'
 
   days_of_inactivity = input('days_of_inactivity')
+  useradd_config_file = input('useradd_config_file')
 
   describe 'Useradd configuration' do
-    useradd_config = parse_config_file('/etc/default/useradd')
+    useradd_config = parse_config_file(useradd_config_file)
 
     context 'when INACTIVE is set' do
       it 'should exist' do

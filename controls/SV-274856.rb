@@ -25,7 +25,8 @@ Note: It is valid for this configuration to be in a file with a name that ends w
   tag nist: ['IA-5 (13)']
   tag 'host'
 
-  sssd_config = parse_config_file('/etc/sssd/sssd.conf')
+  sssd_conf_path = input('sssd_conf_path')
+  sssd_config = parse_config_file(sssd_conf_path)
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
     !%w[docker podman kubepods lxc].include?(virtualization.system)

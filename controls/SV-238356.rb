@@ -56,7 +56,7 @@ $ sudo systemctl restart chrony.service'
 
     if chrony_conf_exists
       describe 'time sources' do
-        server_entries = command('grep "^server" /etc/chrony/chrony.conf').stdout.strip.split("\n").entries
+        server_entries = command("grep \"^server\" #{chrony_conf}").stdout.strip.split("\n").entries
 
         server_entries.each do |entry|
           describe entry do

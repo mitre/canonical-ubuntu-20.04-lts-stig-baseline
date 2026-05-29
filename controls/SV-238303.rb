@@ -50,17 +50,18 @@ If any of the seven audit tools do not have appropriate selection lines, this is
   audit_tools = input('audit_tools')
   audit_rule_suffix = 'p+i+n+u+g+s+b+acl+xattrs+sha512'
   file_integrity_tool = input('file_integrity_tool')
+  aide_conf_path = input('aide_conf_path')
 
   if file_integrity_tool == 'aide'
-    describe file('/etc/aide/aide.conf') do
+    describe file(aide_conf_path) do
       it { should exist }
     end
 
     describe 'AIDE audit tools selection lines' do
       it 'must include exact lines for all audit tools' do
-        config = parse_config_file('/etc/aide/aide.conf', assignment_regex: %r{^\s*(/\S+)\s+(.*?)\s*$})
+        config = parse_config_file(aide_conf_path, assignment_regex: %r{^\s*(/\S+)\s+(.*?)\s*$})
         missing = audit_tools.reject { |tool| config[tool].to_s == audit_rule_suffix }
-        expect(missing).to be_empty, "Missing or incorrect lines in /etc/aide/aide.conf for: #{missing.join(', ')}"
+        expect(missing).to be_empty, "Missing or incorrect lines in #{aide_conf_path} for: #{missing.join(', ')}"
       end
     end
   else
