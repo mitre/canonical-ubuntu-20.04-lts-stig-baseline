@@ -330,7 +330,7 @@ module Inspec::Resources
       return if detect_parallels
       return if detect_vmware
       return if detect_hyperv
-      return if detect_systemd_container
+      return if detect_systemd_virt
     end
 
     def windows_computer_system
