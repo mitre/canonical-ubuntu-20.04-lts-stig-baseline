@@ -36,7 +36,9 @@ jobs:
           password: ${{ secrets.SAF_IRONBANK_CLI_TOKEN }}
 
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Clone full repository so we can push
         run: git fetch --prune --unshallow
@@ -72,12 +74,11 @@ jobs:
         continue-on-error: true
         run: bundle exec kitchen test --destroy=always ${{ matrix.suite }}-${{ env.PLATFORM }}
 
-      - name: Save our ${{ matrix.suite }} results summary
+      - name: Save results summary JSON
         continue-on-error: true
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
-          command_string: "view summary -j -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
+          command_string: "view summary -f json -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -o spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json"
 
       - name: Save Test Result JSON
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
@@ -86,15 +87,20 @@ jobs:
           name: ${{ env.PLATFORM }}_${{ matrix.suite }}.json
           path: spec/results/
 
-      - name: Upload ${{ matrix.suite }} to Heimdall
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
+      - name: Upload to Heimdall
         continue-on-error: true
+        env:
+          SAF_HEIMDALL_UPLOAD_KEY: ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}
         run: |
-          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" -F "public=true" -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" -H "Authorization: Api-Key ${{ secrets.SAF_HEIMDALL_UPLOAD_KEY }}" "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
+          curl -# -s -F data=@spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json \
+            -F "filename=${{ env.PLATFORM }}_${{ matrix.suite }}-${{ env.COMMIT_SHORT_SHA }}.json" \
+            -F "public=true" \
+            -F "evaluationTags=${{ env.COMMIT_SHORT_SHA }},${{ github.repository }},${{ github.workflow }}" \
+            -H "Authorization: Api-Key $SAF_HEIMDALL_UPLOAD_KEY" \
+            "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
-      - name: Display our ${{ matrix.suite }} results summary
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Display results summary
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
 
@@ -105,8 +111,7 @@ jobs:
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-data.json | python markdown-summary.py > spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md
           cat spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}-markdown-summary.md >> $GITHUB_STEP_SUMMARY
 
-      - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Validate scan threshold
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
-          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ env.PLATFORM }}_${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json -F ${{ matrix.suite }}.threshold.yml"

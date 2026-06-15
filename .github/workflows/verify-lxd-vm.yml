@@ -34,7 +34,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get -y install jq
 
       - name: Check out repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
 
@@ -160,9 +160,8 @@ jobs:
             -H "Authorization: Api-Key $SAF_HEIMDALL_UPLOAD_KEY" \
             "${{ vars.SAF_HEIMDALL_URL }}/evaluations"
 
-      - name: Display our ${{ matrix.suite }} results summary
-        if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
-        uses: mitre/saf_action@v1.5.2
+      - name: Display results summary
+        uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
           command_string: "view summary -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json"
 
