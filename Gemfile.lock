@@ -527,6 +527,8 @@ GEM
     kitchen-ansible (0.58.0)
       net-ssh (>= 3)
       test-kitchen (>= 1.4)
+    kitchen-docker (3.0.0)
+      test-kitchen (>= 1.0.0)
     kitchen-dokken (2.23.1)
       docker-api (>= 1.33, < 3)
       kitchen-omnibus-chef (>= 1.0)
@@ -881,6 +883,7 @@ DEPENDENCIES
   inspec!
   inspec-core!
   kitchen-ansible
+  kitchen-docker
   kitchen-dokken
   kitchen-ec2
   kitchen-inspec
@@ -1070,6 +1073,7 @@ CHECKSUMS
   jwt (2.10.2) sha256=31e1ee46f7359883d5e622446969fe9c118c3da87a0b1dca765ce269c3a0c4f4
   k8s-ruby (0.17.2) sha256=9197c70ea7547a06fdc5534c81b00740622a0ccfb12416fc6c06af141b59071b
   kitchen-ansible (0.58.0) sha256=b04a5e98c70e0711a0032671ce779cb9366d0762208946f1d2a910c6696fee64
+  kitchen-docker (3.0.0) sha256=80ddafa8d60bdd0647574f81068eb081bbc238513f84b1c09e3e0f364bac7cf1
   kitchen-dokken (2.23.1) sha256=d7a41e10e8d0637a1fa839f74f87394e1b65bdab5546572f709ed1cdd269a903
   kitchen-ec2 (3.22.3) sha256=8bbb7dade2c84acc926bc116cb52203069e83c341c84926ccb8c4b2f1faa8a4c
   kitchen-inspec (3.1.0) sha256=cc3bd76fbe2de279baecd7e262ed02574aa2bddef9a539a73ed49a0bea2a7a09

@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'kitchen-ansible'
 gem 'kitchen-dokken'
+gem 'kitchen-docker'
 gem 'kitchen-ec2'
 gem 'kitchen-inspec'
 gem 'rake'
