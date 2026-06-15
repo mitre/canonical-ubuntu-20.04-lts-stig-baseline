@@ -67,6 +67,10 @@ Set the sshd option "PubkeyAuthentication yes" in the "/etc/ssh/sshd_config" fil
       it { should be_installed }
     end
 
+    describe sshd_config do
+      its('PubkeyAuthentication') { should cmp 'yes' }
+    end
+
     describe pam('/etc/pam.d/common-auth') do
       its('lines') { should match_pam_rule('auth [success=2 default=ignore] pam_pkcs11.so') }
     end

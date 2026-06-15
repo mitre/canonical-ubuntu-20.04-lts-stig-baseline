@@ -67,6 +67,12 @@ inputs:
     type: String
     value: '/etc/aide/aide.conf'
 
+  # SV-238306
+  - name: audit_sp_remote_server
+    description: Remote audit server receiving offloaded audit logs
+    type: String
+    value: '10.10.10.10'
+
   # SV-238243, SV-238307
   - name: action_mail_acct
     description: Email to be notified when allocated audit record storage volume reaches 
@@ -346,6 +352,7 @@ inputs:
     type: Hash
     value:
       '/var/log/audit': '0750'
+      system_command_directories: '0755'
 
   # SV-238249
   - name: audit_conf_mode

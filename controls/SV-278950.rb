@@ -41,17 +41,10 @@ If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding
   end
 
   # Lifecycle windows derived from STIG narrative
-  standard_support_eol = Time.new(2025, 5, 31, 23, 59, 59, '+00:00')
   esm_support_eol = Time.new(2030, 5, 31, 23, 59, 59, '+00:00')
   now = Time.now.utc
 
-  if now <= standard_support_eol
-    # Within standard support window; vendor support available without subscription
-    describe 'Vendor support status within standard support window' do
-      subject { now <= standard_support_eol }
-      it { should be true }
-    end
-  elsif now <= esm_support_eol
+  if now <= esm_support_eol
     # Within ESM window; verify Ubuntu Pro subscription status
     pro_status = command('pro status')
 

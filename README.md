@@ -51,14 +51,13 @@ banner_text: 'You are accessing a U.S. Government (USG) Information System (IS) 
       'lo',
       'eth0'
     ]
-  audit_sp_remote_server: '192.0.0.1'
+  audit_sp_remote_server: '10.10.10.10'
   approved_wireless_interfaces: []
   fips_config_file: '/proc/sys/crypto/fips_enabled'
   chrony_config_file: '/etc/chrony/chrony.conf'
   useradd_config_file: '/etc/default/useradd'
   rsyslog_config_file: '/etc/rsyslog.d/50-default.conf'
   auditoffload_config_file: '/etc/cron.weekly/audit-offload'
-  audispremote_config_file: '/etc/audisp/plugins.d/au-remote.conf'
   gdm3_config_file: '/etc/gdm3/greeter.dconf-defaults'
 ```
 
