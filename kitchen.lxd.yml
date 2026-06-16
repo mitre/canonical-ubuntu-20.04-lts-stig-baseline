@@ -43,9 +43,6 @@ lifecycle:
   pre_converge:
     - remote: |
         export DEBIAN_FRONTEND=noninteractive
-        echo "+++ Waiting for package initialization to finish +++"
-        sleep 30
-        echo ""
         echo "+++ Refreshing APT package cache +++"
         sudo apt-get -y update
         echo ""

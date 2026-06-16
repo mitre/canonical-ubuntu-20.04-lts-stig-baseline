@@ -131,6 +131,9 @@ jobs:
           [ -n "$ipv4" ] || { echo "No VM IPv4 found"; lxc info "$NAME"; exit 1; }
           echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
 
+      - name: Wait for background apt jobs in LXD VM
+        run: sleep 30
+
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
