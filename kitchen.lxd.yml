@@ -54,6 +54,9 @@ lifecycle:
         sudo add-apt-repository -y universe || true
         sudo apt-get -y update
         echo ""
+        echo "+++ Waiting for background apt/dpkg jobs before Python venv and pip install +++"
+        sleep 30
+        echo ""
         echo "+++ Installing Python venv and pip +++"
         PYVER="$(python3 -V | awk '{print $2}' | cut -d. -f1,2)"
         if ! sudo apt-get -y install "python${PYVER}-venv" python3-pip; then
