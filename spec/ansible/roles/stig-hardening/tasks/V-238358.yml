@@ -1,9 +1,0 @@
-- name: set SILENTREPORTS
-  lineinfile:
-    dest: /etc/default/aide
-    regexp: '^[#\s]*SILENTREPORTS'
-    line: 'SILENTREPORTS=no'
-  tags:
-  - medium
-  when:
-    install_aide | bool

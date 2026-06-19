@@ -1,41 +1,31 @@
 ---
-provisioner:
-  name: ansible_playbook
-  hosts: all
-  require_chef_for_busser: false
-  require_ruby_for_busser: false
-  require_ansible_repo: true
-  ansible_verbose: true
-  ansible_verbosity: 2
-  ansible_version: latest
-  galaxy_ignore_certs: true
-  roles_path: spec/ansible/roles/
-  env_vars:
-    - ANSIBLE_LOCAL_TEMP=$HOME/.ansible/tmp
-    - ANSIBLE_REMOTE_TEMP=$HOME/.ansible/tmp
-
-transport:
-  name: ssh
-  max_ssh_sessions: 2
-
 verifier:
   name: inspec
   sudo: true
   reporter:
     - cli
-    - json:spec/results/ubuntu-2004_%{suite}.json
+    - json:spec/results/%{platform}_%{suite}.json
   inspec_tests:
-    - name: Ubuntu 20.04 LTS STIG V1R5
+    - name: Ubuntu 20.04 LTS STIG v2r4
       path: .
+  input_files:
+    - kitchen.inputs.yml
+  <% if ENV['INSPEC_CONTROL'] %>
+  controls:
+    - "<%= ENV['INSPEC_CONTROL'] %>"
+  <% end %>
   load_plugins: true
-
-platforms:
-  - name: ubuntu-20.04
+  env_vars:
+    - "CHEF_LICENSE=<%= ENV['CHEF_LICENSE'] %>"
 
 suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-ubuntu-vanilla.yml
+
   - name: hardened
     provisioner:
-      playbook: spec/ansible/roles/hardening.yml
-  # - name: vanilla
-  #   provisioner:
-  #     playbook: spec/ansible/roles/vanilla.yml
+      playbook: spec/ansible/roles/ansible-role-ubuntu-hardened.yml
+
+transport:
+  max_ssh_sessions: 6

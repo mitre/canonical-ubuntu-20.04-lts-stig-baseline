@@ -1,0 +1,14 @@
+---
+- hosts:
+    - localhost
+  roles:
+    - roles/ansible-role-ubuntu-vanilla
+    - roles/ansible-role-ubuntu-hardened
+    - roles/ubuntu20STIG
+  serial: 50
+  become: yes
+  vars:
+    ubtu20stig_bootloader_password_hash: "changethispassword"
+    system_is_ec2: true
+    # Skip broken upstream controls
+

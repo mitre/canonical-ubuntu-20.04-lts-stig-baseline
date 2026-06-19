@@ -1,76 +1,58 @@
 control 'SV-238210' do
-  title "The Ubuntu operating system must implement smart card logins for multifactor
-authentication for local and network access to privileged and non-privileged accounts. "
-  desc "Without the use of multifactor authentication, the ease of access to privileged functions is
-greatly increased.
+  title 'The Ubuntu operating system must implement smart card logins for multifactor authentication for local and network access to privileged and nonprivileged accounts.'
+  desc 'Without the use of multifactor authentication, the ease of access to privileged functions is greatly increased.
 
-Multifactor authentication requires using two or more factors to
-achieve authentication.
+Multifactor authentication requires using two or more factors to achieve authentication.
 
 Factors include:
-1) something a user knows (e.g.,
-password/PIN);
-2) something a user has (e.g., cryptographic identification device,
-token); and
+1) something a user knows (e.g., password/PIN);
+2) something a user has (e.g., cryptographic identification device, token); and
 3) something a user is (e.g., biometric).
 
-A privileged account is defined as an
-information system account with authorizations of a privileged user.
+A privileged account is defined as an information system account with authorizations of a privileged user.
 
-Network access is
-defined as access to an information system by a user (or a process acting on behalf of a user)
-communicating through a network (e.g., local area network, wide area network, or the
-internet).
+Network access is defined as access to an information system by a user (or a process acting on behalf of a user) communicating through a network (e.g., local area network, wide area network, or the internet).
 
-The DoD CAC with DoD-approved PKI is an example of multifactor
-authentication.
-
- "
-  desc 'check', "Verify the Ubuntu operating system has the packages required for multifactor
-authentication installed with the following commands:
+The DOD CAC with DOD-approved PKI is an example of multifactor authentication.'
+  desc 'check', %q(Verify the Ubuntu operating system has the packages required for multifactor authentication installed with the following commands:
 
 $ dpkg -l | grep libpam-pkcs11
 
-ii
-libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKCS#11 smart cards
+ii  libpam-pkcs11    0.6.8-4    amd64    Fully featured PAM module for using PKCS#11 smart cards
 
-If the
-\"libpam-pkcs11\" package is not installed, this is a finding.
+If the "libpam-pkcs11" package is not installed, this is a finding.
 
-Verify the sshd daemon allows
-public key authentication with the following command:
+Verify the sshd daemon allows public key authentication with the following command:
 
-$ grep -r ^Pubkeyauthentication
-/etc/ssh/sshd_config*
+$ sudo /usr/sbin/sshd -dd 2>&1 | awk '/filename/ {print $4}' | tr -d '\r' | tr '\n' ' ' | xargs sudo grep -iH '^\s*pubkeyauthentication'
 
 PubkeyAuthentication yes
 
-If this option is set to \"no\" or is
-missing, this is a finding.
-If conflicting results are returned, this is a finding. "
-  desc 'fix', "Configure the Ubuntu operating system to use multifactor authentication for network access
-to accounts.
+If this option is set to "no" or is missing, this is a finding.
 
-Add or update \"pam_pkcs11.so\" in \"/etc/pam.d/common-auth\" to match the
-following line:
+If conflicting results are returned, this is a finding.)
+  desc 'fix', 'Configure the Ubuntu operating system to use multifactor authentication for network access to accounts.
+
+Add or update the following line in "/etc/pam.d/common-auth", placing it above any lines containing "pam_unix.so":
 
 auth    [success=2 default=ignore] pam_pkcs11.so
 
-Set the sshd option
-\"PubkeyAuthentication yes\" in the \"/etc/ssh/sshd_config\" file. "
+Set the sshd option "PubkeyAuthentication yes" in the "/etc/ssh/sshd_config" file.'
   impact 0.5
-  tag severity: 'medium '
-  tag gtitle: 'SRG-OS-000105-GPOS-00052 '
-  tag satisfies: %w(SRG-OS-000105-GPOS-00052 SRG-OS-000106-GPOS-00053 SRG-OS-000107-GPOS-00054 SRG-OS-000108-GPOS-00055)
-  tag gid: 'V-238210 '
-  tag rid: 'SV-238210r858517_rule '
-  tag stig_id: 'UBTU-20-010033 '
-  tag fix_id: 'F-41379r653804_fix '
-  tag cci: %w(CCI-000765 CCI-000766 CCI-000767 CCI-000768)
-  tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)']
+  tag check_id: 'C-41420r951460_chk'
+  tag severity: 'medium'
+  tag gid: 'V-238210'
+  tag rid: 'SV-238210r1015143_rule'
+  tag stig_id: 'UBTU-20-010033'
+  tag gtitle: 'SRG-OS-000105-GPOS-00052'
+  tag fix_id: 'F-41379r951461_fix'
+  tag satisfies: ['SRG-OS-000105-GPOS-00052', 'SRG-OS-000106-GPOS-00053', 'SRG-OS-000107-GPOS-00054', 'SRG-OS-000108-GPOS-00055']
+  tag 'documentable'
+  tag cci: ['CCI-000765', 'CCI-000766', 'CCI-000767', 'CCI-000768', 'CCI-004047']
+  tag nist: ['IA-2 (1)', 'IA-2 (2)', 'IA-2 (3)', 'IA-2 (4)', 'IA-2 (6) (b)']
   tag 'host'
 
-  if virtualization.system.eql?('docker')
+  if %w[docker podman kubepods lxc].include?(virtualization.system)
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'
@@ -87,6 +69,10 @@ Set the sshd option
 
     describe sshd_config do
       its('PubkeyAuthentication') { should cmp 'yes' }
+    end
+
+    describe pam('/etc/pam.d/common-auth') do
+      its('lines') { should match_pam_rule('auth [success=2 default=ignore] pam_pkcs11.so') }
     end
   end
 end

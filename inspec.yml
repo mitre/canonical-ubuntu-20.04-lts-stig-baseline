@@ -1,22 +1,29 @@
 name: Canonical_Ubuntu_20-04_LTS_STIG
 title: Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide
-maintainer: Nitin Ravindran
-copyright: Nitin Ravindran
-copyright_email: nravindran@vmware.com
+maintainer: MITRE SAF Team
+copyright: MITRE
 license: Apache-2.0
-summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 1.6.0
+summary: "InSpec profile aligned to DISA STIG for Canonical Ubuntu 20.04"
+version: 2.4.0
 
 supports:
   - platform-name: ubuntu
     release: 20.04
 
 inputs:
+  # SV-238196
   - name: temporary_accounts
     description: Temporary user accounts
     type: Array
     value: []
 
+  # SV-238196
+  - name: temporary_account_max_days
+    description: Maximum account lifetime in days for temporary accounts
+    type: Numeric
+    value: 3
+
+  # SV-238198, SV-238214
   - name: banner_text
     description: Standard Mandatory DoD Notice and Consent Banner
     type: String
@@ -28,21 +35,33 @@ inputs:
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy. \
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details."
 
+  # SV-238206
   - name: sudo_accounts
     description: Array of users who need access to security functions are part of the sudo group.
     type: Array
     value: [ "ubuntu" ]
 
-  - name: tmout
+  # SV-238208, SV-274858, SV-274859
+  - name: sudoers_config_files
+    description: Sudoers files to inspect
+    type: Array
+    value:
+      - '/etc/sudoers'
+      - '/etc/sudoers.d/*'
+
+  # SV-238207
+  - name: system_activity_timeout
     description:  Inactivity timeouts, in seconds, after which operating system automatically terminates a user session.
     type: numeric
     value: 600
 
+  # SV-238243, SV-238307
   - name: action_mail_acct
     description: Email to be notified when allocated audit record storage volume reaches 
     type: string
     value: root
 
+  # SV-238300, SV-238301, SV-238302, SV-238303
   - name: audit_tools
     description: Audit tools
     type: Array
@@ -56,59 +75,54 @@ inputs:
       '/sbin/augenrules'
     ]
 
-  - name: standard_audit_log_size
-    description: Set audit log size in bytes (default:1073741824 per control specification)
-    type: Numeric
-    value: 8894028
-
   - name: aide_conf_path
     description: Path to aide.conf
     type: String
     value: '/etc/aide/aide.conf'
 
-  - name: action_mail_acct
-    description: Email to be notified when allocated audit record storage volume reaches 
-    type: string
-    value: root
+  # SV-238236
+  - name: expected_aide_sha1sum
+    description: Expected SHA-1 hash for the default AIDE file integrity check configuration
+    type: String
+    value: '32958374f18871e3f7dda27a58d721f471843e26'
 
-  - name: maxlogins
-    description: Maximum number of concurrent sessions
-    type: Numeric
-    value: 10
+  # SV-238306
+  - name: audit_sp_remote_server
+    description: Remote audit server receiving offloaded audit logs
+    type: String
+    value: '10.10.10.10'
 
+  # SV-238334
   - name: is_kdump_required
     description: Is kdump service required? (check with SA and documented with ISSO)
     type: Boolean
     value: false
 
+  # SV-238356
   - name: is_system_networked
     description: Set to true if the system is networked for NTP check
     type: Boolean
     value: true
 
+  # SV-238362
   - name: sssd_conf_path
     description: Path to sssd.conf
     type: String
     value: '/etc/sssd/sssd.conf'
 
+  # SV-274856
+  - name: smart_card_enabled
+    description: Whether smart card authentication is enabled on this system
+    type: Boolean
+    value: false
+
+  # SV-238364
   - name: allowed_ca_fingerprints_regex
     description: Certificate fingerprint regex for DoD PKI-established certificate authorities
     type: string
     value: (9676F287356C89A12683D65234098CB77C4F1C18F23C0E541DE0E196725B7EBE|B107B33F453E5510F68E513110C6F6944BACC263DF0137F821C1B3C2F8F863D2|559A5189452B13F8233F0022363C06F26E3C517C1D4B77445035959DF3244F74|1F4EDE9DC2A241F6521BF518424ACD49EBE84420E69DAF5BAC57AF1F8EE294A9)
 
-  - name: allowed_network_interfaces
-    description: Array of allowed network interfaces (wired & wireless)
-    type: Array
-    value: [
-      'lo',
-      'eth0'
-    ]
-
-  - name: audit_sp_remote_server
-    description: Address of the remote server receiving the audit log
-    type: String
-    value: '192.0.0.1'
-
+  # SV-252704
   - name: approved_wireless_interfaces
     description: List of approved wireless interfaces
     type: array
@@ -119,6 +133,7 @@ inputs:
     type: String
     value: '/proc/sys/crypto/fips_enabled'
 
+  # SV-238356, SV-238357
   - name: chrony_config_file
     description: Location of chrony config file
     type: String
@@ -129,37 +144,291 @@ inputs:
     type: String
     value: '/etc/default/useradd'
 
+  # SV-238330
+  - name: days_of_inactivity
+    description: Maximum days of inactivity before disabling account (DoD recommendation is 35 days; 0 disables immediately after password expiry)
+    type: Numeric
+    value: 35
+
+  # SV-238324
   - name: rsyslog_config_file
     description: Location of rsyslog config file
     type: String
     value: '/etc/rsyslog.d/50-default.conf'
 
-  - name: auditoffload_config_file
-    description: Location of audit offload config file
+  # SV-238321
+  - name: audit_offload_script
+    description: Location of audit offload script
     type: String
     value: '/etc/cron.weekly/audit-offload'
 
-  - name: audispremote_config_file
-    description: Location of audisp-remote plugin config file
-    type: String
-    value: '/etc/audisp/plugins.d/au-remote.conf'
+  # SV-238321
+  - name: airgapped_system
+    description: Whether the system is airgapped and audit offload is not applicable
+    type: Boolean
+    value: false
 
+  # SV-238198
   - name: gdm3_config_file
     description: Location of gdm3 config file
     type: String
     value: '/etc/gdm3/greeter.dconf-defaults'
 
+  # SV-238217
   - name: disable_fips
     description: Is fips disabled or enabled due to FIPS 140 image
     type: boolean
     value: false
 
+  # SV-238201, SV-238210, SV-238229, SV-238233, SV-238362, SV-274855
   - name: pki_disabled
     description: Is PKI authentication used for this system
     type: boolean
     value: false
 
+  # SV-238247, SV-238251
   - name: admin_groups
     description: Array of groups that have administrative privileges
     type: Array
     value: ['root']
+
+  # SV-238219
+  - name: x11_forwarding_required
+    description: Whether X11 forwarding is a documented operational requirement
+    type: Boolean
+    value: false
+
+  # SV-238335
+  - name: data_at_rest_exempt
+    description: Whether data-at-rest encryption requirements are documented as not applicable
+    type: Boolean
+    value: false
+
+  # SV-238335
+  - name: luks_exceptions
+    description: Block devices exempted from crypto_LUKS encryption checks
+    type: Array
+    value: []
+
+  # SV-274859
+  - name: passwordless_admins
+    description: Users documented as authorized for passwordless privilege escalation
+    type: Array
+    value: []
+
+  # SV-238238, SV-238239, SV-238240, SV-238241, SV-238242, SV-238252, SV-238253, SV-238254, SV-238255, SV-238256, SV-238257, SV-238258, SV-238264, SV-238268, SV-238271, SV-238277, SV-238278, SV-238279, SV-238280, SV-238281, SV-238282, SV-238283, SV-238284, SV-238285, SV-238286, SV-238287, SV-238288, SV-238289, SV-238290, SV-238291, SV-238292, SV-238293, SV-238294, SV-238295, SV-238297, SV-238304, SV-238309, SV-238310, SV-238315, SV-238316, SV-238317, SV-238318, SV-238319, SV-238320, SV-274852
+  - name: audit_rule_keynames
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      'execve'                        : 'execpriv',
+      '/etc/shadow'                   : 'usergroup_modification',
+      '/etc/security/opasswd'         : 'usergroup_modification',
+      '/etc/passwd'                   : 'usergroup_modification',
+      '/etc/gshadow'                  : 'usergroup_modification',
+      '/etc/group'                    : 'usergroup_modification',
+      '/etc/sudoers'                  : 'identity',
+      '/etc/sudoers.d'                : 'identity',
+      '/bin/su'                       : 'privileged-priv_change',
+      'setxattr'                      : 'perm_mod',
+      'fsetxattr'                     : 'perm_mod',
+      'lsetxattr'                     : 'perm_mod',
+      'removexattr'                   : 'perm_mod',
+      'fremovexattr'                  : 'perm_mod',
+      'lremovexattr'                  : 'perm_mod',
+      '/usr/bin/chage'                : 'privileged-chage',
+      '/usr/bin/chcon'                : 'perm_mod',
+      '/usr/bin/ssh-agent'            : 'privileged-ssh',
+      '/usr/bin/passwd'               : 'privileged-passwd',
+      '/usr/bin/mount'                : 'privileged-mount',
+      '/usr/bin/umount'               : 'privileged-umount',
+      '/sbin/unix_update'             : 'privileged-unix-update',
+      '/usr/lib/openssh/ssh-keysign'  : 'privileged-ssh',
+      '/usr/bin/setfacl'              : 'perm_mod',
+      '/usr/sbin/pam_timestamp_check' : 'privileged-pam_timestamp_check',
+      '/usr/bin/newgrp'               : 'priv_cmd',
+      'init_module'                   : 'module_chng',
+      'finit_module'                  : 'module_chng',
+      'rename'                        : 'delete',
+      'unlink'                        : 'delete',
+      'rmdir'                         : 'delete',
+      'renameat'                      : 'delete',
+      'unlinkat'                      : 'delete',
+      '/usr/bin/gpasswd'              : 'privileged-gpasswd',
+      'delete_module'                 : 'module_chng',
+      '/usr/bin/crontab'              : 'privileged-crontab',
+      '/usr/bin/chsh'                 : 'priv_cmd',
+      'truncate'                      : 'perm_access',
+      'ftruncate'                     : 'perm_access',
+      'creat'                         : 'perm_access',
+      'open'                          : 'perm_access',
+      'openat'                        : 'perm_access',
+      'open_by_handle_at'             : 'perm_access',
+      'chown'                         : 'perm_mod',
+      'chmod'                         : 'perm_chng',
+      'fchmod'                        : 'perm_chng',
+      'fchmodat'                      : 'perm_chng',
+      '/usr/bin/sudo'                 : 'priv_cmd',
+      '/usr/sbin/usermod'             : 'privileged-usermod',
+      '/usr/bin/chacl'                : 'perm_mod',
+      '/bin/kmod'                     : 'modules',
+      '/sbin/modprobe'                : 'modules',
+      '/sbin/apparmor_parser'         : 'perm_chng',
+      '/usr/bin/chfn'                 : 'privileged-chfn',
+      '/var/log/lastlog'              : 'logins',
+      '/var/log/btmp'                 : 'logins',
+      '/var/log/wtmp'                 : 'logins',
+      '/var/run/utmp'                 : 'logins',
+      '/var/log/sudo.log'             : 'maintenance',
+      '/etc/cron.d'                   : 'cronjobs',
+      '/var/spool/cron'               : 'cronjobs',
+      '/usr/bin/sudoedit'             : 'priv_cmd',
+      '/var/log/faillog'              : 'logins',
+      '/usr/sbin/fdisk'               : 'fdisk',
+      '/var/log/tallylog'             : 'logins'
+    }
+
+  # Default values for expected keynames for all audit rules
+  # NOTE: DO NOT override this hash
+  # If you need to override these values, do so via adding the desired key/value to
+  # the `audit_rule_keynames_overrides` input instead -- overriding `audit_rule_keynames`
+  # directly will lose the values for any key you do not explictly define.
+  # SV-238238, SV-238239, SV-238240, SV-238241, SV-238242, SV-238252, SV-238253, SV-238254, SV-238255, SV-238256, SV-238257, SV-238258, SV-238264, SV-238268, SV-238271, SV-238277, SV-238278, SV-238279, SV-238280, SV-238281, SV-238282, SV-238283, SV-238284, SV-238285, SV-238286, SV-238287, SV-238288, SV-238289, SV-238290, SV-238291, SV-238292, SV-238293, SV-238294, SV-238295, SV-238297, SV-238304, SV-238309, SV-238310, SV-238315, SV-238316, SV-238317, SV-238318, SV-238319, SV-238320, SV-274852
+  - name: audit_rule_keynames_overrides
+    description: The audit rules to be applied to the system
+    type: Hash
+    value: {
+      '/etc/sudoers.d'                : 'privilege_modification',
+      '/etc/sudoers'                  : 'privilege_modification',
+      '/var/log/journal'              : 'systemd_journal',
+      'chown'                         : 'perm_chng',
+      '/usr/bin/chacl'                : 'perm_chng',
+      '/usr/bin/chcon'                : 'perm_chng',
+      '/usr/bin/setfacl'              : 'perm_chng',
+    }
+
+  # SV-255912
+  - name: expected_kex
+    description: List of approved FIPS SSH key exchange algorithms for the KexAlgorithms directive
+    type: Array
+    value:
+      - ecdh-sha2-nistp256
+      - ecdh-sha2-nistp384
+      - ecdh-sha2-nistp521
+      - diffie-hellman-group-exchange-sha256
+
+  # SV-238202
+  - name: pass_min_days
+    description: Minimum password lifetime (days) for new users
+    type: Numeric
+    value: 1
+
+  # SV-238203
+  - name: pass_max_days
+    description: Maximum password lifetime (days) for new users
+    type: Numeric
+    value: 60
+
+  # SV-238209
+  - name: permissions_for_shells
+    description: Default filesystem permission parameters
+    type: Hash
+    value:
+      default_umask: '077'
+
+  # SV-238212
+  - name: sshd_client_alive_count_max
+    description: SSH ClientAliveCountMax value
+    type: Numeric
+    value: 1
+
+  # SV-238213
+  - name: sshd_config_values
+    description: Expected sshd_config key/value settings
+    type: Hash
+    value:
+      ClientAliveInterval: 600
+
+  # SV-238213
+  - name: allow_container_openssh_server
+    description: Whether OpenSSH server is allowed to be installed in containers
+    type: Boolean
+    value: false
+
+  # SV-238216
+  - name: approved_openssh_server_conf
+    description: Approved OpenSSH server configuration values
+    type: Hash
+    value:
+      macs: 'hmac-sha2-512,hmac-sha2-256'
+
+  # SV-238217
+  - name: approved_ciphers
+    description: List of approved FIPS SSH ciphers for the Ciphers directive
+    type: Array
+    value:
+      - aes256-ctr
+      - aes192-ctr
+      - aes128-ctr
+
+  # SV-238235
+  - name: unsuccessful_attempts
+    description: Maximum number of unsuccessful logon attempts before account lockout
+    type: Numeric
+    value: 3
+
+  # SV-238235
+  - name: fail_interval
+    description: Time window in seconds for counting failed logon attempts
+    type: Numeric
+    value: 900
+
+  # SV-238235
+  - name: lockout_time
+    description: Account lockout time in seconds (0 means until released by administrator)
+    type: Numeric
+    value: 0
+
+  # SV-238237
+  - name: login_prompt_delay
+    description: Delay in seconds between logon prompts following a failed attempt
+    type: Numeric
+    value: 4
+
+  # SV-238248
+  - name: expected_modes
+    description: Mapping of expected filesystem modes
+    type: Hash
+    value:
+      '/var/log/audit': '0750'
+      system_command_directories: '0755'
+
+  # SV-238249
+  - name: audit_conf_mode
+    description: Mode for audit configuration files
+    type: String
+    value: '0640'
+
+  # SV-238354, SV-238355
+  - name: expected_firewall_package
+    description: Expected application firewall package name
+    type: String
+    value: 'ufw'
+
+  # SV-238236, SV-238303, SV-238371, SV-238372
+  - name: file_integrity_tool
+    description: File integrity tool package to verify security functions
+    type: String
+    value: 'aide'
+
+  # SV-238224
+  - name: difok
+    description: "The minimum number of required changed characters when passwords are updated."
+    type: Numeric
+    value: 8
+  
+  # SV-238323
+  - name: concurrent_sessions_permitted
+    description: Number of permitted concurrent sessions on this system
+    type: Numeric
+    value: 10

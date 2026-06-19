@@ -1,0 +1,96 @@
+---
+platforms:
+  - name: ubuntu-20
+
+driver:
+  name: proxy
+  host: <%= ENV.fetch("KITCHEN_HOST") %>
+  username: ubuntu
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+  ansible_binary_path: /home/ubuntu/ansible/bin
+  # require_pip3: true
+  ansible_verbose: true
+  roles_path: spec/ansible/roles
+  galaxy_ignore_certs: true
+  requirements_path: spec/ansible/roles/requirements.yml
+  requirements_collection_path: spec/ansible/roles/requirements.yml
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+
+suites:
+  - name: vanilla
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-ubuntu-vanilla.yml
+    driver:
+      tags:
+        Name: Vanilla-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+  - name: hardened
+    provisioner:
+      playbook: spec/ansible/roles/ansible-role-ubuntu-hardened.yml
+    driver:
+      tags:
+        Name: Hardened-<%= ENV['USER'] %>
+        CreatedBy: test-kitchen
+
+lifecycle:
+  pre_converge:
+    - remote: |
+        export DEBIAN_FRONTEND=noninteractive
+        echo "+++ Refreshing APT package cache +++"
+        sudo apt-get -y update
+        echo ""
+        echo "+++ Updating APT Packages +++"
+        sudo apt-get -y upgrade
+        echo ""
+        echo "+++ Installing base packages +++"
+        sudo apt-get -y install bc dnsutils lsb-release vim git wget curl build-essential libssl-dev libffi-dev libbz2-dev
+        sudo add-apt-repository -y universe || true
+        sudo apt-get -y update
+        echo ""
+        echo "+++ Waiting for background apt/dpkg jobs before Python venv and pip install +++"
+        sleep 30
+        echo ""
+        echo "+++ Installing Python venv and pip +++"
+        PYVER="$(python3 -V | awk '{print $2}' | cut -d. -f1,2)"
+        if ! sudo apt-get -y install "python${PYVER}-venv" python3-pip; then
+          sudo apt-get -y install python3-venv python3-pip
+        fi
+        echo ""
+        echo "+++ Creating venv at $HOME/ansible +++"
+        python3 -m venv "$HOME/ansible"
+        "$HOME/ansible/bin/python" -m ensurepip --upgrade || true
+        "$HOME/ansible/bin/python" -m pip install --upgrade pip setuptools wheel
+        echo ""
+        echo "+++ Installing ansible-core 2.13.x +++"
+        "$HOME/ansible/bin/python" -m pip install 'ansible-core>=2.13,<2.14'
+        echo ""
+        echo "+++ Validating ansible-playbook binary +++"
+        if [ ! -x "$HOME/ansible/bin/ansible-playbook" ]; then
+          echo "ERROR: ansible-playbook missing at $HOME/ansible/bin/ansible-playbook"
+          ls -la "$HOME/ansible/bin" || true
+          exit 1
+        fi
+        "$HOME/ansible/bin/ansible-playbook" --version
+        echo ""
+        echo "+++ Updating the ubuntu user to keep sudo working after hardening phase +++"
+        sudo chage -d "$(( $( date +%s ) / 86400 ))" ubuntu
+        echo ""
+        echo "+++ updating ubuntu sudo config for hardening phase +++"
+        sudo chmod 600 /etc/sudoers && sudo sed -i '/^ubuntu\b/d' /etc/sudoers && sudo chmod 440 /etc/sudoers
+        echo ""
+        echo "+++ add cinc-auditor for local shell +++"
+        curl -L https://omnitruck.cinc.sh/install.sh | sudo bash -s -- -P cinc-auditor
+
+transport:
+  name: ssh
+  username: ubuntu
+  ssh_key: <%= ENV.fetch("KITCHEN_SSH_KEY") %>
+  #https://github.com/neillturner/kitchen-ansible/issues/295
+  max_ssh_sessions: 2

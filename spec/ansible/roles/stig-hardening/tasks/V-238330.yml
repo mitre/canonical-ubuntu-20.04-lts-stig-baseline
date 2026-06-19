@@ -1,7 +1,0 @@
-- name: set useradd INACTIVE
-  lineinfile:
-    dest: /etc/default/useradd
-    regexp: '^[#\s]*INACTIVE'
-    line: 'INACTIVE=35'
-  tags:
-  - medium
