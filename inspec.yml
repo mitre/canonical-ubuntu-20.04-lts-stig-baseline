@@ -1,10 +1,9 @@
 name: Canonical_Ubuntu_20-04_LTS_STIG
 title: Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide
-maintainer: Nitin Ravindran
-copyright: Nitin Ravindran
-copyright_email: nravindran@vmware.com
+maintainer: MITRE SAF Team
+copyright: MITRE
 license: Apache-2.0
-summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
+summary: "InSpec profile aligned to DISA STIG for Canonical Ubuntu 20.0.4"
 version: 2.4.0
 
 supports:
