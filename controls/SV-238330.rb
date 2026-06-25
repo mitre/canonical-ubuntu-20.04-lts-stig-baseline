@@ -36,26 +36,18 @@ Note: DoD recommendation is 35 days, but a lower value is acceptable. The value 
 
   describe 'Useradd configuration' do
     useradd_config = parse_config_file(useradd_config_file)
+    useradd_config_params = useradd_config.params
 
-    context 'when INACTIVE is set' do
-      it 'should exist' do
-        expect(useradd_config.params).to include('INACTIVE')
-      end
+    it 'should parse parameters' do
+      expect(useradd_config_params).not_to be_nil
+    end
 
-      it 'should not be nil' do
-        expect(useradd_config.params['INACTIVE']).not_to be_nil
-      end
-
-      it 'should have INACTIVE greater than or equal to 0' do
-        expect(useradd_config.params['INACTIVE'].to_i).to be >= 0
-      end
-
-      it 'should have INACTIVE less than or equal to days_of_inactivity' do
-        expect(useradd_config.params['INACTIVE'].to_i).to be <= days_of_inactivity
-      end
-
-      it 'should not have INACTIVE equal to -1' do
-        expect(useradd_config.params['INACTIVE']).not_to eq '-1'
+    unless useradd_config_params.nil?
+      describe 'INACTIVE setting' do
+        subject { useradd_config_params['INACTIVE'] }
+        it { should cmp >= 0 }
+        it { should cmp <= days_of_inactivity }
+        it { should_not cmp '-1' }
       end
     end
   end

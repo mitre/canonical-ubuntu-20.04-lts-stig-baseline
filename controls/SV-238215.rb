@@ -59,6 +59,10 @@ $ sudo systemctl start sshd.service'
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
+  describe package('openssh-server') do
+    it { should be_installed }
+  end
+
   describe systemd_service('sshd.service') do
     it { should be_running }
   end

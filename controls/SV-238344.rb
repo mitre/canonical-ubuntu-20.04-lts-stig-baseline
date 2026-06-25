@@ -36,6 +36,7 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /
   tag 'host'
   tag 'container'
 
+  system_command_directory_mode = input('expected_modes')['system_command_directories']
   system_commands = command('find -L /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /022 -type d').stdout.strip.split("\n").entries
   valid_system_commands = Set[]
 
@@ -48,12 +49,12 @@ $ sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /
   if valid_system_commands.any?
     valid_system_commands.each do |val_sys_cmd|
       describe file(val_sys_cmd) do
-        it { should_not be_more_permissive_than('755') }
+        it { should_not be_more_permissive_than(system_command_directory_mode) }
       end
     end
   else
     describe "Number of directories that contain system commands found in /bin, /sbin, /usr/bin, /usr/sbin, /usr/local/bin or
-      /usr/local/sbin, that are less permissive than 755" do
+      /usr/local/sbin, that are less permissive than #{system_command_directory_mode}" do
         subject { valid_system_commands }
         its('count') { should eq 0 }
       end

@@ -65,4 +65,33 @@ $ sudo systemctl restart auditd.service)
   describe package('audispd-plugins') do
     it { should be_installed }
   end
+
+  audisp_remote_plugin_config = '/etc/audisp/plugins.d/au-remote.conf'
+  audisp_remote_plugin_config_exists = file(audisp_remote_plugin_config).exist?
+
+  if audisp_remote_plugin_config_exists
+    describe parse_config_file(audisp_remote_plugin_config) do
+      its('active') { should cmp 'yes' }
+    end
+  else
+    describe("#{audisp_remote_plugin_config} exists") do
+      subject { audisp_remote_plugin_config_exists }
+      it { should be true }
+    end
+  end
+
+  audisp_remote_server_config = '/etc/audisp/audisp-remote.conf'
+  audisp_remote_server_config_exists = file(audisp_remote_server_config).exist?
+  audit_sp_remote_server = input('audit_sp_remote_server')
+
+  if audisp_remote_server_config_exists
+    describe parse_config_file(audisp_remote_server_config) do
+      its('remote_server') { should cmp audit_sp_remote_server }
+    end
+  else
+    describe("#{audisp_remote_server_config} exists") do
+      subject { audisp_remote_server_config_exists }
+      it { should be true }
+    end
+  end
 end

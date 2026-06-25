@@ -1,11 +1,10 @@
 name: Canonical_Ubuntu_20-04_LTS_STIG
 title: Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide
-maintainer: Nitin Ravindran
-copyright: Nitin Ravindran
-copyright_email: nravindran@vmware.com
+maintainer: MITRE SAF Team
+copyright: MITRE
 license: Apache-2.0
-summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 1.6.0
+summary: "InSpec profile aligned to DISA STIG for Canonical Ubuntu 20.04"
+version: 2.4.0
 
 supports:
   - platform-name: ubuntu
@@ -17,6 +16,12 @@ inputs:
     description: Temporary user accounts
     type: Array
     value: []
+
+  # SV-238196
+  - name: temporary_account_max_days
+    description: Maximum account lifetime in days for temporary accounts
+    type: Numeric
+    value: 3
 
   # SV-238198, SV-238214
   - name: banner_text
@@ -35,6 +40,14 @@ inputs:
     description: Array of users who need access to security functions are part of the sudo group.
     type: Array
     value: [ "ubuntu" ]
+
+  # SV-238208, SV-274858, SV-274859
+  - name: sudoers_config_files
+    description: Sudoers files to inspect
+    type: Array
+    value:
+      - '/etc/sudoers'
+      - '/etc/sudoers.d/*'
 
   # SV-238207
   - name: system_activity_timeout
@@ -67,11 +80,17 @@ inputs:
     type: String
     value: '/etc/aide/aide.conf'
 
-  # SV-238243, SV-238307
-  - name: action_mail_acct
-    description: Email to be notified when allocated audit record storage volume reaches 
-    type: string
-    value: root
+  # SV-238236
+  - name: expected_aide_sha1sum
+    description: Expected SHA-1 hash for the default AIDE file integrity check configuration
+    type: String
+    value: '32958374f18871e3f7dda27a58d721f471843e26'
+
+  # SV-238306
+  - name: audit_sp_remote_server
+    description: Remote audit server receiving offloaded audit logs
+    type: String
+    value: '10.10.10.10'
 
   # SV-238334
   - name: is_kdump_required
@@ -90,6 +109,12 @@ inputs:
     description: Path to sssd.conf
     type: String
     value: '/etc/sssd/sssd.conf'
+
+  # SV-274856
+  - name: smart_card_enabled
+    description: Whether smart card authentication is enabled on this system
+    type: Boolean
+    value: false
 
   # SV-238364
   - name: allowed_ca_fingerprints_regex
@@ -137,6 +162,12 @@ inputs:
     type: String
     value: '/etc/cron.weekly/audit-offload'
 
+  # SV-238321
+  - name: airgapped_system
+    description: Whether the system is airgapped and audit offload is not applicable
+    type: Boolean
+    value: false
+
   # SV-238198
   - name: gdm3_config_file
     description: Location of gdm3 config file
@@ -160,6 +191,30 @@ inputs:
     description: Array of groups that have administrative privileges
     type: Array
     value: ['root']
+
+  # SV-238219
+  - name: x11_forwarding_required
+    description: Whether X11 forwarding is a documented operational requirement
+    type: Boolean
+    value: false
+
+  # SV-238335
+  - name: data_at_rest_exempt
+    description: Whether data-at-rest encryption requirements are documented as not applicable
+    type: Boolean
+    value: false
+
+  # SV-238335
+  - name: luks_exceptions
+    description: Block devices exempted from crypto_LUKS encryption checks
+    type: Array
+    value: []
+
+  # SV-274859
+  - name: passwordless_admins
+    description: Users documented as authorized for passwordless privilege escalation
+    type: Array
+    value: []
 
   # SV-238238, SV-238239, SV-238240, SV-238241, SV-238242, SV-238252, SV-238253, SV-238254, SV-238255, SV-238256, SV-238257, SV-238258, SV-238264, SV-238268, SV-238271, SV-238277, SV-238278, SV-238279, SV-238280, SV-238281, SV-238282, SV-238283, SV-238284, SV-238285, SV-238286, SV-238287, SV-238288, SV-238289, SV-238290, SV-238291, SV-238292, SV-238293, SV-238294, SV-238295, SV-238297, SV-238304, SV-238309, SV-238310, SV-238315, SV-238316, SV-238317, SV-238318, SV-238319, SV-238320, SV-274852
   - name: audit_rule_keynames
@@ -346,6 +401,7 @@ inputs:
     type: Hash
     value:
       '/var/log/audit': '0750'
+      system_command_directories: '0755'
 
   # SV-238249
   - name: audit_conf_mode

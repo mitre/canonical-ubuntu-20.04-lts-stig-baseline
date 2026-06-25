@@ -1,5 +1,5 @@
 galaxy_info:
-  author: Will Dower
+  author: MITRE SAF team
   description: Ansible Role for Ubuntu 20.04 Hardened install
   company: MITRE
 

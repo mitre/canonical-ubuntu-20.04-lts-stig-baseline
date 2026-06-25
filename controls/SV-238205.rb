@@ -30,14 +30,15 @@ If output is produced and the accounts listed are interactive user accounts, thi
   tag 'host'
   tag 'container'
 
-  user_list = command("awk -F \":\" 'list[$3]++{print $1}' /etc/passwd").stdout.split("\n")
-  findings = Set[]
+  duplicate_users = users.entries
+                         .group_by { |u| u[:uid] }
+                         .values
+                         .select { |entries| entries.length > 1 }
+                         .flatten
+                         .map { |u| u[:username] }
 
-  user_list.each do |user_name|
-    findings <<= user_name
-  end
   describe 'Duplicate User IDs (UIDs) must not exist for interactive users' do
-    subject { findings.to_a }
+    subject { duplicate_users }
     it { should be_empty }
   end
 end

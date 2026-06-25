@@ -52,10 +52,7 @@ $ sudo chown root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/*'
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  files1 = command('find /etc/audit/ -type f \( -iname \*.rules -o -iname \*.conf \)').stdout.strip.split("\n").entries
-  files2 = command('find /etc/audit/rules.d/* -type f').stdout.strip.split("\n").entries
-
-  audit_conf_files = files1 + files2
+  audit_conf_files = command("find /etc/audit -type f -iname '*.rules' -o -iname '*.conf' -o -path '/etc/audit/rules.d/*'").stdout.strip.split("\n").entries
 
   if audit_conf_files.empty?
     describe 'Audit configuration files' do
