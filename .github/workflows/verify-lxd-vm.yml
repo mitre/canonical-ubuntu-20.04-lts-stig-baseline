@@ -123,8 +123,9 @@ jobs:
         run: |
           set -euo pipefail
           NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
+          ipv4=""
           for i in $(seq 1 24); do
-            ipv4=$(lxc list "$NAME" --format=json | jq -r '.[0].state.network | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address' | head -n1)
+            ipv4=$(lxc list "$NAME" --format=json | jq -r '[.[0].state.network // {} | to_entries[] | .value.addresses[]? | select(.family=="inet" and .scope=="global") | .address][0] // empty')
             [ -n "$ipv4" ] && break
             sleep 5
           done
