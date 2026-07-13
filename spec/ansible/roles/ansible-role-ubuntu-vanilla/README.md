@@ -1,5 +1,6 @@
+
+A brief description of the role goes here.
 ansible-role-ubuntu-vanilla
-===========================
 
 This role prepares a plain Ubuntu 20.04 host for baseline validation without applying STIG hardening. It keeps the target close to a vanilla image while installing the utility packages needed by the test harness.
 

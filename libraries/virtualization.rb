@@ -240,6 +240,36 @@ module Inspec::Resources
       true
     end
 
+    def detect_kubernetes_container
+      return false unless kubernetes_service_account_mounted? || kubernetes_mountinfo? || kubernetes_env?
+    
+      @virtualization_data[:system] = "kubepods"
+      @virtualization_data[:role] = "guest"
+      true
+    end
+    
+    def kubernetes_service_account_mounted?
+      inspec.file("/var/run/secrets/kubernetes.io/serviceaccount").exist? ||
+        inspec.file("/run/secrets/kubernetes.io/serviceaccount").exist?
+    end
+    
+    def kubernetes_mountinfo?
+      return false unless inspec.file("/proc/self/mountinfo").exist?
+    
+      mountinfo = inspec.file("/proc/self/mountinfo").content
+      mountinfo.include?("kubepods") ||
+        mountinfo.include?("/var/lib/kubelet/pods/") ||
+        mountinfo.include?("kubernetes.io~") ||
+        mountinfo.include?("/var/run/secrets/kubernetes.io/serviceaccount")
+    end
+    
+    def kubernetes_env?
+      return false unless inspec.file("/proc/1/environ").exist?
+    
+      environ = inspec.file("/proc/1/environ").content
+      environ.include?("KUBERNETES_SERVICE_HOST=")
+    end
+
     def detect_docker
       return false unless inspec.file("/.dockerenv").exist? || inspec.file("/.dockerinit").exist?
 
@@ -318,6 +348,7 @@ module Inspec::Resources
       # each detect method will return true if it matched and was successfully
       # able to populate @virtualization_data with stuff.
       return if detect_xen
+      return if detect_kubernetes_container
       return if detect_docker
       return if detect_virtualbox
       return if detect_lxd
