@@ -10,7 +10,7 @@ supports:
   - platform-name: ubuntu
     release: 20.04
   - platform-name: debian
-    release: 11
+    release: 11.*
 
 inputs:
   # SV-238196
