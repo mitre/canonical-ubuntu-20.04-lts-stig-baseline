@@ -4,7 +4,7 @@ maintainer: MITRE SAF Team
 copyright: MITRE
 license: Apache-2.0
 summary: "InSpec profile aligned to DISA STIG for Canonical Ubuntu 20.04"
-version: 2.4.0
+version: 2.4.1
 
 supports:
   - platform-name: ubuntu
@@ -140,6 +140,18 @@ inputs:
     description: Location of chrony config file
     type: String
     value: '/etc/chrony/chrony.conf'
+
+  # SV-238356
+  - name: authoritative_timeservers
+    description: Timeserver(s) that must appear as server directives in the chrony config
+    type: Array
+    value: ["0.us.pool.ntp.mil"]
+
+  # SV-238356
+  - name: match_all_authoritative_timeservers_enabled
+    description: Specify that all timeservers in authoritative_timeservers must be present and valid
+    type: Boolean
+    value: false
 
   - name: useradd_config_file
     description: Location of useradd config file

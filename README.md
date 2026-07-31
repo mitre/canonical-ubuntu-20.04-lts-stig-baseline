@@ -1,6 +1,6 @@
 # canonical-ubuntu-20.04-lts-stig-baseline
 
-InSpec profile to validate the secure configuration of Ubuntu 20.04, against [DISA](https://iase.disa.mil/stigs/)'s Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide (STIG) Version 1, Release 6.
+InSpec profile to validate the secure configuration of Ubuntu 20.04, against [DISA](https://iase.disa.mil/stigs/)'s Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide (STIG) Version 2, Release 4.
 
 ## Getting Started  
 It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __ssh__.

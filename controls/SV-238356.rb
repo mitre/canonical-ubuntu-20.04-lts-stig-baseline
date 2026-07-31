@@ -50,24 +50,59 @@ $ sudo systemctl restart chrony.service'
   is_system_networked = input('is_system_networked')
 
   if is_system_networked
+    chrony_conf_path = input('chrony_config_file')
+    authoritative_timeservers = input('authoritative_timeservers')
+    match_all_authoritative_timeservers_enabled = input('match_all_authoritative_timeservers_enabled')
 
-    chrony_conf = input('chrony_config_file')
-    chrony_conf_exists = file(chrony_conf).exist?
+    chrony_conf_exists = file(chrony_conf_path).exist?
 
+    # `server` directives from the chrony config; compact drops the nil the
+    # resource returns when none are configured (e.g. a pool-only or empty
+    # config), so the maps below cannot raise.
+    time_sources = chrony_conf_exists ? [chrony_conf(chrony_conf_path).server].flatten.compact : []
+
+    # Map maxpoll values; chrony's default is 10 when maxpoll is not specified.
+    max_poll_values = time_sources.map { |val|
+      val.match?(/.*maxpoll.*/) ? val.gsub(/.*maxpoll\s+(\d+)(\s+.*|$)/, '\1').to_i : 10
+    }
+
+    # Map server hostnames only
+    server_values = time_sources.map { |val|
+      val.split.first
+    }
+
+    # Always emits a result: a missing config or a config with no `server`
+    # directives is a finding, never a silent zero-result control (the bare
+    # resource would report a skip on a missing file, hiding the finding).
     if chrony_conf_exists
-      describe 'time sources' do
-        server_entries = command("grep \"^server\" #{chrony_conf}").stdout.strip.split("\n").entries
-
-        server_entries.each do |entry|
-          describe entry do
-            it { should match "^server\s+.*\s+iburst\s+maxpoll\s+=\s+17$" }
-          end
-        end
+      describe chrony_conf(chrony_conf_path) do
+        its('server') { should_not be_nil }
       end
     else
-      describe "#{chrony_conf} exists" do
-        subject { chrony_conf_exists }
-        it { should be true }
+      describe chrony_conf_path do
+        it 'exists — chrony must be installed and configured with authoritative time sources' do
+          expect(chrony_conf_exists).to be true
+        end
+      end
+    end
+
+    unless time_sources.empty?
+      # Verify the chrony config lists authoritative DoD time source(s) with a
+      # valid maxpoll (<= 16)
+      describe 'chrony.conf' do
+        if match_all_authoritative_timeservers_enabled
+          it 'should include all specified valid timeservers' do
+            expect(authoritative_timeservers.all? { |input|
+                     server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+                   }).to be true
+          end
+        else
+          it 'should include at least one valid timeserver' do
+            expect(authoritative_timeservers.any? { |input|
+              server_values.include?(input) && max_poll_values[server_values.index(input)] <= 16
+            }).to be true
+          end
+        end
       end
     end
   else
