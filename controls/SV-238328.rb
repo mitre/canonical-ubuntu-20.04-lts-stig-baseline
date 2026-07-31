@@ -53,12 +53,21 @@ $ sudo ufw deny <direction> <port/protocol/service>'
     !%w[docker podman kubepods lxc].include?(virtualization.system)
   }
 
-  ufw_status = command('ufw status').stdout.strip.lines.first
-  value = ufw_status.split(':')[1].strip
+  # `ufw status` prints nothing to stdout when ufw is not installed, so guard
+  # the parse — an absent firewall is a finding, never an exception.
+  ufw_installed = package('ufw').installed?
+  ufw_status_line = ufw_installed ? command('ufw status').stdout.strip.lines.first.to_s : ''
+  ufw_state = ufw_status_line.split(':')[1].to_s.strip
 
   describe 'UFW status' do
-    subject { value }
-    it { should cmp 'active' }
+    it 'is active' do
+      failure_hint = if ufw_installed
+                       "`ufw status` reported: #{ufw_status_line.inspect}"
+                     else
+                       'the ufw package is not installed, so no ufw firewall is restricting ports, protocols, or services'
+                     end
+      expect(ufw_state).to cmp('active'), "UFW should be active but #{failure_hint}"
+    end
   end
   describe 'Status listings for any allowed services, ports, or applications must be documented with the organization' do
     skip 'Status listings checks must be preformed manually'
