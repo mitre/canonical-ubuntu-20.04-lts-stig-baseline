@@ -49,7 +49,7 @@ $ sudo chown root /etc/audit/audit*.{rules,conf} /etc/audit/rules.d/*'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   audit_conf_files = command("find /etc/audit -type f -iname '*.rules' -o -iname '*.conf' -o -path '/etc/audit/rules.d/*'").stdout.strip.split("\n").entries

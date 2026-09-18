@@ -59,7 +59,7 @@ $ sudo apt install libnss-sss'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   required_packages = %w[sssd libpam-sss libnss-sss]

@@ -48,7 +48,7 @@ Reload settings from all system configuration files with the following command:
   tag 'host'
 
   only_if('Control not applicable within a container', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   parameter = 'kernel.dmesg_restrict'

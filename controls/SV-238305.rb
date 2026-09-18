@@ -46,7 +46,7 @@ where <log mountpoint> is the aforementioned mount point.)
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   audit_log_dir = command("dirname #{auditd_conf.log_file}").stdout.strip

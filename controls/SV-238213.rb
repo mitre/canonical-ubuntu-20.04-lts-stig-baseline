@@ -41,7 +41,7 @@ $ sudo systemctl restart sshd.service'
   gssapi_authentication = input('sshd_config_values')
   value = gssapi_authentication[setting]
   openssh_present = package('openssh-server').installed?
-  is_container = %w[docker podman kubepods lxc].include?(virtualization.system)
+  is_container = virtualization.container_system?
   allow_container_openssh = input('allow_container_openssh_server')
 
   only_if('This requirement is Not Applicable in the container without open-ssh installed', impact: 0.0) {

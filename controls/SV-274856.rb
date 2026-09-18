@@ -29,7 +29,7 @@ Note: It is valid for this configuration to be in a file with a name that ends w
   sssd_config = parse_config_file(sssd_conf_path)
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   if input('smart_card_enabled')

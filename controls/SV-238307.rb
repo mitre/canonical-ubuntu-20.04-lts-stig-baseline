@@ -50,7 +50,7 @@ Edit "/etc/audit/auditd.conf" and set the "space_left" parameter to be at least 
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   log_file = auditd_conf.log_file

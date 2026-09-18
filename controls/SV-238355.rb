@@ -37,7 +37,7 @@ $ sudo systemctl enable --now ufw.service'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   expected_firewall_package = input('expected_firewall_package')
