@@ -12,6 +12,11 @@ supports:
   - platform-name: debian
     release: 11.*
 
+depends:
+  - name: inspec-profile-resources
+    git: https://github.com/mitre/inspec-profile-resources.git
+    ref: dba0308406baa84b2b8171dd9e7c02287fbe2a4d
+
 inputs:
   # SV-238196
   - name: temporary_accounts
