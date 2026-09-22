@@ -23,7 +23,7 @@ If any occurrences of "!authenticate" return from the command, this is a finding
   tag 'container-conditional'
 
   only_if('Control not applicable within a container without sudo installed', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) || command('sudo').exist?
+    !virtualization.container_system? || command('sudo').exist?
   }
 
   describe sudoers(input('sudoers_config_files')) do

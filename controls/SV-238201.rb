@@ -23,7 +23,7 @@ If the system is missing an "/etc/pam_pkcs11/" directory and an "/etc/pam_pkcs11
   tag nist: ['IA-5 (2) (a) (2)']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if virtualization.container_system?
     impact 0.0
     describe 'This control is Not Applicable inside a container' do
       skip 'This control is Not Applicable inside a container'

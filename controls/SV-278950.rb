@@ -30,7 +30,7 @@ If the installed version of Ubuntu 20.04 LTS is not supported, this is a finding
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   lsb = parse_config_file('/etc/lsb-release')

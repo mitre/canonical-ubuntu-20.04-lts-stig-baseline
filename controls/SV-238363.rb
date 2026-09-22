@@ -27,7 +27,7 @@ A subscription to the "Ubuntu Pro" plan is required to obtain the FIPS Kernel cr
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   fips_config_file = input('fips_config_file')

@@ -39,7 +39,7 @@ $ sudo systemctl reload sshd.service'
   tag 'container-conditional'
 
   only_if('Control not applicable - SSH is not installed within containerized Ubuntu', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system) || file('/etc/ssh/sshd_config').exist?
+    !virtualization.container_system? || file('/etc/ssh/sshd_config').exist?
   }
 
   approved_macs = input('approved_openssh_server_conf')['macs']
