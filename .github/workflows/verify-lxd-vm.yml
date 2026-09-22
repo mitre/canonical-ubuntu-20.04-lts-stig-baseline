@@ -132,6 +132,41 @@ jobs:
           [ -n "$ipv4" ] || { echo "No VM IPv4 found"; lxc info "$NAME"; exit 1; }
           echo "KITCHEN_HOST=$ipv4" >> "$GITHUB_ENV"
 
+      - name: Wait for cloud-init and SSH
+        run: |
+          set -euo pipefail
+          NAME="${{ matrix.suite }}-${{ env.PLATFORM }}"
+
+          show_diagnostics() {
+            echo "=== LXD instance information ==="
+            lxc info "$NAME" || true
+            echo "=== cloud-init status ==="
+            lxc exec "$NAME" -- cloud-init status --long || true
+            echo "=== SSH service status ==="
+            lxc exec "$NAME" -- systemctl status ssh --no-pager || true
+            echo "=== cloud-init output ==="
+            lxc exec "$NAME" -- tail -n 200 /var/log/cloud-init-output.log || true
+          }
+
+          # The VM can be RUNNING and have an IPv4 address before cloud-init
+          # installs openssh-server and starts sshd.
+          if ! timeout 300s lxc exec "$NAME" -- cloud-init status --wait; then
+            echo "cloud-init did not complete successfully within five minutes"
+            show_diagnostics
+            exit 1
+          fi
+
+          for i in $(seq 1 60); do
+            if lxc exec "$NAME" -- systemctl is-active --quiet ssh; then
+              exit 0
+            fi
+            sleep 5
+          done
+
+          echo "SSH service did not become active within five minutes"
+          show_diagnostics
+          exit 1
+
       - name: Run kitchen test
         if: ${{ !contains(steps.commit.outputs.message, 'only-validate-profile') }}
         continue-on-error: true
