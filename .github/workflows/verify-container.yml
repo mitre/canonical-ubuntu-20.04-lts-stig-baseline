@@ -114,4 +114,4 @@ jobs:
       - name: Validate scan threshold
         uses: mitre/saf_action@a19f76ed3721c14aa8a1afb8eded117d8bf16a5d  # v1.9.0
         with:
-          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json --templateFile ${{ matrix.suite }}.threshold.yml"
+          command_string: "validate threshold -i spec/results/${{ env.PLATFORM }}_${{ matrix.suite }}.json --templateFile ${{ env.PLATFORM }}_${{ matrix.suite }}.threshold.yml"

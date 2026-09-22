@@ -39,7 +39,7 @@ Replace "[audit_tool]" with the audit tool that does not have the correct permis
   tag nist: ['AU-9 a', 'AU-9']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if virtualization.container_system?
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'

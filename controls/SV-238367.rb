@@ -52,7 +52,7 @@ $ sudo ufw limit in on eth0'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   describe 'Manual review required: correlate listening services from ss -l46ut with ufw status and confirm LIMIT is applied to each listening port unless explicitly DENY' do

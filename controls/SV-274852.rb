@@ -35,7 +35,7 @@ $ sudo augenrules --load'
   audited_paths = %w[/etc/cron.d /var/spool/cron]
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   audited_paths.each do |audit_path|

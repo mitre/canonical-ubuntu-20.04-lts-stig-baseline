@@ -20,7 +20,7 @@ ldap_user_certificate=userCertificate;binary'
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   sssd_conf = input('sssd_conf_path')

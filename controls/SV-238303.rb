@@ -44,7 +44,7 @@ If any of the seven audit tools do not have appropriate selection lines, this is
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   audit_tools = input('audit_tools')

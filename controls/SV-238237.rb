@@ -24,7 +24,7 @@ auth    required    pam_faildelay.so    delay=4000000'
   tag nist: ['CM-6 b']
   tag 'host'
 
-  if %w[docker podman kubepods lxc].include?(virtualization.system)
+  if virtualization.container_system?
     impact 0.0
     describe 'Control not applicable to a container' do
       skip 'Control not applicable to a container'

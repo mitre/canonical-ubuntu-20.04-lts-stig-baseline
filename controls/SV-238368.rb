@@ -29,7 +29,7 @@ If "nx" is not showing up in "/proc/cpuinfo", and the system's BIOS setup config
   tag 'host'
 
   only_if('This control is Not Applicable to containers', impact: 0.0) {
-    !%w[docker podman kubepods lxc].include?(virtualization.system)
+    !virtualization.container_system?
   }
 
   dmesg_nx_conf = command('dmesg | grep \'[NX|DX]*protection\'').stdout
