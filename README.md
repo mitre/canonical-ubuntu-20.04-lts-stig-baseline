@@ -1,5 +1,7 @@
 # canonical-ubuntu-20.04-lts-stig-baseline
 
+- Profile Version: `2.4.2`
+
 InSpec profile to validate the secure configuration of Ubuntu 20.04, against [DISA](https://iase.disa.mil/stigs/)'s Canonical Ubuntu 20.04 LTS Security Technical Implementation Guide (STIG) Version 2, Release 4.
 
 ## Getting Started  
